@@ -36,7 +36,7 @@
             
 			<cfset session.userid="#qryGetLogin.id#">
 			<cfset session.email="#qryGetLogin.email#">
-            
+            <cfset session.current_association="#qryGetLogin.last_site_id#">
 
             
            
