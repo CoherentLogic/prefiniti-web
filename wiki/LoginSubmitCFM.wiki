@@ -1,0 +1,14 @@
+#summary Traditional Login Processing
+#labels login-submit.cfm
+
+= Introduction =
+
+This page processes traditional form-based logins.
+
+= Submitted From =
+
+/authentication/components/NewLogin.cfm
+
+= JavaScript Dependencies =
+
+N/A
