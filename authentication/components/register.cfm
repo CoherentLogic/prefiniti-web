@@ -1,3 +1,7 @@
+<!---
+	$Id$
+--->
+
 <cfquery name="record_hit" datasource="webwarecl">
 	INSERT INTO hits
     	(hit_page,
