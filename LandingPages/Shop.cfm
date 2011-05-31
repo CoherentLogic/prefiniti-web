@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 <table><tr><td>
 <h3>Shop</h3>

@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 
 <h3>File &amp; Photo Storage</h3>
