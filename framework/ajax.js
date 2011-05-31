@@ -1,4 +1,5 @@
 // 
+//  $Id$
 //
 //  ajax.js
 //   Common routines for using AJAX functionality
@@ -9,6 +10,7 @@
 //
 //
 //  3/15/2007:		Added AjaxLoadPageToValueCtl(), AjaxSubmitFromTextToDiv(), and AjaxGetCheckedValue()
+//
 
 
 //

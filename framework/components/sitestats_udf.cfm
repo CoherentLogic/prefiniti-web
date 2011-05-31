@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cffunction name="getSiteStats" returntype="struct" output="no">
 	<cfargument name="site_id" type="numeric" required="yes">
 	<cfargument name="user_id" type="numeric" required="yes">
