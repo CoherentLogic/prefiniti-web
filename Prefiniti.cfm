@@ -1,3 +1,8 @@
+<!---
+	$Id$
+	
+	Prefiniti main page
+--->
 <!---<html>
 	<head>
 		<title>The Prefiniti Network</title>

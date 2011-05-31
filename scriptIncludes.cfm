@@ -1,3 +1,7 @@
+<!---	
+	$Id$
+	Scripts to be included
+--->
 <script type="text/javascript" src="/ColorPicker2.js"></script>
 <script type="text/javascript" src="/framework/framework.js"></script>
 <script type="text/javascript" src="/framework/prefiniti.js"></script>
