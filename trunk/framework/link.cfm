@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfinclude template="/authentication/authentication_udf.cfm">
 
 <cfif getPermissionByKey('#attributes.perm#', #url.current_association#) EQ true>

@@ -1,4 +1,6 @@
-
+<!---
+	$Id$
+--->
 <!---
 <cffunction name="getSiteStats" returntype="struct">
 	<cfargument name="site_id" type="numeric" required="yes">

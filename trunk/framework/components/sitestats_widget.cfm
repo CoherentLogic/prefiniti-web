@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfinclude template="/authentication/authentication_udf.cfm">
 <cfinclude template="/framework/components/sitestats_udf.cfm">
 
