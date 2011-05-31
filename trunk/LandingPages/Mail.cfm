@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 
 <cfquery name="get_mail" datasource="webwarecl">

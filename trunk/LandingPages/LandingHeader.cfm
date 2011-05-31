@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfquery name="getSites" datasource="sites">
 	SELECT * FROM site_associations WHERE user_id=#url.CalledByUser#
 </cfquery>

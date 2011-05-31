@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 
 <cfparam name="UserColl" default="">

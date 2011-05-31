@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 
 <cfquery name="gFavs" datasource="webwarecl">
