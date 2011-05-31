@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -19,6 +22,7 @@
     <cfparam name="session.current_site_id" default="0">
     <cfparam name="session.current_association" default="0">
     <cfparam name="session.webware_admin" default="0">
+    <cfparam name="session.authentication_key" default="">
   
     
 
