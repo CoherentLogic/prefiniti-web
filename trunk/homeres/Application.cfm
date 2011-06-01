@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cfapplication name="PrefinitiHomeV2" sessionmanagement="yes">
 <cfparam name="session.browserType" default="">
 

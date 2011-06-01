@@ -26,10 +26,10 @@
 <file name="invite_user_submit.cfm" server="www.prefiniti.com/prefiniti15/" local="129325464000000000" remote="129325464000000000" />
 <file name="Login.cfm" server="www.prefiniti.com/prefiniti15/" local="128605752000000000" remote="128605752000000000" />
 <file name="maintenancePanel.cfm" server="www.prefiniti.com/prefiniti15/" local="128413944000000000" remote="128413944000000000" />
-<file name="NewLogin.cfm" server="www.prefiniti.com/prefiniti15/" local="129506471456241575" remote="129506471400000000" />
+<file name="NewLogin.cfm" server="www.prefiniti.com/prefiniti15/" local="129513584181230452" remote="129513583800000000" />
 <file name="permCheckbox.cfm" server="www.prefiniti.com/prefiniti15/" local="128395800000000000" remote="128395800000000000" />
 <file name="profileManager.cfm" server="www.prefiniti.com/prefiniti15/" local="128413080000000000" remote="128413080000000000" />
-<file name="register.cfm" server="www.prefiniti.com/prefiniti15/" local="128731896000000000" remote="128731896000000000" />
+<file name="register.cfm" server="www.prefiniti.com/prefiniti15/" local="129513587130269127" remote="129513586800000000" />
 <file name="registerSubmit.cfm" server="www.prefiniti.com/prefiniti15/" local="128821752000000000" remote="128821752000000000" />
 <file name="requirePerm.cfm" server="www.prefiniti.com/prefiniti15/" local="128616984000000000" remote="128616984000000000" />
 <file name="setassoctype.cfm" server="www.prefiniti.com/prefiniti15/" local="128574648000000000" remote="128574648000000000" />
