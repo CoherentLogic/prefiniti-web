@@ -1,3 +1,6 @@
+//
+//	$Id$
+//
 var refreshTimer;
 function SetAssocType(id, type)
 {
