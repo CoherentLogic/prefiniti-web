@@ -1,4 +1,6 @@
-
+<!---
+	$Id$
+--->
     
     <div id="mainArea">
     	<div class="sideBox" <cfif session.browserType NEQ "Microsoft Internet Explorer">style="padding-top:20px;"</cfif>>

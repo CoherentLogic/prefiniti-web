@@ -1,0 +1,1734 @@
+/*
+ * $Id$
+ */
+#headBar {
+	width: 100%;
+	background-color: #3399CC;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	height: 16px;
+	margin-bottom:6px;
+	background-attachment: fixed;
+	background-image: url(/MyCL/components/tabgrad.gif);
+	background-repeat: repeat-x;
+}
+
+a {
+	text-decoration:none;
+	color:#000000;
+}
+a:hover {
+	color:#3399CC;
+	text-decoration: underline;
+	}
+
+.inputText {
+	border:1px solid #999999;
+	padding:1px;
+	margin:3px;
+	
+}
+
+.img-shadow {
+  float:left;
+  background: url(/graphics/shadowAlpha.png) no-repeat bottom right !important;
+  background: url(/graphics/shadow.gif) no-repeat bottom right;
+  margin: 10px 0 0 10px !important;
+  margin: 10px 0 0 5px;
+  }
+
+.img-shadow img {
+  display: block;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #a9a9a9;
+  margin: -6px 6px 6px -6px;
+  padding: 4px;
+  }
+
+input, select, textarea {
+	border:none;
+	padding:3px;
+	margin:3px;
+	
+	
+	
+}
+
+option {
+	padding:none;
+	
+}
+
+button {background-image:url(../images/tabgrad-h.gif);
+}
+
+.openTable {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+
+.midTable {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+
+.closeTable {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+
+.stdHeader {
+	font-family: 'Times New Roman', Times, serif;
+	color:#3399CC;
+	font-weight:lighter;
+	font-size:24px;
+	margin-top:3px;
+}	
+
+.navBtn {
+	clear: none;
+	display: inline;
+	padding: 6px;
+}
+
+.navBtn a {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+	color:#FFFFFF;
+}
+
+.navLinks {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+	text-decoration:none;
+	background-color: #FFFFFF;
+	}
+
+th {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	background-color: #3399CC;
+	color: #FFFFFF;
+	background-image: url(http://www.prefiniti.com/MyCL/components/tabgrad.gif);
+	padding: 3px;
+}
+.introCopy {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana;
+	font-size: small;
+	padding-top:2px;
+	padding-left:5px;
+	padding-right:5px;
+	padding-bottom:0px;
+	
+}
+.bodyCopy {
+	padding:10px;
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	font-size: medium;
+}
+body {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color:#666666;
+	margin:0px;
+	padding:0px;
+	background-color:#FFFFFF;
+}
+.bodyTable {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+}
+.notify {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #FF0000;
+	background-color:#FFFFFF;
+}
+.quoteBox {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: small;
+	font-weight: normal;
+	display: inline;
+	height: auto;
+	width: 200px;
+	float: right;
+	border: 2px groove #CCCCCC;
+	font-style: italic;
+	padding: 5px;
+	text-align: center;
+	background-color: #CCCCCC;
+	clear: right;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+.loginNavTabl {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #000000;
+	background-color: #FFFFFF;
+	font-weight: normal;
+	height: 30px;
+	background-repeat: repeat-x;
+	background-position: center;
+	padding-top: 0px;
+	padding-right: 10px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+	/*background-image: url(http://www.webwarecl.com/MyCL/components/tabgrad.gif);*/
+	border:none;
+}
+
+td {
+	background-color:#FFFFFF;
+	/*-moz-opacity:.90;*/
+}
+.introTable {
+	background-image: url(../graphics/totalstation.jpg);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+}
+.subHead {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #FFFFFF;
+	background-position: left;
+	text-align: left;
+	background-color: #666666;
+}
+.int {
+	border-bottom-width: 1px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: solid;
+	border-left-style: none;
+	border-bottom-color: #000000;
+}
+.logbox {
+	background-color: #FFFFFF;
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	text-transform: none;
+	font-weight: normal;
+}
+#wrapper {
+	width: 800px;
+	text-align: center;
+	
+}
+.sessionMessage {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #0000FF;
+	background-color: #CCCCCC;
+	height: 90px;
+	width: 300px;
+	vertical-align: middle;
+	display: block;
+	border: 1px ridge #666666;
+	text-align: center;
+	padding-top: 0px;
+}
+.genMessage {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #0000FF;
+	background-color: #CCCCCC;
+	height: 90px;
+	width: 300px;
+	vertical-align: middle;
+	display: block;
+	border: 1px ridge #666666;
+	text-align: center;
+	padding-top: 0px;
+}
+#leftBlock {
+	height: auto;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#itemAttention {
+	height: auto;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	text-align:center;
+}
+.orderListBlock 
+{
+	/*-moz-opacity:.90;*/
+	height: auto;
+	/*margin-top: 20px;*/
+	border-top: 1px solid #CCCCCC;
+	border-left: 1px solid #EFEFEF;
+	border-bottom: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	margin-right: 20px;
+	width: 700px;
+	float: left;
+	display: inline;
+	margin-bottom: 20px;
+
+	background-color:#FFFFFF;
+	border-radius: 5px;
+	padding:15px;
+	clear:right;
+	overflow: visible;
+}
+.sidebarBlock {
+	float: left;
+	width: 240px;
+	height: 100px;
+	margin-top: 34px;
+	margin-left: 20px;
+	margin-right: 0px;
+
+	border-top: 1px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+	border-bottom:1px solid #CCCCCC;
+	border-right:none;
+	margin-bottom: 20px;
+	background-color:#EFEFEF;
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-bottomleft:10px;
+}
+
+.sidebarBlock td {
+	background-color:#EFEFEF;
+	
+}
+
+.normalButton
+{ /*background-image:url(/graphics/tabBtn-h.gif);*/
+	background-color:#3399CC;
+	color:white;
+	border-left:1px solid silver;
+	border-top:1px solid silver;
+	border-bottom:1px solid gray;
+	border-right:1px solid gray;
+	padding:3px;
+	-moz-border-radius:3px;
+}
+
+.custName {
+	padding: 5px;
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bolder;
+	background-color: #3399CC;
+	color: #FFFFFF;
+}
+.jobsTable {
+	margin-left: 30px;
+}
+
+
+.nameHdr {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	text-align: right;
+}
+.bioOuter {
+	padding: 10px;
+	border: 1px solid #CCCCCC;
+	margin: 5px;
+}
+.bioPic {
+	padding: 0px;
+	float: left;
+	clear: left;
+	margin-bottom: 30px;
+}
+.bioText {
+	display: inline;
+	float: right;
+	padding: 5px;
+	clear: right;
+	width: 500px;
+}
+.topLinks {
+	background-color: #FFFFFF;
+}
+.VPHeader {
+	
+	font-size: large;
+	font-weight: normal;
+	font-family: "Segoe UI", "Lucida Grande", "Trebuchet MS", Verdana;
+	padding-left: 20px;
+	padding-top: 20px;
+}
+.VPBody {
+	font-family: "Segoe UI", "Lucida Grande", "Trebuchet MS", Verdana;
+	font-size: small;
+	padding-left: 40px;
+}
+.VPLink {
+	font-family: "Segoe UI", "Lucida Grande", "Trebuchet MS", Verdana;
+	font-weight: bold;
+	border: 1px solid #999999;
+
+	width: 200px;
+	background-color: #CCCCCC;
+	text-align: center;
+	color: #0099FF;
+	padding: 4px;
+	margin: 30px;
+}
+.tbBack {
+	background-color: #CCCCCC;
+}
+.button {
+	width: 120px;
+	text-align: center;
+	border: thin solid #999999;
+	padding: 3px;
+}
+.tMsg {
+	width: 500px;
+	padding: 5px;
+	overflow: scroll;
+}
+pre {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+}
+input {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+}
+#taskInfoWrapper {
+	background-color: #3399CC;
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	font-weight: bold;
+	position: absolute;
+	/*left: 500px;
+	top: 500px;*/
+	width: 250px;
+}
+.popupWin {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	color: #FFFFFF;
+	background-color: #3399CC;
+	font-weight: bold;
+}
+select {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+}
+.bodyWrapper {
+	
+	width: 100%;
+	clear:both;
+	
+	
+}
+.copyrightTable {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	color: #999999;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	width: 900px;
+	padding: 5px;
+	margin-top: 30px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+.bottomLinks a {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+	margin-top: -30px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	color: #CCCCCC;
+	text-decoration: none;
+}
+
+.splash {
+	width: 900px;
+	margin: 5px;
+	padding: 0px;
+	border: 1px solid #CCCCCC;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.roundedTable {
+	margin: 5px;
+	padding: 0px;
+	border: 1px solid #CCCCCC;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.newsTable {
+	width: 905px;
+	margin: 5px;
+	padding: 0px;
+}
+.newsInnerTable {
+	width: 450px;
+}
+.newsHead {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	text-align: left;
+	border: 2px solid #3399CC;
+	text-transform: none;
+	color: #3399CC;
+}
+.toolbarTable
+{
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #CCCCCC;
+	width: 100%;
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: small;
+	font-style: normal;
+	padding: 0px;
+	text-align: right;
+	/*background-image: url(http://www.webwarecl.com/MyCL/components/tabgrad.gif);*/
+}
+#sMsg {
+	z-index: 200;
+	position: absolute;
+	left: 350px;
+	top: 300px;
+}
+#gMsg {
+	z-index: 200;
+	position: absolute;
+	left: 350px;
+	top: 300px;
+}
+.SettingsCheckBox {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: lighter;
+	color: #999999;
+	vertical-align: text-top;
+	display: block;
+	padding: 5px;
+}
+.OptionsBox {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	border: 1px solid #3399CC;
+	font-size: xx-small;
+	background-color: #FFFFFF;
+	margin: 8px;
+	vertical-align: middle;
+	padding: 2px;
+}
+.OptionBoxHeading {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #3399CC;
+	padding-left: 5px;
+}.navToolbar {
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	background-color: #3399CC;
+	
+}
+.subHeadNew {
+
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #FFFFFF;
+	background-position: left;
+	text-align: left;
+	background-color: #3399CC;
+}
+.tabBar {
+	height: auto;
+	margin-top: 20px;
+	
+	margin-right: 20px;
+	width: 600px;
+	float: right;
+	display: inline;
+	margin-bottom: 0px;
+
+	
+	clear:right;
+	overflow: visible;
+
+}
+
+.tabButtonActive
+{
+	/*-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;*/
+
+	border-radius: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: none;
+	border-left-style: solid;
+	border-top-color: #999999;
+	border-right-color: #999999;
+	border-left-color: #999999;
+	padding-top: 2px;
+	padding-right: 6px;
+	padding-left: 6px;
+	background-color: #999999;
+	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-image:url(/graphics/tabBtn-h.gif);
+	
+}
+.tabButtonInactive
+{
+	/*-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;*/
+
+	border-radius: 5px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: none;
+	border-left-style: solid;
+	border-top-color: #000000;
+	border-right-color: #000000;
+	border-left-color: #000000;
+	padding-top: 2px;
+	padding-right: 3px;
+	padding-left: 3px;
+	margin-right: 3px;
+	font-weight: bold;
+	background-color: #CCCCCC;
+	background-image:url(/graphics/tabBtn.gif);
+}
+.menuTable {
+	margin: 8px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left:0px;
+	padding-right:0px;
+	
+	background-color: #C0C0C0;
+
+	/*background-image: url(/graphics/tabBtn.gif);*/
+	background-repeat: repeat-x;
+	background-position: top;
+}
+.menuTable a:hover {
+	text-decoration:none;
+	color:white;
+}
+.menuTable a {
+	color:black;
+}
+.homeHeader {
+	padding: 10px;
+	font-family: "Segoe UI", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+}
+
+	.pList 
+	{
+		border-left:1px solid #EFEFEF;
+		border-right:1px solid #EFEFEF;
+		-moz-border-radius-topleft:5px;
+		-moz-border-radius-topright:5px;
+	}
+	
+	.pList th
+	{
+		text-align:left;
+		background-color:#EFEFEF;
+		color:#3399CC;
+		font-weight:bold;
+		background-image:none;
+	}
+	
+	.pList td
+	{
+		border-bottom:1px solid #EFEFEF;
+	}
+	
+.PWindowTitle
+{
+	background-color:#3399CC;
+	width:100%;
+	color:white;
+	font-weight:bold;
+	
+}	
+
+.PWindowTitleInactive
+{
+	background-color:#999999;
+	width:100%;
+	color:black;
+	font-weight:normal;
+	
+}	
+
+.PDesktopManager
+{
+	background-color:#EFEFEF;
+	padding:10px;
+	-moz-border-radius-topright:5px;
+	-moz-opacity:.90;
+	
+	height:20px;
+	
+	overflow:visible;
+	width:auto;
+	min-width:800px;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	border:1px solid #3399cc;
+}	
+
+.PDMWindowIcon
+{
+	-moz-opacity:.90;
+	background-color:white;
+	border:1px solid #3399CC;
+	float:left;
+	width:auto;
+	font-weight:bold;
+	margin:3px;
+	padding-left:5px;
+	padding-right:5px;
+	-moz-border-radius:5px;
+}	
+
+.PDMWindowIcon a:hover 
+{ 
+	text-decoration:none;
+	color:black;
+}
+
+.PDMWindowIconInactive a:hover 
+{ 
+	text-decoration:none;
+	color:black;
+}
+
+.PDMWindowIconInactive
+{
+	-moz-opacity:.90;
+	background-color:#999999;
+	border:1px solid white;
+	float:left;
+	width:auto;
+	font-weight:normal;
+	margin:3px;
+	padding-left:5px;
+	padding-right:5px;
+	-moz-border-radius:5px;
+}
+
+.PWindowControls
+{
+	float:right;
+	margin-top:-20px;
+}	
+
+.PWindowClientArea 
+{
+	width:100%;
+	height:100%;
+	overflow:auto;
+}
+
+.PNavigator
+{
+	display:none;
+	position:absolute;
+	top:150px;
+	left:0px;
+	width:250px;
+	background-color:#EFEFEF;
+	-moz-opacity:.90;
+}
+	
+.PWindowGCIcon 
+{	
+	margin-right:5px;
+	float:left;
+	display:block;
+	z-index:65000;
+}	
+
+.PWindowTitle
+{
+	background-color:#3399CC;
+	width:100%;
+	color:black;
+	font-weight:bold;
+	background-image:url(/graphics/steel.png);
+	background-repeat:repeat-x;
+	
+}	
+
+.PWindowTitleInactive
+{
+	background-color:#999999;
+	width:100%;
+	color:white;
+	font-weight:normal;
+	
+}	
+
+.PDesktopManager
+{
+	background-color:#000000;
+	padding:10px;
+	-moz-border-radius-topright:5px;
+	-moz-opacity:.70;
+	
+	height:90px;
+	
+	overflow:visible;
+	width:auto;
+	
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	
+	z-index:260;
+}	
+
+.PDMWindowIcon
+{
+	-moz-opacity:.90;
+	background-color:white;
+	border:1px solid #3399CC;
+	float:left;
+	width:auto;
+	font-weight:bold;
+	margin-right:3px;
+	padding-left:5px;
+	padding-right:5px;
+	-moz-border-radius:5px;
+}	
+
+.PDMWindowIcon a:hover 
+{ 
+	text-decoration:none;
+	color:black;
+}
+
+.PDMWindowIconInactive a:hover 
+{ 
+	text-decoration:none;
+	color:black;
+}
+
+.PDMWindowIconInactive
+{
+	-moz-opacity:.90;
+	background-color:#999999;
+	border:1px solid white;
+	float:left;
+	width:auto;
+	font-weight:normal;
+	margin-right:3px;
+	padding-left:5px;
+	padding-right:5px;
+	-moz-border-radius:5px;
+}
+
+.PWindowControls
+{
+	float:right;
+	margin-top:-20px;
+}	
+
+.PWindowClientArea 
+{
+	width:100%;
+	height:100%;
+	overflow:auto;
+}
+
+.PNavigator
+{
+	display:none;
+	position:absolute;
+	top:150px;
+	left:0px;
+	width:250px;
+	background-color:#EFEFEF;
+	-moz-opacity:.90;
+	-moz-border-radius-topright:5px;
+	-moz-border-radius-bottomright:5px;
+	padding-right:5px;
+}
+	
+.PWindowGCIcon 
+{	
+	margin-right:5px;
+	float:left;
+	display:block;
+	z-index:65000;
+}
+
+.PWindowList
+{
+	display:block;
+	float:left;
+	max-width:900px;
+}
+
+#dropmenudiv{
+position:absolute;
+border:1px solid silver;
+-moz-opacity:.80;
+border-bottom-width: 1;
+	font-family: "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+	font-weight:lighter;
+	color:#EFEFEF;
+line-height:18px;
+z-index:800;
+padding:0px;
+background-color:#EFEFEF;
+
+}
+
+#dropmenudiv a{
+background-color:#EFEFEF;
+width: 100%;
+display:block;
+vertical-align:middle;
+text-indent: 3px;
+clear:right;
+padding-left:10px;
+padding-right:3px;
+padding-bottom:0px;
+padding-top:4px;
+text-decoration: none;
+font-weight: lighter;
+
+} 
+
+#dropmenudiv img {
+	display:block;
+	float:left;
+	
+	padding:3px 0;
+	padding-top:3px;
+	border-right:1px solid black;
+	background-color:#C0C0C0;
+	vertical-align:middle;
+}
+
+#dropmenudiv a:hover
+{ /*hover background color*/
+background-color:#CCCCCC;
+}
+
+.PDesktopNotification {
+	background-color:#000000;
+	-moz-opacity:.70;
+	-moz-border-radius:10px;
+	width:500px;
+	height:auto;
+	padding:30px;
+	position:absolute;
+	top:20px;
+	right:20px;
+	z-index:2000;
+}
+
+.PDesktopNotification td {
+	background-color:#000000;
+	-moz-opacity:.70;
+}
+
+.PDesktopNotification h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+	-moz-opacity:.70;
+}
+
+.PDesktopNotification h2 {
+	font-size:medium;
+	margin:0px;
+	padding:5px;
+	color:white;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	-moz-opacity:.70;
+}
+
+.PNotifyText {
+	font-size:medium;
+	font-weight:lighter;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	color:white;
+}
+
+.PNotifyText a {
+	font-size:medium;
+	font-weight:lighter;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	color:white;
+}
+
+.PNotifyText a:hover {
+	color:white;
+	text-decoration:none;
+}
+
+.PNotifyBox {
+	background-color:#000000;
+	-moz-opacity:.70;
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-topright:10px;
+	width:350px;
+	height:auto;
+	padding:10px;
+	position:absolute;
+	bottom:0px;
+	right:10px;
+	z-index:2000;
+}
+
+.PrefinitiLauncherDiv {
+	background-color:#000000;
+	-moz-opacity:.80;
+	-moz-border-radius:10px;
+	width:800px;
+	height:410px;
+	padding:10px;
+	position:absolute;
+	top:25px;
+	left:25px;
+	z-index:52000;
+	
+}
+
+.PrefinitiLauncherDiv td {
+	background-color:#000000;
+	-moz-opacity:.80;
+	color:white;
+}
+
+.PrefinitiLauncherDiv h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+}
+
+.PrefinitiLauncherDiv td h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+	-moz-opacity:.80;
+}
+
+.PLauncherAppName {
+	font-size:medium;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#3399CC;
+}
+
+.PrefinitiLauncherDiv h2 {
+	font-size:medium;
+	margin:0px;
+	padding:5px;
+	color:white;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	-moz-opacity:.70;
+}	
+
+.PLInfoArea {
+	min-height:250px;
+	height:250px;
+	overflow:auto;
+	width:550px;
+	-moz-opacity:1.0;
+	padding:3px;
+	margin:3px;
+	color:white;
+	font-size:small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.PLInfoArea a {
+	color:white;
+	text-decoration:none;
+	font-size:small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.PLInfoArea a:hover {
+	text-decoration:none;
+	color:gold;
+}
+		
+	
+
+.PLLargeLink {
+	display:block;
+	margin-left:20px;
+	margin-bottom:3px;
+	padding:5px;
+	font-size:medium;
+	color:white;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.PDMCommonDialog {
+	background-color:black;
+	
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+	width:450px;
+	height:auto;
+	color:white;
+	padding:20px;
+}
+
+.PDMCommonDialog input {
+	margin:0px;
+}
+
+.PDMCommonDialog td {
+	background-color:black;
+	
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+}
+
+.PDMCommonDialog h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+}
+
+.PItemBox {
+	background-color:white;
+	color:black;
+	width:250px;
+	height:320px;
+	overflow:auto;
+}
+
+.PItemBox td {
+	background-color:white;
+}
+
+.ObjectIcon {
+	width:auto;
+	max-width:150px;
+	height:auto;
+	overflow:visible;
+	float:left;
+	text-align:center;
+	font-size:xx-small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+	margin:10px;
+}
+.ObjectListItem {
+	width:250px;
+	height:50px;
+	overflow:hidden;
+	float:left;
+	font-size:x-small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+}	
+
+.PBreadCrumb {
+	text-decoration:none;
+	color:white;
+	font-weight:bold;
+	font-size:xx-small;
+}
+
+.PBreadCrumb a {
+	text-decoration:none;
+	color:white;
+	font-weight:bold;
+	font-size:xx-small;
+}
+
+.PBreadCrumb a:hover {
+	color:gold;
+}
+
+.PObjectDetailTable {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:xx-small;
+}
+
+.PObjectDetailTable th {
+	background-image:none;
+	background-color:#EFEFEF;
+	color:black;
+	font-weight:bold;
+	font-size:xx-small;
+	border-bottom:1px solid #CCCCCC;
+	text-align:left;
+	
+}
+
+.PObjectDetailTable td {
+	background-color:white;
+	color:#3399CC;
+	border-bottom:1px solid black;
+	font-size:xx-small;
+	font-weight:bold;
+}
+	
+	
+.PWindowTitle
+{
+	background-color:#3399CC;
+	width:100%;
+	color:black;
+	font-weight:bold;
+	background-image:url(/graphics/steel.png);
+	background-repeat:repeat-x;
+	
+}	
+
+.PWindowTitleInactive
+{
+	background-color:#999999;
+	width:100%;
+	color:white;
+	font-weight:normal;
+	
+}	
+
+.PDesktopManager
+{
+	background-color:black;
+	padding:10px;
+	-moz-border-radius-topright:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-opacity:.60;
+	
+	height:20px;
+	
+	overflow:visible;
+	width:auto;
+	
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	
+	z-index:260;
+}	
+
+.PDMWindowIcon
+{
+	-moz-opacity:1;
+	/*background-color:white;
+	float:left;
+	width:auto;
+	font-weight:bold;
+	margin-right:3px;
+	padding-left:5px;
+	padding-right:5px;
+	-moz-border-radius-topright:5px;*/
+	margin-right:5px;
+	margin-top:-10px;
+	float:left;
+	display:block;
+	width:32px;
+	height:32px;
+}	
+
+.PDMWindowIcon a:hover 
+{ 
+	text-decoration:none;
+	color:black;
+	width:48px;
+	height:48px;
+}
+
+.PDMWindowIconInactive a:hover 
+{ 
+	text-decoration:none;
+	color:black;
+}
+
+.PDMWindowIconInactive
+{
+	-moz-opacity:.60;
+	/*background-color:#999999;
+
+	float:left;
+	width:auto;
+	font-weight:normal;
+	margin-right:3px;
+	padding-left:5px;
+	padding-right:5px;
+	-moz-border-radius-topright:5px;*/
+	margin-right:5px;
+	margin-top:-5px;
+	float:left;
+	display:block;
+}
+
+.PWindowControls
+{
+	float:right;
+	margin-top:-20px;
+}	
+
+.PWindowClientArea 
+{
+	width:100%;
+	height:100%;
+	overflow:auto;
+}
+
+.PNavigator
+{
+	display:none;
+	position:absolute;
+	top:150px;
+	left:0px;
+	width:250px;
+	background-color:#EFEFEF;
+	-moz-opacity:.90;
+	-moz-border-radius-topright:5px;
+	-moz-border-radius-bottomright:5px;
+	padding-right:5px;
+}
+	
+.PWindowGCIcon 
+{	
+	margin-right:5px;
+	margin-top:-30px;
+	float:left;
+	display:block;
+	z-index:65000;
+}
+
+.PWindowList
+{
+	display:block;
+	float:left;
+	max-width:900px;
+	margin-top:-20px;
+}
+
+#dropmenudiv{
+position:absolute;
+border:1px solid silver;
+-moz-opacity:.80;
+border-bottom-width: 1;
+	font-family: "Lucida Grande", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+	font-weight:lighter;
+	color:#EFEFEF;
+line-height:18px;
+z-index:800;
+padding:0px;
+background-color:#EFEFEF;
+
+}
+
+#dropmenudiv a{
+background-color:#EFEFEF;
+width: 100%;
+display:block;
+vertical-align:middle;
+text-indent: 3px;
+clear:right;
+padding-left:10px;
+padding-right:3px;
+padding-bottom:0px;
+padding-top:4px;
+text-decoration: none;
+font-weight: lighter;
+
+} 
+
+#dropmenudiv img {
+	display:block;
+	float:left;
+	
+	padding:3px 0;
+	padding-top:3px;
+	border-right:1px solid black;
+	background-color:#C0C0C0;
+	vertical-align:middle;
+}
+
+#dropmenudiv a:hover
+{ /*hover background color*/
+background-color:#CCCCCC;
+}
+
+.PDesktopNotification {
+	background-color:#000000;
+	-moz-opacity:.70;
+	-moz-border-radius:10px;
+	width:500px;
+	height:auto;
+	padding:30px;
+	position:absolute;
+	top:20px;
+	right:20px;
+	z-index:2000;
+}
+
+.PDesktopNotification td {
+	background-color:#000000;
+	-moz-opacity:.70;
+}
+
+.PDesktopNotification h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+	-moz-opacity:.70;
+}
+
+.PDesktopNotification h2 {
+	font-size:medium;
+	margin:0px;
+	padding:5px;
+	color:white;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	-moz-opacity:.70;
+}
+
+.PNotifyText {
+	font-size:medium;
+	font-weight:lighter;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	color:white;
+}
+
+.PNotifyText a {
+	font-size:medium;
+	font-weight:lighter;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	color:white;
+}
+
+.PNotifyText a:hover {
+	color:white;
+	text-decoration:none;
+}
+
+.PNotifyBox {
+	background-color:#000000;
+	-moz-opacity:.50;
+	-moz-border-radius-bottomleft:10px;
+	-moz-border-radius-bottomright:10px;
+	width:350px;
+	height:auto;
+	padding:10px;
+	position:absolute;
+	top:0px;
+	right:0px;
+	z-index:2000;
+}
+
+.PrefinitiLauncherDiv {
+	background-color:#000000;
+	-moz-opacity:.80;
+	-moz-border-radius:10px;
+	width:800px;
+	height:410px;
+	padding:10px;
+	position:absolute;
+	top:25px;
+	left:25px;
+	z-index:52000;
+	display:none;
+	
+}
+
+.PrefinitiLauncherDiv td {
+	background-color:#000000;
+	-moz-opacity:.80;
+	color:white;
+}
+
+.PrefinitiLauncherDiv h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+}
+
+.PrefinitiLauncherDiv td h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+	-moz-opacity:.80;
+}
+
+.PLauncherAppName {
+	font-size:medium;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#3399CC;
+}
+
+.PrefinitiLauncherDiv h2 {
+	font-size:medium;
+	margin:0px;
+	padding:5px;
+	color:white;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	-moz-opacity:.70;
+}	
+
+.PLInfoArea {
+	min-height:250px;
+	height:250px;
+	overflow:auto;
+	width:550px;
+	-moz-opacity:1.0;
+	padding:3px;
+	margin:3px;
+	color:white;
+	font-size:small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.PLInfoArea a {
+	color:white;
+	text-decoration:none;
+	font-size:small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.PLInfoArea a:hover {
+	text-decoration:none;
+	color:gold;
+}
+		
+	
+
+.PLLargeLink {
+	display:block;
+	margin-left:20px;
+	margin-bottom:3px;
+	padding:5px;
+	font-size:medium;
+	color:white;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.PDMCommonDialog {
+	background-color:black;
+	
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+	width:450px;
+	height:auto;
+	color:white;
+	padding:20px;
+}
+
+.PDMCommonDialogWhite {
+	background-color:white;
+	
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+	width:450px;
+	height:auto;
+	color:black;
+	padding:20px;
+}
+
+.PDMCommonDialog input {
+	margin:0px;
+}
+
+.PDMCommonDialog td {
+	background-color:black;
+	
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+}
+
+.PDMCommonDialog h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:white;
+}
+
+.PDMCommonDialogWhite td {
+	background-color:white;
+	color:black;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:small;
+}
+
+.PDMCommonDialogWhite h1 {
+	font-size:x-large;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+}
+
+.PItemBox {
+	background-color:white;
+	color:black;
+	
+	overflow:auto;
+}
+
+.PItemBox td {
+	background-color:white;
+}
+
+.ObjectIcon {
+	width:auto;
+	max-width:150px;
+	height:auto;
+	overflow:visible;
+	float:left;
+	text-align:center;
+	font-size:xx-small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+	margin:10px;
+	padding:4px;
+	-moz-border-radius:2px;
+
+}
+.ObjectListItem {
+	width:250px;
+	height:50px;
+	overflow:hidden;
+	float:left;
+	font-size:x-small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+}	
+
+.PBreadCrumb {
+	text-decoration:none;
+	color:black;
+	font-weight:bold;
+	font-size:xx-small;
+}
+
+.PBreadCrumb a {
+	text-decoration:none;
+	color:black;
+	font-weight:bold;
+	font-size:xx-small;
+}
+
+.PBreadCrumb a:hover {
+	color:#3399CC;
+}
+
+.PObjectDetailTable {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:xx-small;
+}
+
+.PObjectDetailTable th {
+	background-image:none;
+	background-color:#EFEFEF;
+	color:black;
+	font-weight:bold;
+	font-size:xx-small;
+	border-bottom:1px solid #CCCCCC;
+	text-align:left;
+	
+}
+
+.PObjectDetailTable td {
+	background-color:white;
+	color:#3399CC;
+	border-bottom:1px solid black;
+	font-size:xx-small;
+	font-weight:bold;
+}
+	
+.PTreeBlock {
+	margin-left:5px;
+	
+}		
+
+.PTreeView {
+	width:30%;
+	padding:5px;
+	color:black;
+	background-color:white;
+	font-size:xx-small;
+	font-weight:normal;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+
+.PToolbarBox {
+	background-color:#EFEFEF;
+	width:100%;
+	float:none;
+}
+
+.PToolbarBox td {
+	background-color:#EFEFEF;
+}
+
+.PToolbarBox img {
+	padding:3px;
+}	
+
+.PNotifyBox h3 {
+	font-size:small;
+	color:white;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}	
+
+.PNotifyBox a {
+	color:white;
+	font-size:x-small;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:none;
+}
+
+.PNotifyBox a:hover {
+	color:gold;
+	text-decoration:none;
+}	

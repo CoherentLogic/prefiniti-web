@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cftry>
 <cfinclude template="/notifications/notification_udf.cfm">
 <cfcatch type="any">

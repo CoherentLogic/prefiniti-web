@@ -1,3 +1,6 @@
+<!---
+	$Id$
+--->
 <cffunction name="getPermissionByKey" returntype="boolean">
 	<cfargument name="sz_key" type="string" required="yes">
     <cfargument name="n_assoc_id" type="numeric" required="yes">
