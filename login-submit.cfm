@@ -37,9 +37,8 @@
 				   
 		<cflocation url="http://prefiniti15.prefiniti.com/Prefiniti.cfm#urlstr#" addtoken="no">			
 	<cfelse>
-    	<!--- the user's account is disabled --->
-		<cfset session.message="Your account has been disabled.">
-		<cflocation url="default.cfm" addtoken="no">
+    	<!--- the user's account is disabled --->	
+		<cflocation url="/homeres/account_disabled.cfm" addtoken="no">
 	</cfif>
 
 <cfelse>
