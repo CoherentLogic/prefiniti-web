@@ -165,6 +165,11 @@
         <span class="navButton"><a href="Services.cfm">Services</a></span>
         <span class="navButton"><a href="FAQs.cfm">FAQs</a></span>
         <span class="navButton"><a href="ContactUs.cfm">Contact Us</a></span>
-        <span class="navButton" style="background-image:none;"><a href="SignIn/SignIn.cfm" style="background-image:none;">Sign In</a></span>
+        <cfif IsDefined("url.PDKey")>
+        	<cfset desktop_url = "/desktop_login.cfm?PDKey=#URL.PDKey#&PDVersion=#URL.PDVersion#">    	    
+            <cflocation url="#desktop_url#">
+		<cfelse>
+	        <span class="navButton" style="background-image:none;"><a href="SignIn/SignIn.cfm" style="background-image:none;">Sign In</a></span>
+		</cfif>
     </div>
     <img src="/homeres/header_line.png" alt="Header Line" />
