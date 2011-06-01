@@ -1,5 +1,5 @@
 #summary Traditional Login Processing
-#labels login-submit.cfm
+#labels login-submit.cfm,NewLogin.cfm
 
 = Introduction =
 
