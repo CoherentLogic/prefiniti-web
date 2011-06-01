@@ -21,6 +21,12 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
 
+<cfif IsDefined("url.PDKey")>
+	<cfset turl = "/desktop_login.cfm?PDKey=#URL.PDKey#&PDVersion=#URL.PDVersion#">
+	<cflocation url="#turl#">
+	
+</cfif>
+
 <center>
 <div align="center" style="width:450px; height:310px; padding:20px; background-color:white; color:black; border:1px solid black; margin-top:60px;">
 <h1><img src="/graphics/prefiniti.png" /></h1>

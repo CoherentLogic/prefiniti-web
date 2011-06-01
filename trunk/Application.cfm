@@ -43,8 +43,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfparam name="session.current_association" default="0">
     <cfparam name="session.webware_admin" default="0">
     <cfparam name="session.authentication_key" default="">
-  
-    
+  	<cfparam name="session.pd_enhanced" default="0">
+    <cfparam name="session.pd_version" default="">
 
     <div id="soundmanager-debug" style="display:none;"></div>
     
