@@ -628,6 +628,18 @@ function wwCreateDepartment(site_id, department_name)
 	editSite(glob_current_site_id, "departments.cfm");
 }
 
+function wwDeleteDepartment(department_id)
+{
+	var url;
+	url = '/authentication/components/site_manager/delete_department.cfm?id=' + escape(department_id);
+	
+	var onTransferCompleted = function () {
+		AjaxRefreshTarget();	
+	}
+	
+	AjaxLoadPageToDiv('dev-null', url, onTransferCompleted);
+}
+	
 function wwAddMember(department_id, user_id)
 {
 	var url;

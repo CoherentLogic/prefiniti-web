@@ -162,6 +162,23 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfreturn #wwgd#>
 </cffunction>
 
+<cffunction name="wwDeleteDepartment" returntype="void">
+	<cfargument name="department_id" type="numeric" required="yes">
+    
+    <cfquery name="delete_event_entries" datasource="sites">
+    	DELETE FROM event_entries WHERE department_id=#department_id#
+    </cfquery>
+    
+    <cfquery name="delete_department_entries" datasource="sites">
+    	DELETE FROM department_entries WHERE department_id=#department_id#
+    </cfquery>
+    
+    <cfquery name="delete_department" datasource="sites">
+    	DELETE FROM departments WHERE id=#department_id#
+    </cfquery>
+
+</cffunction>
+
 <cffunction name="wwGetDepartmentMembers" returntype="query">
 	<cfargument name="department_id" type="numeric" required="yes">
     
