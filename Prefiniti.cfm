@@ -214,13 +214,12 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	</td>
 	<td align="right" width="50%" style="background-color:transparent;">
 		
-		<div class="hdr_tools_wrapper" style="width:auto; float:right;">
-		<a class="hdr_tools" style="border-left:none;" href="##" onClick="OpenLanding('Shop.cfm')">Shop</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('Work.cfm')">Work</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('Socialize.cfm')">Socialize</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('Organize.cfm')">Organize</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('UploadAndStore.cfm')">Upload &amp; Store</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('Customize.cfm')">Customize</a>
+		<div class="hdr_tools_wrapper" style="width:auto; float:right;">		
+		<a class="hdr_tools" style="border-left:none;" href="##" onClick="OpenLanding('Work.cfm')">Work</a>
+		<a class="hdr_tools" href="##" onClick="OpenLanding('Socialize.cfm')">Friends</a>
+		<a class="hdr_tools" href="##" onClick="OpenLanding('Organize.cfm')">Calendar</a>
+		<a class="hdr_tools" href="##" onClick="OpenLanding('UploadAndStore.cfm')">Files</a>
+		<a class="hdr_tools" href="##" onClick="OpenLanding('Customize.cfm')">Account Center</a>
 		</div>
 		<!--- <input type="button" class="normalButton" value="Go" onclick="ORMSSearch(GetValue('searchBox'))"> --->
 	</td>

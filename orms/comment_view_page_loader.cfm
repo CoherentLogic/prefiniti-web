@@ -1,0 +1,1 @@
+<cfmodule template="/orms/comment_view_page.cfm" r_id="#url.r_id#" page="1">

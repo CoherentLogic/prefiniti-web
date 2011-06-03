@@ -498,13 +498,4 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		
 		<cfreturn #SessionKey#>
 
-	
-	<!---
-	var unRP = new KRequestParam("username", Username);
-	var pwRP = new KRequestParam("password", Password);
-	var pskRP = new KRequestParam("HP_PrefinitiSessionToken", HP_PrefinitiSessionToken);
-	var ipRP = new KRequestParam("HP_CGI_NetworkNode", HP_CGI_NetworkNode);
-	var browserRP = new KRequestParam("HP_Browser", HP_Browser);
-	var osRP = new KRequestParam("HP_OS", HP_OS);
-	--->
 </cffunction>

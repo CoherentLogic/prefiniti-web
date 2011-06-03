@@ -1,0 +1,1 @@
+<cfmodule template="/orms/comment_form.cfm" r_id="#url.r_id#" user_id="#url.user_id#">
