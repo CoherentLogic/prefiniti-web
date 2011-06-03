@@ -48,16 +48,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		</td>
 		<td>
 			
-			<h3>My Business</h3>
 			
-			<p style="margin-left:5px;">
-			<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Change business information" url="/authentication/components/maintenancePanel.cfm?section=site_information.cfm" help="Change my business information"><br />
-			<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Create and edit departments" url="/authentication/components/maintenancePanel.cfm?section=departments.cfm" help="Create and edit departments"><br />
-			<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Prefiniti billing" url="/authentication/components/maintenancePanel.cfm?section=billing.cfm" help="View billing information"><br />
-			<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Business events" url="/authentication/components/maintenancePanel.cfm?section=order_settings.cfm" help="View billing information"><br />
-			<cfmodule template="/framework/link.cfm" perm="AS_VIEW" linkname="Manage employees and customers" url="/authentication/components/associationManager.cfm" help="Manage employees and customers"><br />	
-			<cfmodule template="/framework/link.cfm" perm="WW_MANAGECATALOG" linkname="Add a product to my company's catalog" url="/product_ordering/AddProduct.cfm" help="Add Product"><br />
-			</p>				
 			
 			<cfif pfIsPrefinitiAdmin(url.calledByUser)>
 				<h3>Prefiniti Network Administration</h3>

@@ -225,114 +225,25 @@ function AjaxLoadPageToDiv(DivID, PageURL, onTransferCompleted, onTransferStart,
 				var re_packageIcon = new RegExp("<wwaficon>[\n\r\s]*(.*)[\n\r\s]*</wwaficon>", "gmi");
 				var packageIcon = re_packageIcon.exec(content);
 				
-				var re_sidebar = new RegExp("<wwafsidebar>[\n\r\s]*(.*)[\n\r\s]*</wwafsidebar>", "gmi");
-				var packageSB = re_sidebar.exec(content);
-				
-				if (packageSB) {
-					loadSidebar(packageSB[1]);
-				}
+
 				
 				
 				if (title != null) {	
-					if (DivID == 'tcTarget') {
-						if (!glob_steel) {
-							// we're NOT running steel. create it in a tab.
-							addTabButton(title[1], PageURL);
-						}
-						else {
-							// we're running steel. create it in a window.
-							
-							var WinExists;
-							WinExists = p_session.Framework.FindWindowByTitle(title[1]);
-							
-							if (!WinExists) {
-								var PHandle = 'LoaderWindow' + LoaderHandleIdx.toString();
-								var PWin;
-								var PRec;
-								var PIco;
-								var WRef;
-								PRec = new PAutoRect(900, 600);
-								
-								if (packageIcon) {
-									if (packageIcon[1].indexOf('/') == -1) {
-										PIco = new PIcon('/graphics/' + packageIcon[1], P_SMALLICON);
-									}
-									else {
-										PIco = new PIcon(packageIcon[1], P_SMALLICON);
-									}
-								}
-								else {
-									PIco = new PIcon('/graphics/webware-16x16.png', P_SMALLICON);
-								}
-								
-								PWin = new PWindow(PHandle, title[1], PRec, PIco);
-						
-								try {
-									WRef = p_session.Framework.CreateWindow(PWin);
-									WRef.SetClientAreaHTML(xmlHttp.responseText);
-								}
-								catch (ex) {
-									writeConsole("Loader Exception: " + ex.toString());
-								}
-							}
-							else {
-								var WRef;
-								WRef = p_session.Framework.FindWindow(WinExists);
-								WRef.SetClientAreaHTML(xmlHttp.responseText);
-								
-								p_session.Framework.SetFocus(WinExists);
-							}
-							
-							
-						}
-					}
-					
+					if (DivID == 'tcTarget') {						
+						// we're NOT running steel. create it in a tab.
+						addTabButton(title[1], PageURL);																									
+					}					
 				}
 				
-				
-				var FWAdd = null;
-				
-				if (DivID == 'tcTarget') {
-					FWAdd = ''; 
-				} 
-				else {
-					FWAdd = '';
-				}
-				
-				if (DivID == 'tcTarget') {
-					if (!glob_steel) {					
-						document.getElementById(DivID).innerHTML = xmlHttp.responseText + FWAdd;
-					}
-						
-				}
-				else {
-					document.getElementById(DivID).innerHTML = xmlHttp.responseText + FWAdd;
-				}
-				
-				try {
-					eval(document.getElementById('pageScriptContent').innerHTML);
-					
-					var d = document.getElementById('pageScriptContent').parentNode;
-  					var olddiv = document.getElementById('pageScriptContent');
-  					d.removeChild(olddiv);
-				}
-				catch (error)
-				{
-					writeConsole("Prefiniti Application Framework error - " + error);
-				}
-				
-				//loadSiteStats();
-				
-				if (glob_browser != "Microsoft Internet Explorer") {
-					shiftOpacity(DivID, 300);
-				}
+				document.getElementById(DivID).innerHTML = xmlHttp.responseText;
 				
 				try {
 					onTransferCompleted();
 				}
-				catch (e) {
-					//do nothing	
+				catch (ex) {
+					//do nothing					
 				}
+				
 				//hideDiv('st_busy');
 				document.body.style.cursor="default";				
 				break;

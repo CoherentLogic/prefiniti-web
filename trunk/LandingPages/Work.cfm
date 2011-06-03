@@ -26,41 +26,345 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	SELECT * FROM department_entries WHERE user_id=#url.calledByUser#
 </cfquery>	
 
-<cfset createProjectLink = CreateObject("component","res").GetByTypeAndPK("User Account", url.calledByUser).GetCreator("Project")>
 
 
-<table width="100%" cellpadding="0" cellspacing="0">
-<tr><td>
-<h3>Orders &amp; Projects</h3>
-<p style="margin-left:5px;">
-	<!---<cfmodule template="/framework/link.cfm" perm="AS_LOGIN" linkname="Create New Project" url="ORMSDialog('#createProjectLink#');" help="Create New Project"><br />--->
-	<cfmodule template="/framework/link.cfm" perm="WF_VIEW" linkname="View priority projects" url="/jobViews/priority.cfm" help="Priority Projects"><br />
-	<cfmodule template="/framework/link.cfm" perm="WF_PROCESSORDER" linkname="Process new orders" url="/jobViews/newJobs.cfm" help="Process New Orders"><br />
-    <cfmodule template="/framework/link.cfm" perm="WF_VIEW" linkname="" url="/jobViews/priority.cfm" help="Priority Projects"><br />
+<div id="landing_work_links" style="display:inline;">
+
+	<div style="width:300px; min-height:120px; float:left;">
+	<table cellpadding="5">
+    	<tr>
+        	<td valign="bottom"><img src="http://us-production-r1g1s1.prefiniti.com/graphics/AppIconResources/crystal_project/32x32/actions/contents.png" /></td>
+            <td>
+            	<span class="LandingHeaderText">Project Management</span><br />
+                <p style="margin-left:10px;">
+	                <img class="LandingLink" src="/graphics/page_white_add.png" align="absmiddle"/>&nbsp;
+                	<cfmodule template="/framework/link.cfm" perm="WF_CREATE" linkname="New Project..." url="NewProject"><br />
+	                <img class="LandingLink" src="/graphics/find.png" align="absmiddle"/>&nbsp;
+					<cfmodule template="/framework/link.cfm" perm="WF_VIEW" linkname="Find Projects..." url="FindProject"><br />
+	                <img class="LandingLink" src="/graphics/wand.png" align="absmiddle"/>&nbsp;
+                    <cfmodule template="/framework/link.cfm" perm="WF_PROCESSORDER" linkname="Approve Projects..." url="/jobViews/newJobs.cfm"><br />    				
+				</p>
+            </td>
+        </tr>
+	</table>
+    </div>
+	<div style="width:300px; min-height:120px; float:left;">
+	<table cellpadding="5">
+    	<tr>
+        	<td valign="bottom"><img src="http://us-production-r1g1s1.prefiniti.com/graphics/AppIconResources/crystal_project/32x32/actions/kalarm.png" /></td>
+            <td>
+            	<span class="LandingHeaderText">Time Collection</span><br />
+                <p style="margin-left:10px;">
+	                <img class="LandingLink" src="/graphics/page_white_add.png" align="absmiddle"/>&nbsp;
+                	<cfmodule template="/framework/link.cfm" perm="TS_CREATE" linkname="New Timesheet..." url="NewTimesheet"><br />
+                    <img class="LandingLink" src="/graphics/find.png" align="absmiddle"/>&nbsp;
+					<cfmodule template="/framework/link.cfm" perm="TS_VIEW" linkname="Find Timesheet..." url="FindTimesheet" ><br />
+				</p>
+            </td>
+        </tr>
+	</table>  
+    </div>          
+	<div style="width:300px; min-height:120px; float:left;">
+	<table cellpadding="5">
+    	<tr>
+        	<td valign="bottom"><img src="http://us-production-r1g1s1.prefiniti.com/graphics/AppIconResources/crystal_project/32x32/actions/info.png" /></td>
+            <td>
+            	<span class="LandingHeaderText">Customize Business</span><br />
+                <p style="margin-left:10px;">
+	                <img class="LandingLink" src="/graphics/user_edit.png" align="absmiddle"/>&nbsp;
+                    <cfmodule template="/framework/link.cfm" perm="AS_VIEW" linkname="Employees and customers..." url="/authentication/components/associationManager.cfm" help="Manage employees and customers"><br />	
+                    <img class="LandingLink" src="/graphics/page.png" align="absmiddle"/>&nbsp;
+                	<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Change site information..." url="/authentication/components/maintenancePanel.cfm?section=site_information.cfm"><br />
+                    <img class="LandingLink" src="/graphics/group_edit.png" align="absmiddle"/>&nbsp;
+					<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Manage departments..." url="/authentication/components/maintenancePanel.cfm?section=departments.cfm"><br />
+					<img class="LandingLink" src="/graphics/lightning.png" align="absmiddle"/>&nbsp;
+					<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Manage event notifications..." url="/authentication/components/maintenancePanel.cfm?section=order_settings.cfm"><br />
+                   
+				</p>
+            </td>
+        </tr>
+	</table>  
+    </div>
+</div> <!--- landing_work_links --->
+
+<div id="landing_timesheet_search" style="display:none;">
+<cfinclude template="/authentication/authentication_udf.cfm">
+<cfinclude template="/socialnet/socialnet_udf.cfm">
 	
-</p>
+    <!---<cfquery name="gUsers" datasource="webwarecl">
+		SELECT longName, id FROM Users WHERE type=1 ORDER BY lastName, firstName 
+	</cfquery>--->
+    
+    <cfquery name="gUsers" datasource="sites">
+		SELECT user_id FROM site_associations WHERE site_id=#url.current_site_id# AND assoc_type=1
+	</cfquery>
 
-<h3>Project Manager 2.0 <span style="color:red;">(BETA)</span>
-<p style="margin-left:5px;">
-	<cfmodule template="/framework/link.cfm" perm="WF_VIEW" linkname="Projects at a glance" url="/pm/ProjectLists/AtAGlance.cfm" help="Projects at a glance"><br />
+	<cfquery name="qjnv" datasource="webwarecl">
+		SELECT clsJobNumber, description FROM projects WHERE site_id=#url.current_site_id#
+	</cfquery>
+    
+    <table cellpadding="10">
+    	<tr>
+        	<td valign="bottom"><img src="http://us-production-r1g1s1.prefiniti.com/graphics/AppIconResources/crystal_project/32x32/actions/find.png" /></td>
+            <td>
+            	<span class="LandingHeaderText">Find Timesheet</span><br />
+            </td>
+		</tr>
+	</table>                  
+				<table width="100%">
+            
+           
+					
+					
+					<tr>
+						<td><cfoutput>
+							
+							
+							<cfif getPermissionByKey("TS_VIEWALL", #url.current_association#) NEQ true>
+								<form name="dateSelEmp">
+								<table width="100%" cellpadding="0" cellspacing="0">
+									<tr>
+										<th colspan="2"><cfoutput>View by Date</cfoutput></th>
+									</tr>
+									
+									<tr>
+										<td align="right">From</td>
+										<td align="left" nowrap><input name="startDateEmp" id="startDateEmp" type="text" size="15" readonly> 
+										<a href="javascript:popupDate(AjaxGetElementReference('startDateEmp'));"><img src="/graphics/date.png" border="0"></a></td>
+									</tr>
+									<tr>
+										<td align="right">Until</td>
+										<td align="left" nowrap><input name="endDateEmp" id="endDateEmp" type="text" size="15" readonly> 
+										<a href="javascript:popupDate(AjaxGetElementReference('endDateEmp'));;"><img src="/graphics/date.png" border="0"></a></td>
+									</tr>
+									<tr>
+									<td align="right"></td>
+									<td align="left">
+										<input type="button" class="normalButton" onclick="javascript:loadWeekToCtls('startDateEmp', 'endDateEmp');" value="Use Current Week" /><br />&nbsp;
+									</td>
+								</tr>
+									<tr>
+										<td colspan="2" align="right">
+	                                        <input type="button" name="cancelFindTS" value="Cancel" onclick="hideDiv('landing_timesheet_search'); showDiv('landing_work_links');" />
+											<input type="button" name="printByUserEmp" value="View All Printable" 
+											onclick="javascript:loadTimesheetPrint('tcTarget', #url.calledByUser#, GetValue('startDateEmp'), GetValue('endDateEmp'), 'None', 'no', '')"/>
+											<input type="button" name="getByUser" value="View Editable" 
+											onclick="javascript:loadTimesheetView('tcTarget', #url.calledByUser#, GetValue('startDateEmp'), GetValue('endDateEmp'), 'Open', 'no', '')"/>
+										</td>
+									</tr>
+									
+								</table>
+								</form>
+								<script language="javascript">
+									var startDateEmpCal = new calendar2(document.forms['dateSelEmp'].elements['startDateEmp']);
+									var endDateEmpCal = new calendar2(document.forms['dateSelEmp'].elements['endDateEmp']);
+								</script>
+							</cfif>
+							
+							
+							</cfoutput>
+							<cfif getPermissionByKey("TS_VIEWALL", #url.current_association#) EQ true>
+							<form name="dateSel">
+							<div style="width:300px; float:left; font-size:12px;">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<th colspan="2"><cfoutput>View by Employee</cfoutput></th>
+								</tr>
+								<tr>
+									<td align="right">Employee</td>
+									<td>
+										<select name="byUser" id="byUser">
+												<option value="noUserFilter">All Users</option>
+											<cfoutput query="gUsers">
+												<option value="#user_id#">#getLongname(user_id)#</option>
+											</cfoutput>	
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td align="right">From</td>
+									<td align="left" nowrap><input name="startDate" id="startDate" type="text" size="15" readonly> 
+									<a href="javascript:popupDate(AjaxGetElementReference('startDate'));"><img src="/graphics/date.png" border="0"></a></td>
+								</tr>
+								<tr>
+									<td align="right">Until</td>
+									<td align="left" nowrap><input name="endDate" id="endDate" type="text" size="15" readonly> 
+									<a href="javascript:popupDate(AjaxGetElementReference('endDate'));"><img src="/graphics/date.png" border="0"></a></td>
+								</tr>
+								<tr>
+									<td align="right"></td>
+									<td align="left">
+										<input type="button" onclick="javascript:loadWeekToCtls('startDate', 'endDate');" value="Use Current Week" />
+									</td>
+								</tr>
+							</table>
+                            </div>
+                            <div style="width:300px; float:left; font-size:12px;">
+                            <table>                                
+								<tr>
+									<td align="right"></td>
+									<td align="left" nowrap><p>
+									  <label>
+									    <input name="filterBy" type="radio" value="None" checked="checked" />
+									    View All</label>
+									  <br />
+									  <label>
+									    <input type="radio" name="filterBy" value="Signed" />
+									    Signed Only</label>
+									  <br />
+									  <label>
+									    <input type="radio" name="filterBy" value="Open" />
+									    Open Only</label>
+									  <br />
+									  <label>
+									    <input type="radio" name="filterBy" value="Approved" />
+									    Approved Only</label>
+									  <br />
+									  </p>									</td>
+								</tr>
+								<tr>
+                                	<td>&nbsp;</td>
+                                    <td>
+                                	<div style="display:none;">
+                                        <table><tr>
+                                        <td>Project Number:</td>
+                                        <td>
+                                            <select name="projectNumber" id="projectNumber">
+                                                    <option value="" selected="selected">No filter</option>
+                                                <cfoutput query="qjnv">
+                                                    <option value="#clsJobNumber#">#clsJobNumber#</option>
+                                                </cfoutput>
+                                                
+                                            </select>
+                                        </td></tr></table>
+                                    </div>
+                                    </td>                                    
+								</tr>
+								<tr>
+									<td colspan="2" align="right">
+																		</td>
+								</tr>
+								
+							</table>
+                            </div>
+                            <div style="width:100%; margin-top:100px; float:left; text-align:right;">
+                            <cfoutput>
+                                          <input type="button" name="cancelFindTS" value="Cancel" onclick="hideDiv('landing_timesheet_search'); showDiv('landing_work_links');" />
+										  <input type="button" name="printByUser" value="View Printable" 
+											onclick="javascript:loadTimesheetPrint('tcTarget', GetValue('byUser'), GetValue('startDate'), GetValue('endDate'), AjaxGetCheckedValue('filterBy'), 'no', GetValue('projectNumber'))"/>
+									    <input type="button" style="margin-right:20px;" name="getByUser" value="View Editable" 
+										onclick="javascript:loadTimesheetView('tcTarget', GetValue('byUser'), GetValue('startDate'), GetValue('endDate'), AjaxGetCheckedValue('filterBy'), 'no', GetValue('projectNumber')); hideDiv('gen_window_frame');"/></cfoutput>	
+                                        
+							</form>
+                            </div>
+							
+							</cfif>
+							
+							
+						</td>
+				</table>						
+</div>	<!--- landing_timesheet_search --->
+
+<div id="landing_project_search" style="display:none; width:100%;">
+	<script language="javascript">
+        
+        function DoSearch(str, currentUserOnly)
+        {
+            var url;
+            var sfield;
+            var stype;
+            
+            sfield = AjaxGetCheckedValue("SearchField");
+            stype = AjaxGetCheckedValue("SearchType");
+            
+            url = "/forms/searchSubSmall.cfm?SearchType=";
+            url += stype;
+            url += "&SearchField=";
+            url += sfield;
+            url += "&SearchValue=";
+            url += escape(str);
+            url += "&currentUserOnly=" + escape(currentUserOnly);
+            url += "&userid=" + escape(glob_userid);
+    
+            //alert(url);
+            AjaxLoadPageToDiv("tcTarget", url);
+        }
+    </script>
+     <table cellpadding="10">
+    	<tr>
+        	<td valign="bottom"><img src="http://us-production-r1g1s1.prefiniti.com/graphics/AppIconResources/crystal_project/32x32/actions/find.png" /></td>
+            <td>
+            	<span class="LandingHeaderText">Find Project</span><br />
+            </td>
+		</tr>
+	</table>
 	
-</p>
+    <form name="searchForm" >
+    		<div style="width:300px; height:200px; float:left; margin-left:30px;">
+	      	<span class="LandingHeaderText" style="font-size:14px;">Search Type</span><br />
+            <p style="margin-left:10px;"> 
+              <label>
+              <input type="radio" name="SearchField" value="clsJobNumber" checked/>
+              Project Number</label>
+              <br />
+              <label>
+              <input type="radio" name="SearchField" value="address"/>
+              Address</label>
+              <br />
+              <label>
+              <input type="radio" name="SearchField" value="section"/>
+              Section</label>
+              <br />
+              <label>
+              <input type="radio" name="SearchField" value="township"/>
+              Township</label>
+              <br />
+              <label>
+              <input type="radio" name="SearchField" value="range"/>
+              Range</label>
+              <br />
+              <label>
+              <input type="radio" name="SearchField" value="billing_company" />
+              Ordered By Company</label> 
+            </p>             
+            </div>
+            <div style="width:300px; height:200px; float:left;">
+            <span class="LandingHeaderText" style="font-size:14px;">Criteria</span><br />
+            
+              <label>
+              <input type="radio" name="SearchType" value="BeginsWith" />
+              Begins With</label>
+              <br />
+              <label>
+              <input type="radio" name="SearchType" value="Contains" checked />
+              Contains</label>
+              <br />
+          
+	            <input name="SearchValue" id="sv" type="text" width="100%;" />
+    	        
+            
+       		</div>
+            <div style="width:100%; margin-top:20px; float:left; text-align:right;">
+	            <input type="button" name="cancelFindProject" value="Cancel" onclick="hideDiv('landing_project_search'); showDiv('landing_work_links');" />
+            	<input type="button" style="margin-right:20px;" value="Search" onclick="javascript:DoSearch(GetValue('sv'), 'false'); hideDiv('gen_window_frame');">
+            </div>
+    </form>
+</div> <!--- landing_project_search --->
 
-<h3>Time Entry</h3>
-<p style="margin-left:5px;">
-	<cfmodule template="/framework/link.cfm" perm="TS_CREATE" linkname="Start a new timesheet" url="NewTimesheet" help="Start a new timesheet"><br />
-	<cfmodule template="/framework/link.cfm" perm="TS_VIEW" linkname="My open timesheets" url="MyOpenTimesheets" help="My open timesheets"><br />
-	<cfmodule template="/framework/link.cfm" perm="TS_VIEW" linkname="This week's timesheets" url="/tc/components/timesheetsByWeek.cfm" help="This week's timesheets">
-<br />
-	<cfmodule template="/framework/link.cfm" perm="TS_VIEW_TC" linkname="Manage task codes" url="/tc/taskCodes.cfm" help="Manage task codes"><br />
-</p>	
-</td><td>
-<h3>My Departments</h3>
-<p style="margin-left:5px;">
-	<cfoutput query="MyDepts">
-		<cfmodule template="/framework/link.cfm" perm="AS_LOGIN" linkname="" url="DepartmentLink" department_id="#department_id#" help="View department"><br />
-	</cfoutput>
-	<cfmodule template="/framework/link.cfm" perm="AS_LOGIN" linkname="View all my departments" url="MyDepartments" help="My departments"><br />
-</p>
-</td></tr></table>
-			
+<div id="landing_project_search_subdivision" style="display:none;">    
+    <cfquery name="gsubs" datasource="webwarecl">
+        SELECT * FROM Subdivisions WHERE approved=1 ORDER BY name
+    </cfquery>        
+    
+        <div style="width:220px; margin:3px; border:1px solid #EFEFEF;">
+            <h3>Search by Subdivision</h3>
+            <select name="SubID" id="SubID" style="width:200px; max-width:200px;">
+                <cfoutput query="gsubs">	
+                    <option value="#id#">#name#</option>
+                </cfoutput>
+            </select>
+            <input type="button" value="Search by Subdivision" onclick="javascript:SearchBySub(GetValue('SubID'));" />
+                                        
+        </div>        
+   
+</div> <!--- landing_project_search_subdivision --->			

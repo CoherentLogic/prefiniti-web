@@ -1750,3 +1750,11 @@ background-color:#CCCCCC;
 	color:gold;
 	text-decoration:none;
 }	
+
+.LandingHeaderText
+{
+	font-weight:lighter; 
+	font-size:16px; 
+	color:#2957A2; 
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
