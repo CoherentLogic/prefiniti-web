@@ -204,11 +204,6 @@ button {background-image:url(../images/tabgrad-h.gif);
 th {
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
 	font-size: x-small;
-	
-	color: #FFFFFF;
-	background-image: url(https://www.prefiniti.com/MyCL/components/tabgrad.gif);
-	padding: 3px;
-	/*text-align: left;*/
 }
 .introCopy {
 	font-family: "Segoe UI", "Lucida Grande", Tahoma, Verdana;
