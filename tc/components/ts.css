@@ -1,0 +1,18 @@
+.tsTitle {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	text-transform: uppercase;
+	font-size: medium;
+}
+td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+	border: 1px solid #000000;
+}
+body {
+	padding:0px;
+	background-color:white;
+}
