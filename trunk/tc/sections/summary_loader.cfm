@@ -1,0 +1,1 @@
+<cfmodule template="/tc/sections/summary.cfm" r_pk="#url.r_pk#">

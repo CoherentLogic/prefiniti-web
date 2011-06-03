@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="approveTC.cfm" server="www.prefiniti.com/prefiniti15/" local="129177720000000000" remote="129177720000000000" />
+<file name="checkRem.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="convertLineItems.cfm" server="www.prefiniti.com/prefiniti15/" local="129076632000000000" remote="129076632000000000" />
+<file name="convertLineItems_li.cfm" server="www.prefiniti.com/prefiniti15/" local="129076632000000000" remote="129076632000000000" />
+<file name="deleteTC.cfm" server="www.prefiniti.com/prefiniti15/" local="128555640000000000" remote="128555640000000000" />
+<file name="deleteTCSub.cfm" server="www.prefiniti.com/prefiniti15/" local="128969496000000000" remote="128969496000000000" />
+<file name="firstDayOfWeek.cfm" server="www.prefiniti.com/prefiniti15/" local="128257560000000000" remote="128257560000000000" />
+<file name="hoursByTS.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="lastDayOfWeek.cfm" server="www.prefiniti.com/prefiniti15/" local="128257560000000000" remote="128257560000000000" />
+<file name="lineItemsByTC.cfm" server="www.prefiniti.com/prefiniti15/" local="129076632000000000" remote="129076632000000000" />
+<file name="mileageByTS.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="printView.cfm" server="www.prefiniti.com/prefiniti15/" local="128395800000000000" remote="128395800000000000" />
+<file name="projectsByCard.cfm" server="www.prefiniti.com/prefiniti15/" local="129076632000000000" remote="129076632000000000" />
+<file name="reverseTC.cfm" server="www.prefiniti.com/prefiniti15/" local="129177720000000000" remote="129177720000000000" />
+<file name="set_billed.cfm" server="www.prefiniti.com/prefiniti15/" local="129177720000000000" remote="129177720000000000" />
+<file name="set_paid.cfm" server="www.prefiniti.com/prefiniti15/" local="129177720000000000" remote="129177720000000000" />
+<file name="taskCode.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="taskCodeDesc.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="tcFooter.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="tcHeader.cfm" server="www.prefiniti.com/prefiniti15/" local="129076632000000000" remote="129076632000000000" />
+<file name="tcStatus.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="tcUser.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="timesheetsByWeek.cfm" server="www.prefiniti.com/prefiniti15/" local="128981592000000000" remote="128981592000000000" />
+<file name="ts.css" server="www.prefiniti.com/prefiniti15/" local="128256696000000000" remote="128256696000000000" />
+<file name="tsDay.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+<file name="viewTimeCard.cfm" server="www.prefiniti.com/prefiniti15/" local="128390616000000000" remote="128390616000000000" />
+</dwsync>
