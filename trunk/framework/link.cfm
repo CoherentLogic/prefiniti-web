@@ -31,17 +31,17 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 </style>
 
 <cfif getPermissionByKey('#attributes.perm#', #url.current_association#) EQ true>
-	<cfoutput>
-        <cfswitch expression="#attributes.url#">
+	<cfoutput>    
+        <cfswitch expression="#attributes.url#">        
 			<cfcase value="FindProject">
-            	<a class="LandingLink" href="javascript:hideDiv('landing_work_links'); showDiv('landing_project_search');">#attributes.linkname#</a>
+            	<a class="LandingLink" href="javascript:hideDiv('landing_work_links'); showDivBlock('landing_project_search');">#attributes.linkname#</a>
             </cfcase>
             <cfcase value="NewProject">
 	            <cfset createProjectLink = CreateObject("component","res").GetByTypeAndPK("User Account", url.calledByUser).GetCreator("Project")>
                 <a class="LandingLink" href="##" onclick="dispatch(); ORMSDialog('#createProjectLink#')">#attributes.linkname#</a>
 			</cfcase>                
             <cfcase value="FindTimesheet">
-                <a class="LandingLink" href="javascript:hideDiv('landing_work_links'); showDiv('landing_timesheet_search');">#attributes.linkname#</a>
+                <a class="LandingLink" href="##" onclick="dispatch(); ORMSDialog('/tc/search.cfm');">#attributes.linkname#</a>
 			</cfcase>                
             <cfcase value="MyOpenTimesheets">
                 <a class="LandingLink" href="javascript:loadTimesheetView('tcTarget', glob_userid, '1/1/1980', '1/1/2999', 'Open', glob_isTCAdmin, ''); dispatch();">My open timesheets</a>
@@ -49,7 +49,6 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             <cfcase value="NewTimesheet">
                 <cfset createTimesheetLink = CreateObject("component","res").GetByTypeAndPK("User Account", url.calledByUser).GetCreator("Time Card")>
                 <a class="LandingLink" href="##" onclick="dispatch(); ORMSDialog('#createTimesheetLink#')">#attributes.linkname#</a>
-                <!---<a class="LandingLink" href="javascript:AjaxLoadPageToDiv('tcTarget', '/tc/timesheet.cfm?action=add&userid=' + glob_userid); dispatch();">#attributes.linkname#</a>--->
             </cfcase>
             <cfcase value="ViewProfile">
             	<a class="LandingLink" href="javascript:viewProfile15(glob_userid); dispatch();">#attributes.linkname#</a>
@@ -93,7 +92,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			</cfcase>               
             <cfdefaultcase>
                 <a class="LandingLink" href="##" onclick="OpenLink('#attributes.url#');">#attributes.linkname#</a>
-            </cfdefaultcase> 
-        </cfswitch>           
-    </cfoutput>
+            </cfdefaultcase>                        
+    	</cfswitch>                        
+    </cfoutput>   
 </cfif>
