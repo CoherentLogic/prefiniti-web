@@ -47,7 +47,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 <a class="LandingLink" href="javascript:loadTimesheetView('tcTarget', glob_userid, '1/1/1980', '1/1/2999', 'Open', glob_isTCAdmin, ''); dispatch();">My open timesheets</a>
             </cfcase>
             <cfcase value="NewTimesheet">
-                <a class="LandingLink" href="javascript:AjaxLoadPageToDiv('tcTarget', '/tc/timesheet.cfm?action=add&userid=' + glob_userid); dispatch();">#attributes.linkname#</a>
+                <cfset createTimesheetLink = CreateObject("component","res").GetByTypeAndPK("User Account", url.calledByUser).GetCreator("Time Card")>
+                <a class="LandingLink" href="##" onclick="dispatch(); ORMSDialog('#createTimesheetLink#')">#attributes.linkname#</a>
+                <!---<a class="LandingLink" href="javascript:AjaxLoadPageToDiv('tcTarget', '/tc/timesheet.cfm?action=add&userid=' + glob_userid); dispatch();">#attributes.linkname#</a>--->
             </cfcase>
             <cfcase value="ViewProfile">
             	<a class="LandingLink" href="javascript:viewProfile15(glob_userid); dispatch();">#attributes.linkname#</a>

@@ -1,4 +1,25 @@
-// JavaScript Document
+/*
+ * $Id$
+ *
+ * Copyright (C) 2011 John Willis
+ *
+ * This file is part of Prefiniti.
+ *
+ * Prefiniti is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Prefiniti is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+ 
 function loadTimesheetView(target, emp_id, startDate, endDate, filter, admin, jobNum)
 {
 	
@@ -221,4 +242,15 @@ function iif_export(id, companyName, companyCreateTime, QBVer, QBRel)
 	url += "&QBVer=" + escape(QBVer) + "&QBRel=" + escape(QBRel);
 	
 	AjaxLoadPageToDiv('tcTarget', url);
+}
+
+function TCCreateTimesheet()
+{
+	var onLoadEventHandler = function () {
+		
+		AjaxLoadPageToDiv('timesheet_creator_form', '/tc/creator/timecard_ready.cfm');		
+	}
+	
+	AjaxSubmitForm(AjaxGetElementReference('create_timesheet'), '/tc/creator/submit_timecard.cfm', 'create_timesheet_buttons', onLoadEventHandler);
+		
 }

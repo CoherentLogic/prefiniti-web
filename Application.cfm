@@ -68,9 +68,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
  	<!-- Load the SoundManager div -->
     <cfinclude template="soundManagerDiv.cfm">
 
-    <!-- Load the title bar -->
-    <cfinclude template="headBar.cfm">
-
+    
     <!-- Configure this Prefiniti session -->
     <cfif #session.loggedin# EQ "yes">
         <cfinclude template="webwareConfigLoad.cfm">
@@ -84,8 +82,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfinclude template="maintCheck.cfm">
     
     <script src="/framework/UI/wz_tooltip.js" type="text/javascript"></script>
-    <!-- Load the session message as appropriate -->
-    <cfinclude template="sessionMessage.cfm">
+
     
     <!-- Load the generic message template -->
     <cfinclude template="genericMessage.cfm">
