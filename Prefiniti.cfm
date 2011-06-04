@@ -188,7 +188,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <div style="width:100%; background-color:#efefef; border-bottom:1px solid #c0c0c0;">
 <div id="tb" class="iPrefinitiToolbar" align="right">
 	
-	<div style="width:auto; float:left; padding-top:8px;"><img src="/graphics/prefiniti-small.png"></div>
+    <cfset site_info = getSiteInformation(session.current_site_id)>
+    <cfset site_logo = "/SiteContent/#site_info.SiteID#/#site_info.logo#">
+	<div style="width:auto; float:left; padding-top:8px;"><cfoutput><img src="#site_logo#" height="30px"></cfoutput></div>
 	<input 	type="text" 
 			id="searchBox" 
 			name="searchBox" 
@@ -196,7 +198,6 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			value="Type your search terms and press Enter"
 			onkeypress="ORMSSearchKeyPress(event);"
 			onclick="ORMSSearchClick();">		
-	<!---<a style="float:right; margin-left:8px;" class="button" href="##" onclick="ORMSSearch(GetValue('searchBox'))"><span>Go</span></a>--->
 		
 	
 	<table width="900" style="margin-top:8px;">
@@ -210,7 +211,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <span id="cms_delete_file"><img src="/graphics/bin.png" border="0" align="absmiddle"> <a href="javascript:cmsDeleteFile(GetValue('selected_file_id'), GetValue('current_mode'));">Delete File</a> |&nbsp;</span>
     <img src="/graphics/zoom.png" border="0" align="absmiddle"> <a href="javascript:cmsViewFile(GetValue('selected_file_id'), GetValue('current_mode'));">View File</a>
 	</span>  
-	<div id="Sidebars" style="float:left;"></div>  
+
 	</td>
 	<td align="right" width="50%" style="background-color:transparent;">
 		
