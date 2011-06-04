@@ -28,7 +28,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
-<div id="landing_work_links" style="display:inline;">
+<div id="landing_work_links" style="display:block;height:100%;position:relative;">
 
 	<div style="width:300px; min-height:120px; float:left;">
 	<table cellpadding="5">
@@ -87,7 +87,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </div>
 </div> <!--- landing_work_links --->
 
-<div id="landing_timesheet_search" style="display:none;">
+<div id="landing_timesheet_search" style="display:none;height:100%;position:relative;">
 <cfinclude template="/authentication/authentication_udf.cfm">
 <cfinclude template="/socialnet/socialnet_udf.cfm">
 	
@@ -111,13 +111,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             </td>
 		</tr>
 	</table>                  
-				<table width="100%">
-            
-           
-					
-					
-					<tr>
-						<td><cfoutput>
+				<cfoutput>
 							
 							
 							<cfif getPermissionByKey("TS_VIEWALL", #url.current_association#) NEQ true>
@@ -166,10 +160,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 							<cfif getPermissionByKey("TS_VIEWALL", #url.current_association#) EQ true>
 							<form name="dateSel">
 							<div style="width:300px; float:left; font-size:12px;">
-                            <table width="100%" cellpadding="0" cellspacing="0">
-								<tr>
-									<th colspan="2"><cfoutput>View by Employee</cfoutput></th>
-								</tr>
+                            <table width="100%" cellpadding="0" cellspacing="0">								
 								<tr>
 									<td align="right">Employee</td>
 									<td>
@@ -194,7 +185,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 								<tr>
 									<td align="right"></td>
 									<td align="left">
-										<input type="button" onclick="javascript:loadWeekToCtls('startDate', 'endDate');" value="Use Current Week" />
+										<input type="button" onclick="javascript:loadWeekToCtls('startDate', 'endDate');">Use Current Week</a>
 									</td>
 								</tr>
 							</table>
@@ -247,22 +238,23 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 								
 							</table>
                             </div>
-                            <div style="width:100%; margin-top:100px; float:left; text-align:right;">
+                            <div style="position:absolute; bottom:0px; border-top:1px solid #c0c0c0; width:100%; height:45px; background-color:#efefef;">
+							<div style="padding:8px; float:right;" id="search_timesheet_buttons" >
                             <cfoutput>
-                                          <input type="button" name="cancelFindTS" value="Cancel" onclick="hideDiv('landing_timesheet_search'); showDiv('landing_work_links');" />
-										  <input type="button" name="printByUser" value="View Printable" 
-											onclick="javascript:loadTimesheetPrint('tcTarget', GetValue('byUser'), GetValue('startDate'), GetValue('endDate'), AjaxGetCheckedValue('filterBy'), 'no', GetValue('projectNumber'))"/>
-									    <input type="button" style="margin-right:20px;" name="getByUser" value="View Editable" 
-										onclick="javascript:loadTimesheetView('tcTarget', GetValue('byUser'), GetValue('startDate'), GetValue('endDate'), AjaxGetCheckedValue('filterBy'), 'no', GetValue('projectNumber')); hideDiv('gen_window_frame');"/></cfoutput>	
-                                        
-							</form>
+                                          <a class="button" href="##" name="cancelFindTS" onclick="hideDiv('landing_timesheet_search'); showDiv('landing_work_links');">Cancel</a>
+										  <a class="button" href="##" name="printByUser" onclick="javascript:loadTimesheetPrint('tcTarget', GetValue('byUser'), GetValue('startDate'), GetValue('endDate'), AjaxGetCheckedValue('filterBy'), 'no', GetValue('projectNumber'))">View Printable</a>
+									    <a class="button"  name="getByUser"
+										onclick="javascript:loadTimesheetView('tcTarget', GetValue('byUser'), GetValue('startDate'), GetValue('endDate'), AjaxGetCheckedValue('filterBy'), 'no', GetValue('projectNumber')); hideDiv('gen_window_frame');">View Editable</a></cfoutput>	
                             </div>
+                            </div>                                       
+							</form>
+                         
+                                                     
 							
 							</cfif>
 							
 							
-						</td>
-				</table>						
+								
 </div>	<!--- landing_timesheet_search --->
 
 <div id="landing_project_search" style="display:none; width:100%;">
