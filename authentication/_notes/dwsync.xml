@@ -3,4 +3,6 @@
 <file name="Application.cfm" server="www.prefiniti.com/prefiniti15/" local="128286072000000000" remote="128286072000000000" />
 <file name="authentication.js" server="www.prefiniti.com/prefiniti15/" local="129515006998716287" remote="129516037800000000" />
 <file name="authentication_udf.cfm" server="www.prefiniti.com/prefiniti15/" local="129515427312436857" remote="129516037800000000" />
+<file name="site.cfc" server="www.prefiniti.com/prefiniti15/" local="129517189291667096" remote="129517189200000000" />
+<file name="site_membership.cfc" server="www.prefiniti.com/prefiniti15/" local="129517189481217938" remote="129517189200000000" />
 </dwsync>

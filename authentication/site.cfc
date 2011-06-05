@@ -135,19 +135,66 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.r_pk = gwanr.SiteID>               
 	</cffunction>
     
+    <cffunction name="Create" access="public" output="no" returntype="authentication.site">
+    	<cfargument name="site_name" type="string" required="yes">
+        <cfargument name="industry" type="string" required="yes">
+        <cfargument name="owner" type="authentication.user" required="yes">
+        
+        <cfquery name="get_industry" datasource="sites">
+        	SELECT id FROM industries WHERE industry_name='#industry#'
+        </cfquery>
+        
+        <cfset this.site_name = site_name>
+        <cfset this.industry = get_industry.id>
+        <cfset this.admin_id = owner.r_pk>
+        
+        <cfreturn #this#>        
+    </cffunction>
+    
     <cffunction name="AddMembership" access="public" returntype="void" output="no">
     	<cfargument name="user" type="authentication.user" required="yes">
+        <cfargument name="membership_type" type="string" required="yes">
         
+        <cfset memb_om_uuid = CreateUUID()>
+        
+        <cfquery name="mt" datasource="sites">
+        	SELECT association_type FROM association_types WHERE association_type_name='#membership_type#'
+        </cfquery>
+        
+        <cfquery name="add_member" datasource="sites">
+        	INSERT INTO site_associations
+            			(user_id,
+                        site_id,
+                        assoc_type,
+                        conf_id)
+			VALUES		(#user.r_pk#,
+            			#this.r_pk#,
+                        #mt.association_type#,
+                        '#membership_om_uuid#')                                                
+        </cfquery>                                
     </cffunction>
     
     <cffunction name="DeleteMembership" access="public" returntype="void" output="no">
     	<cfargument name="user" type="authentication.user" required="yes">
-    
+    	<cfargument name="membership_type" type="string" required="yes">
+        
+        <cfquery name="mt_id" datasource="sites">
+        	SELECT association_type FROM association_types WHERE association_type_name='#membership_type#'
+        </cfquery>
+        
+        <cfquery name="delete_member" datasource="sites">
+        	DELETE FROM site_associations
+            WHERE		user_id=#user.r_pk#
+            AND			assoc_type=#mt_id.association_type#
+        </cfquery>        
     </cffunction>
 
     <cffunction name="Memberships" access="public" returntype="array" output="no">
     	<cfargument name="user" type="authentication.user" required="yes">
     
     </cffunction>
+    
+
+   	
             
 </cfcomponent>
