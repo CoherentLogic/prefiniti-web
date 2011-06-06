@@ -26,7 +26,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.username = "">				<!--- username --->
     <cfset this.password = "">				<!--- password --->
     <cfset this.email = "">					<!--- email --->
-    <cfset this.sms_number = "">			<!--- sms_number --->
+    <cfset this.sms_number = "">			<!--- smsNumber --->
     <cfset this.picture = "">				<!--- picture --->
     <cfset this.account_enabled = 0>		<!--- account_enabled --->
     <cfset this.gender = "">				<!--- gender --->
@@ -53,7 +53,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfset this.written = false>    
     
-    <cffunction name="Create" access="public" returntype="authentication.user" output="no">
+    <cffunction name="Create" access="public" returntype="authentication.user" output="no">    
 		<cfargument name="username" type="string" required="yes">
 		<cfargument name="password" type="string" required="yes">
 		<cfargument name="password_question" type="string" required="yes">
@@ -66,6 +66,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfargument name="allow_search" type="boolean" required="yes">
 		<cfargument name="zip_code" type="string" required="yes">
 		
+        <cfset this.om_uuid = CreateUUID()>
         <cfset this.username = username>
         <cfset this.password = Hash(password)>
         <cfset this.password_question = password_question>
@@ -76,12 +77,18 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.last_name = last_name>
         <cfset this.display_name = FormatName()>
         <cfset this.birthday = CreateODBCDate(birthday)>
-        <cfif allow_search = true>
+        <cfset this.account_confirmed = 0>
+        <cfset this.account_enabled = 1>
+        
+        <cfif allow_search EQ true>
         	<cfset this.allow_search = 1>
         <cfelse>
         	<cfset this.allow_search = 0>
         </cfif>
         <cfset this.zip_code = zip_code>
+        
+        <cfset this.Save()>
+        <cfset this.SendConfirmationEmail()>
         
         <cfreturn #this#>
 	</cffunction>
@@ -99,7 +106,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="Open" access="public" output="no" returntype="authentication.user">
     	<cfargument name="username" type="string" required="yes">
         
-        <cfquery name="Open" datasource="webwarecl">
+        <cfquery name="UOpen" datasource="webwarecl">
         	SELECT 	*
             FROM	users
             WHERE	username='#username#'
@@ -109,7 +116,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfset this.username = UOpen.username>						<!--- username --->
         <cfset this.password = UOpen.password>						<!--- password --->
         <cfset this.email = UOpen.email>							<!--- email --->
-        <cfset this.sms_number = UOpen.sms_number>					<!--- sms_number --->
+        <cfset this.sms_number = UOpen.smsNumber>					<!--- smsNumber --->
         <cfset this.picture = UOpen.picture>						<!--- picture --->
         <cfset this.account_enabled = UOpen.account_enabled>		<!--- account_enabled --->
         <cfset this.gender = UOpen.gender>							<!--- gender --->
@@ -167,7 +174,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             SET		username='#this.username#',
             		password='#this.password#',
                     email='#this.email#',
-                    sms_number='#this.sms_number#',
+                    smsNumber='#this.sms_number#',
                     picture='#this.picture#',
                     account_enabled=#this.account_enabled#,
                     gender='#this.gender#',
@@ -204,7 +211,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             	(username,
                 password,
                 email,
-                sms_number,
+                smsNumber,
                 picture,
                 account_enabled,
                 gender,
@@ -234,7 +241,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 '#this.email#',
                 '#this.sms_number#',
                 '#this.picture#',
-                #this.account_enabled,
+                #this.account_enabled#,
                 '#this.gender#',
                 #this.account_confirmed#,
                 #this.sms_confirmed#,
@@ -265,6 +272,23 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.r_pk = wanr_get_id.id>               
     </cffunction>
     
-
+	<cffunction name="SendConfirmationEmail" access="public" returntype="void" output="no">
+    	<cfoutput>
+        <cfmail from="register@prefiniti.com" to="#this.email#" subject="Prefiniti Account Confirmation" type="html">
+            <h1>Account Created</h1>
+            
+            <p>Your Prefiniti account has been created. Please visit the link below to confirm your new account.</p>            
+            
+            <a href="http://prefiniti15.prefiniti.com/homeres/confirm_account.cfm?om_uuid=#this.om_uuid#">Confirm My Account</a>
+            
+            <p>Otherwise, copy the following text to your browser's URL bar:</p>
+            
+            <pre>http://prefiniti15.prefiniti.com/homeres/confirm_account.cfm?om_uuid=#this.om_uuid#</pre>
+            
+            <p>You will need <a href="http://www.mozilla.com/en-US/firefox/">Mozilla Firefox<a/>, <a href="http://www.google.com/chrome">Google Chrome</a>, or <a href="http://www.apple.com/safari/">Apple Safari</a> to use Prefiniti. We do not support Microsoft Internet Explorer at this time.</p>
+        </cfmail>
+        </cfoutput>
+        
+    </cffunction>
 
 </cfcomponent>
