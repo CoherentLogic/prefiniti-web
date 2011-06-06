@@ -29,6 +29,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.summary = "">
     <cfset this.about = "">
     <cfset this.industry = 0>
+    <cfset this.industry_name = "">
     <cfset this.logo = "">
     <cfset this.mission_statement = "">
     <cfset this.vision_statement = "">
@@ -43,10 +44,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfargument name="id" type="numeric" required="yes">
 
 		<cfquery name="s" datasource="sites">
-        	SELECT * FROM sites WHERE SiteID = id
+        	SELECT * FROM sites WHERE SiteID=#id#
         </cfquery>
         
-        <cfset this.r_pk = s.id>
+        <cfset this.r_pk = s.SiteID>
         <cfset this.site_name = s.SiteName>
         <cfset this.admin_id = s.admin_id>
         <cfset this.enabled = s.enabled>
@@ -61,10 +62,29 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.salestax_rate = s.salestax_rate>
         <cfset this.logo_invoice = s.logo_invoice>
         
+        <cfquery name="g_ind" datasource="sites">
+        	SELECT industry_name FROM industries WHERE id=#this.industry#
+        </cfquery>
+        
+        <cfset this.industry_name = g_ind.industry_name>
+        
         <cfset this.written = true>
         
         <cfreturn #this#>
 	</cffunction>
+    
+    <cffunction name="OpenByMembershipID" access="public" returntype="authentication.site" output="no">
+    	<cfargument name="membership_id" type="numeric" required="yes">
+        
+        <cfquery name="g_site" datasource="sites">
+        	SELECT site_id FROM site_associations WHERE id=#membership_id#
+        </cfquery>
+        
+        <cfset retval = this.Open(g_site.site_id)>
+        
+        <cfreturn #this#>
+    </cffunction>
+    
     
     <cffunction name="Save" access="public" output="no" returntype="void">
     	<cfif this.written>
