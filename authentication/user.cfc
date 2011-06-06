@@ -53,11 +53,48 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfset this.written = false>    
     
-    <cffunction name="myFunction" access="public" returntype="string">
-		<cfargument name="myArgument" type="string" required="yes">
-		<cfset myResult="foo">
-		<cfreturn myResult>
+    <cffunction name="Create" access="public" returntype="authentication.user" output="no">
+		<cfargument name="username" type="string" required="yes">
+		<cfargument name="password" type="string" required="yes">
+		<cfargument name="password_question" type="string" required="yes">
+		<cfargument name="password_answer" type="string" required="yes">		        
+        <cfargument name="email" type="string" required="yes">
+		<cfargument name="first_name" type="string" required="yes">
+		<cfargument name="middle_initial" type="string" required="yes">
+		<cfargument name="last_name" type="string" required="yes">
+		<cfargument name="birthday" type="string" required="yes">		
+        <cfargument name="allow_search" type="boolean" required="yes">
+		<cfargument name="zip_code" type="string" required="yes">
+		
+        <cfset this.username = username>
+        <cfset this.password = Hash(password)>
+        <cfset this.password_question = password_question>
+        <cfset this.password_answer = password_answer>
+        <cfset this.email = email>
+        <cfset this.first_name = first_name>
+        <cfset this.middle_initial = middle_initial>
+        <cfset this.last_name = last_name>
+        <cfset this.display_name = FormatName()>
+        <cfset this.birthday = CreateODBCDate(birthday)>
+        <cfif allow_search = true>
+        	<cfset this.allow_search = 1>
+        <cfelse>
+        	<cfset this.allow_search = 0>
+        </cfif>
+        <cfset this.zip_code = zip_code>
+        
+        <cfreturn #this#>
 	</cffunction>
+    
+    <cffunction name="FormatName" access="public" returntype="string" output="no">
+    	<cfif Len(this.middle_initial) GT 0>
+        	<cfset fname = this.first_name & " " & this.middle_initial & ". " & this.last_name>
+        <cfelse>
+        	<cfset fname = this.first_name & " " & this.last_name>
+        </cfif>
+        
+        <cfreturn #fname#>
+    </cffunction>
     
     <cffunction name="Open" access="public" output="no" returntype="authentication.user">
     	<cfargument name="username" type="string" required="yes">
