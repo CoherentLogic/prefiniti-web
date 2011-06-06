@@ -27,7 +27,7 @@
 </cfquery>                  
 
 <cfquery name="pi" datasource="webwarecl">
-	SELECT * FROM projects WHERE clsJobNumber='#form.clsJobNUmber#'
+	SELECT * FROM projects WHERE clsJobNumber='#form.clsJobNumber#'
 </cfquery>
 
 <cfquery name="orig_si" datasource="sites">
@@ -131,7 +131,10 @@
             	
             	<cfoutput>
                 	Project #form.clsJobNumber#<br />
-                    #orig_si.SiteName#
+                    #orig_si.SiteName#<br /><br />
+                    <span style="color:#999999;">
+                    Client Job Number: #pi.clientJobNumber#
+                    </span>
 				</cfoutput>
             </td>
             <td valign="top" align="right">
@@ -140,8 +143,9 @@
             	
                 	#pi.billing_company#<br />                     
                     #pi.billing_address#<br />
-                    #UCase(pi.billing_city)# #pi.billing_state# #pi.billing_zip#
-				
+                    #UCase(pi.billing_city)# #pi.billing_state# #pi.billing_zip# <br /><br />
+                    
+                    #pi.description#				
                 </cfoutput>
 			</td>                                                                 
 		</tr>                                                    
