@@ -67,20 +67,40 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #this#>
     </cffunction>
     
+    <cffunction name="OpenByPK" access="public" returntype="authentication.site_membership" output="no">
+    	<cfargument name="r_pk" type="numeric" required="yes">
+        
+        <cfquery name="opk" datasource="sites">
+        	SELECT  *
+            FROM	site_associations
+            WHERE	id=#r_pk#
+		</cfquery>            
+        
+        <cfset this.site = CreateObject("component", "authentication.site").OpenByMembershipID(opk.id)>
+        <cfset this.user = CreateObject("component", "authentication.user").OpenByPK(opk.user_id)>    
+        
+		<cfquery name="gmt" datasource="sites">
+        	SELECT association_type_name FROM association_types WHERE association_type=#opk.assoc_type#
+        </cfquery>
+        
+		<cfset this.membership_type = gmt.association_type_name>
+        <cfset this.r_pk = opk.id>
+        
+        <cfset this.written = true>
+        
+    	<cfreturn #this#>
+    </cffunction>
+    
     
     <cffunction name="Delete" access="public" returntype="void" output="no">
     	<cfargument name="site" type="authentication.site" required="yes">
     	<cfargument name="user" type="authentication.user" required="yes">
     	<cfargument name="membership_type" type="string" required="yes">
         
-        <cfquery name="mt_id" datasource="sites">
-        	SELECT association_type FROM association_types WHERE association_type_name='#membership_type#'
-        </cfquery>
-        
+     
         <cfquery name="delete_member" datasource="sites">
         	DELETE FROM site_associations
-            WHERE		user_id=#user.r_pk#
-            AND			assoc_type=#mt_id.association_type#
+            WHERE		id=#this.r_pk#
         </cfquery>        
     </cffunction>
     
@@ -116,7 +136,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         </cfquery>
         
         <cfset this.r_pk = wanr_id.id>
-    </cffunction>
+    </cffunction>        
     
     <cffunction name="Grant" access="public" output="no" returntype="void">
     	<cfargument name="permission_key" type="string" required="yes">
@@ -128,16 +148,18 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         </cfquery>
         
         <cfset tperm_id = get_perm_id.id>
-    
-        <cfquery name="set_perm" datasource="sites">
-            INSERT INTO permission_entries
-                (assoc_id,
-                perm_id)
-            VALUES
-                (#this.r_pk#,
-                #tperm_id#)
-        </cfquery>                        
-    </cffunction>
+ 		
+        <cfif this.Examine(permission_key)>   
+            <cfquery name="set_perm" datasource="sites">
+                INSERT INTO permission_entries
+                    (assoc_id,
+                    perm_id)
+                VALUES
+                    (#this.r_pk#,
+                    #tperm_id#)
+            </cfquery>                        
+        </cfif>
+    </cffunction>        
     
     <cffunction name="Revoke" access="public" output="no" returntype="void">
     	<cfargument name="permission_key" type="string" required="yes">
@@ -145,7 +167,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfparam name="tperm_id" default="">
         
         <cfquery name="get_perm_id" datasource="sites">
-            SELECT * FROM permissions WHERE perm_key='#permission_key#'
+            SELECT id FROM permissions WHERE perm_key='#permission_key#'
         </cfquery>
         
         <cfset tperm_id = get_perm_id.id>  
@@ -169,6 +191,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         
         <cfset tperm_id = get_perm_id.id>
         
+        <cfif tperm_id EQ "">
+        	<cfreturn false>
+        </cfif>
+        
         <cfquery name="get_entry" datasource="sites">
             SELECT * FROM permission_entries WHERE perm_id=#tperm_id# AND assoc_id=#this.r_pk#
         </cfquery>
@@ -180,4 +206,38 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         </cfif>                           
     </cffunction>
 	
+    
+    <cffunction name="GrantSet" access="public" output="no" returntype="void">
+    	<cfargument name="permission_keys" type="string" required="yes">    
+        	        
+        <cfset perm_array = ListToArray(permission_keys, ",")>
+            
+    	<cfloop array="#perm_array#" index="cp">
+        	<cfset this.Grant(cp)>
+        </cfloop>  
+    </cffunction>
+    
+    <cffunction name="RevokeSet" access="public" output="no" returntype="void">
+    	<cfargument name="permission_keys" type="string" required="yes">    
+        
+		<cfset perm_array = ListToArray(permission_keys, ",")>
+            
+    	<cfloop array="#perm_array#" index="cp">
+        	<cfset this.Revoke(cp)>
+        </cfloop>      
+    </cffunction>    
+    
+    <cffunction name="ExamineSet" access="public" output="no" returntype="boolean">
+    	<cfargument name="permission_keys" type="string" required="yes">    
+    
+    	<cfset perm_array = ListToArray(permission_keys, ",")>
+            
+    	<cfloop array="#perm_array#" index="cp">
+        	<cfif NOT this.Examine(cp)>
+            	<cfreturn false>
+            </cfif>
+        </cfloop>  
+        
+        <cfreturn true>
+    </cffunction>
 </cfcomponent> 

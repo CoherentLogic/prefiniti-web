@@ -32,61 +32,61 @@
         <div class="cellLabel">                        
 			<p style="margin-top:0px;">
 				<label>
-					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="SubdivisionOrDeed" value="Subdivision" <cfif #projectInfo.SubdivisionOrDeed# EQ "Subdivision">checked</cfif> onclick="invalidateSection('filingStat', '#url.PWindowHandle#');"/>Subdivision
+					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="SubdivisionOrDeed" value="Subdivision" <cfif #projectInfo.SubdivisionOrDeed# EQ "Subdivision">checked</cfif> onclick="invalidateSection('filingStat');"/>Subdivision
 				</label>
 				<br />
 				<label>
-					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="SubdivisionOrDeed" value="Deed" <cfif #projectInfo.SubdivisionOrDeed# EQ "Deed">checked</cfif> onclick="invalidateSection('filingStat',  '#url.PWindowHandle#');"/>Deed
+					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="SubdivisionOrDeed" value="Deed" <cfif #projectInfo.SubdivisionOrDeed# EQ "Deed">checked</cfif> onclick="invalidateSection('filingStat');"/>Deed
                 </label>
 				<br />
 			</p>
 			<p>
 				<label>
-					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="FilingType" value="Plat" <cfif #projectInfo.FilingType# EQ "Plat">checked</cfif> onclick="invalidateSection('filingStat', '#url.PWindowHandle#');"/>
+					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="FilingType" value="Plat" <cfif #projectInfo.FilingType# EQ "Plat">checked</cfif> onclick="invalidateSection('filingStat');"/>
 Plat
 				</label>
 				<br />
 				<label>
 					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="FilingType" value="Cabinet"  			
-						<cfif #projectInfo.FilingType# EQ "Cabinet">checked</cfif> onclick="invalidateSection('filingStat', '#url.PWindowHandle#');"/>Cabinet
+						<cfif #projectInfo.FilingType# EQ "Cabinet">checked</cfif> onclick="invalidateSection('filingStat');"/>Cabinet
 				</label>
 				<br />
 				<label>
-					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="FilingType" value="Book"  <cfif #projectInfo.FilingType# EQ "Book">checked</cfif> onclick="invalidateSection('filingStat', '#url.PWindowHandle#');"/>Book
+					<input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="FilingType" value="Book"  <cfif #projectInfo.FilingType# EQ "Book">checked</cfif> onclick="invalidateSection('filingStat');"/>Book
 				</label>
 				<br />
 			</p>          
         </div>
         <div class="cellC" style="clear:right;">
-            <input type="text" <cfif canEdit EQ 0>readonly</cfif> id="PlatCabinetBook" name="PlatCabinetBook" value="#projectInfo.PlatCabinetBook#" onkeyup="invalidateSection('filingStat', '#url.PWindowHandle#');" class="inputText"/>
+            <input type="text" <cfif canEdit EQ 0>readonly</cfif> id="PlatCabinetBook" name="PlatCabinetBook" value="#projectInfo.PlatCabinetBook#" onkeyup="invalidateSection('filingStat');" class="inputText"/>
         </div>
     
         <div class="cellLabel">
         <p><label>
-                                  <input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="PageOrSlide" value="Page" <cfif #projectInfo.PageOrSlide# EQ "Page">checked</cfif> onclick="invalidateSection('filingStat', '#url.PWindowHandle#');"/>
+                                  <input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="PageOrSlide" value="Page" <cfif #projectInfo.PageOrSlide# EQ "Page">checked</cfif> onclick="invalidateSection('filingStat');"/>
                                   Page</label>
                                 <br />
                                 <label>
-                                  <input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="PageOrSlide" value="Slide" <cfif #projectInfo.PageOrSlide# EQ "Slide">checked</cfif> onclick="invalidateSection('filingStat', '#url.PWindowHandle#');"/>
+                                  <input type="radio" <cfif canEdit EQ 0>disabled</cfif> name="PageOrSlide" value="Slide" <cfif #projectInfo.PageOrSlide# EQ "Slide">checked</cfif> onclick="invalidateSection('filingStat');"/>
                                   Slide</label>
                                 <br />
                                 </p>
         </div>
         <div class="cellC">                            
-            <input type="text" <cfif canEdit EQ 0>readonly</cfif> id="PageSlide" name="PageSlide" value="#projectInfo.PageSlide#" onkeyup="invalidateSection('filingStat', '#url.PWindowHandle#');" class="inputText"/>
+            <input type="text" <cfif canEdit EQ 0>readonly</cfif> id="PageSlide" name="PageSlide" value="#projectInfo.PageSlide#" onkeyup="invalidateSection('filingStat');" class="inputText"/>
         </div>
    
     <div class="cellLabel" style="clear:left;">Reception or Document Number:</div>
     <div class="cellC">
-		<input type="text" <cfif canEdit EQ 0>readonly</cfif> id="ReceptionNumber" name="ReceptionNumber"  value="#projectInfo.ReceptionNumber#" onkeyup="invalidateSection('filingStat', '#url.PWindowHandle#');" class="inputText"/>
+		<input type="text" <cfif canEdit EQ 0>readonly</cfif> id="ReceptionNumber" name="ReceptionNumber"  value="#projectInfo.ReceptionNumber#" onkeyup="invalidateSection('filingStat');" class="inputText"/>
 	</div>
     <div class="cellLabel">Filing Date:</div>
     <div class="cellC">
-		<input type="text" <cfif canEdit EQ 0>readonly</cfif> id="FilingDate" name="FilingDate"  value="#DateFormat(projectInfo.FilingDate, 'mm/dd/yyyy')#"  onkeyup="invalidateSection('filingStat', '#url.PWindowHandle#');" class="inputText"/> <cfif #url.permissionLevel# EQ 1><a href="javascript:popupDate(AjaxGetElementReference('FilingDate'));"><img src="graphics/date.png" border="0" /></a></cfif>
+		<input type="text" <cfif canEdit EQ 0>readonly</cfif> id="FilingDate" name="FilingDate"  value="#DateFormat(projectInfo.FilingDate, 'mm/dd/yyyy')#"  onkeyup="invalidateSection('filingStat');" class="inputText"/> <a href="javascript:popupDate(AjaxGetElementReference('FilingDate'));"><img src="graphics/date.png" border="0" /></a>
 	</div>
     <div class="cellLabel">Certified To:</div>
     <div class="cellC">
-    	<input type="text" <cfif canEdit EQ 0>readonly</cfif> id="CertifiedTo" name="CertifiedTo"  value="#projectInfo.CertifiedTo#" onkeyup="invalidateSection('filingStat', '#url.PWindowHandle#');" class="inputText"/>
+    	<input type="text" <cfif canEdit EQ 0>readonly</cfif> id="CertifiedTo" name="CertifiedTo"  value="#projectInfo.CertifiedTo#" onkeyup="invalidateSection('filingStat');" class="inputText"/>
 	</div>        
    </div>
 	

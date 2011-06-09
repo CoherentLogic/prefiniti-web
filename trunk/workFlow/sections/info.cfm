@@ -30,7 +30,7 @@
 	    
         <div class="cellLabel">Special Instructions:</div>
         <div class="cellC">
-			<textarea name="specialinstructions" cols="50" rows="8" class="inputText" id="specialinstructions" onkeyup="invalidateSection('otherStat', '#url.PWindowHandle#');">#projectInfo.specialinstructions#</textarea>
+			<textarea name="specialinstructions" cols="50" rows="8" class="inputText" id="specialinstructions" onkeyup="invalidateSection('otherStat');">#projectInfo.specialinstructions#</textarea>
 		</div>
 	</div>
 	

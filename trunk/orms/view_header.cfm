@@ -56,13 +56,19 @@
 					<cfif orms_rec.CanRead(URL.CalledByUser)>
 						<a href="##" class="button" onclick=""><span>Share</span></a>
 					</cfif>
+                    
+                    <cfif orms_rec.CanRead(URL.CalledByUser)>
+                    	<cfoutput>
+						<a href="##" class="button" onclick="ORMSDialog('/cms/create_file.cfm?target_uuid=#orms_rec.r_id#');"><span>Attach File</span></a>
+                        </cfoutput>
+					</cfif>
 					
 					<cfif orms_rec.CanRead(URL.CalledByUser)>
 						<cfoutput><a class="button" href="http://prefiniti15.prefiniti.com/Prefiniti.cfm?view=#orms_rec.r_id#&section=" target="_blank"><span>New Window</span></a></cfoutput>
 					</cfif>
 					
-					<a href="##" class="button" onclick="ORMSShowHideSidebar();"><span>Show/Hide Sidebar</span></a>
-					
+					<!--- <a href="##" class="button" onclick="ORMSShowHideSidebar();"><span>Show/Hide Sidebar</span></a>
+					 --->
 					
 				</div>
 			</div>

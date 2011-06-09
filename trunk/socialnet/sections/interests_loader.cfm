@@ -1,0 +1,1 @@
+<cfmodule template="/socialnet/sections/interests.cfm" r_pk="#url.r_pk#">

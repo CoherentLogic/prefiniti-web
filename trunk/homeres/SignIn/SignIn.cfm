@@ -29,7 +29,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <center>
 <div align="center" style="width:450px; height:310px; padding:20px; background-color:white; color:black; border:1px solid black; margin-top:60px;">
-<h1><img src="/graphics/prefiniti.png" /></h1>
+<h1><img src="/graphics/prenew-medium.png" /></h1>
 <p><strong>Prefiniti</strong><br />Version 1.6</p>
 
 

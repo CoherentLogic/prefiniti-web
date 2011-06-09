@@ -205,22 +205,7 @@
     <cfdirectory action="create" directory="D:\Inetpub\Prefiniti15\UserContent\#url.reg_username#\media">
 </cfoutput>
 
-<cfoutput>
-<cfmail from="register@prefiniti.com" to="#url.email#" subject="Prefiniti Account Confirmation" type="html">
-	<h1>Account Created</h1>
-	
-	<p>Your Prefiniti account has been created. Please visit the link below to confirm your new account.</p>
-	<p>You will need <a href="http://www.mozilla.com/en-US/firefox/">Mozilla Firefox<a/> or <a href="http://www.apple.com/safari/">Apple Safari<a/> to use Prefiniti. We do not support Internet Explorer at this time.</p>
-	
-	<a href="http://prefiniti15.prefiniti.com/appBase.cfm?sideBar=Register&contentBar=/authentication/components/setInitialPassword.cfm?cid=#cid#">Confirm My Account</a>
-	
-	<p>Otherwise, copy the following text to your browser's URL bar:</p>
-	
-	<pre>http://prefiniti15.prefiniti.com/appBase.cfm?sideBar=Register&contentBar=/authentication/components/setInitialPassword.cfm?cid=#cid#</pre>
-</cfmail>
-</cfoutput>
 
-<cfoutput>
 <table width="100%">
 <tr>
 	<td align="center">
