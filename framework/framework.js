@@ -1050,6 +1050,11 @@ function loadHomeView()
 	AjaxLoadPageToDiv('tcTarget', '/framework/homeView.cfm');
 }
 
+function loadFirstLogin()
+{
+	AjaxLoadPageToDiv('tcTarget', '/framework/welcomeView.cfm');	
+}
+
 /*<div id="tabBars" class="tabBar">
 <span class="tabButtonActive" id="listViewBtn"><a href="javascript:setListView();">Project View</a></span>*/
 

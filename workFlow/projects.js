@@ -150,10 +150,7 @@ function viewPrintable(project_id)
 function invalidateSection(statusDiv, windowHandle)
 {
 	if (windowHandle) {
-		var wRef = p_session.Framework.FindWindow(windowHandle);
-		if (wRef) {
-			wRef.NeedsSaving = true;
-		}
+		alert("The windowHandle parameter to the invalidateSection() function in projects.js has been deprecated and will be dropped in a future release.");
 	}
 	SetInnerHTML(statusDiv, '<font color="red">Save needed.</font>');
 }

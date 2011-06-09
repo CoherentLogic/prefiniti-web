@@ -27,7 +27,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.password = "">				<!--- password --->
     <cfset this.email = "">					<!--- email --->
     <cfset this.sms_number = "">			<!--- smsNumber --->
-    <cfset this.picture = "">				<!--- picture --->
+    <cfset this.user_picture = "">				<!--- picture --->
     <cfset this.account_enabled = 0>		<!--- account_enabled --->
     <cfset this.gender = "">				<!--- gender --->
     <cfset this.account_confirmed = 0>		<!--- confirmed --->
@@ -49,7 +49,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.global_admin = 0>			<!--- webware_admin --->
     <cfset this.creation_date = #CreateODBCDateTime(Now())#>		<!--- CreationDate --->
     <cfset this.location_url = "">			<!--- location_url --->
-    <cfset this.active_membership = 0>		<!--- last_site_id --->
+    <cfset this.active_membership_id = 0>		<!--- last_site_id --->
+   	<cfset this.first_login = 0>
+    <cfset this.object_record = "">				<!--- ORMS record --->
+    
     
     <cfset this.written = false>    
     
@@ -79,7 +82,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.birthday = CreateODBCDate(birthday)>
         <cfset this.account_confirmed = 0>
         <cfset this.account_enabled = 1>
-        
+    	<cfset this.first_login = 1>
+            
         <cfif allow_search EQ true>
         	<cfset this.allow_search = 1>
         <cfelse>
@@ -117,7 +121,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.password = UOpen.password>						<!--- password --->
         <cfset this.email = UOpen.email>							<!--- email --->
         <cfset this.sms_number = UOpen.smsNumber>					<!--- smsNumber --->
-        <cfset this.picture = UOpen.picture>						<!--- picture --->
+        <cfset this.user_picture = UOpen.picture>						<!--- picture --->
         <cfset this.account_enabled = UOpen.account_enabled>		<!--- account_enabled --->
         <cfset this.gender = UOpen.gender>							<!--- gender --->
         <cfset this.account_confirmed = UOpen.confirmed>			<!--- confirmed --->
@@ -139,7 +143,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.global_admin = UOpen.webware_admin>				<!--- webware_admin --->
         <cfset this.creation_date = UOpen.CreationDate>				<!--- CreationDate --->
         <cfset this.location_url = UOpen.location_url>				<!--- location_url --->
-        <cfset this.active_membership = UOpen.last_site_id>			<!--- last_site_id --->       
+        <cfset this.active_membership_id = UOpen.last_site_id>			<!--- last_site_id --->       
+        <cfset this.first_login = UOpen.first_login>
+        
+        <cfset this.object_record = CreateObject("component", "res").GetByTypeAndPK("User Account", this.r_pk)>
         
         <cfset this.written = true>
         
@@ -175,7 +182,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             		password='#this.password#',
                     email='#this.email#',
                     smsNumber='#this.sms_number#',
-                    picture='#this.picture#',
+                    picture='#this.user_picture#',
                     account_enabled=#this.account_enabled#,
                     gender='#this.gender#',
                     confirmed=#this.account_confirmed#,
@@ -196,7 +203,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                     confirm_id='#this.om_uuid#',
                     webware_admin=#this.global_admin#,
                     location_url='#this.location_url#',
-                    last_site_id=#this.active_membership#
+                    last_site_id=#this.active_membership_id#
+                    first_login=#this.first_login#
 			WHERE	id=#this.r_pk#                    
         </cfquery>          
     </cffunction>
@@ -234,13 +242,14 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 webware_admin,
                 CreationDate,
                 location_url,
-                last_site_id)
+                last_site_id,
+                first_login)
 			VALUES
             	('#this.username#',
                 '#this.password#',
                 '#this.email#',
                 '#this.sms_number#',
-                '#this.picture#',
+                '#this.user_picture#',
                 #this.account_enabled#,
                 '#this.gender#',
                 #this.account_confirmed#,
@@ -262,7 +271,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 #this.global_admin#,
                 #this.creation_date#,
                 '#this.location_url#',
-                #this.active_membership#)                                                              
+                #this.active_membership_id#,
+                #this.first_login#)                                                              
         </cfquery>
         
         <cfquery name="wanr_get_id" datasource="webwarecl">
@@ -290,5 +300,96 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         </cfoutput>
         
     </cffunction>
-
+    
+    <cffunction name="ConfirmAccount" access="public" returntype="void" output="no">
+    	<cfset this.account_confirmed = 1>                    
+        <cfset this.Save()>
+    </cffunction>
+    
+    <cffunction name="Confirmed" access="public" returntype="boolean" output="no">
+    	<cfif this.account_confirmed EQ 0>
+        	<cfreturn false>
+		<cfelse>
+        	<cfreturn true>
+		</cfif>                                    
+    </cffunction>
+    
+    <cffunction name="SetPassword" access="public" returntype="void" output="no">
+    	<cfargument name="password" type="string" required="yes">
+        <cfargument name="password_question" type="string" required="yes">
+        <cfargument name="password_answer" type="string" required="yes">
+        
+        <cfset this.password = Hash(password)>
+        <cfset this.password_question = password_question>
+        <cfset this.password_answer = password_answer>
+        
+        <cfset this.Save()>
+    </cffunction>
+    
+    <cffunction name="FirstLogin" access="public" returntype="boolean" output="no">
+    	<cfif this.first_login EQ 1>
+        	<cfreturn true>
+        <cfelse>
+        	<cfreturn false>
+        </cfif>
+    </cffunction>
+    
+    <cffunction name="Picture" access="public" returntype="string" output="no">
+		<cfreturn #this.user_picture#>    
+    </cffunction>
+    
+    <cffunction name="Friends" access="public" returntype="array" output="no">
+    	<cfquery name="qryFriends" datasource="webwarecl">
+        	SELECT * FROM friends WHERE target_id=#this.r_pk#
+        </cfquery>
+        
+        <cfset ret_val = ArrayNew(1)>
+        
+        <cfoutput query="qryFriends">
+        	<cfset t_user = CreateObject("component", "authentication.user").OpenByPK(source_id)>
+            
+            <cfset ArrayAppend(ret_val, t_user)>
+        </cfoutput>
+            	               
+        <cfreturn #ret_val#>
+    </cffunction>
+    
+    <cffunction name="CommonFriends" access="public" returntype="array" output="no">
+    	<cfargument name="target_user" type="authentication.user" required="yes">
+        
+        <cfset source_friends = this.Friends()>
+        <cfset target_friends = target_user.Friends()>
+        
+        <cfset ret_val = ArrayNew(1)>
+        
+        <cfloop array="#source_friends#" index="sf">
+        	<cfloop array="#target_friends#" index="tf">
+            	<cfif sf.r_pk EQ tf.r_pk>
+                	<cfset ArrayAppend(ret_val, sf)>
+				</cfif>                    
+            </cfloop>
+        </cfloop>
+        
+        <cfreturn #ret_val#>    
+    </cffunction>
+    
+    <cffunction name="Online" access="public" returntype="boolean" output="no">       	>
+        
+        <cfquery name="io" datasource="webwarecl">
+        	SELECT 	*	
+            FROM	auth_tokens
+            WHERE	username='#this.username#'
+            AND		active=1
+    	</cfquery>
+        
+        <cfif io.RecordCount GT 0>
+        	<cfreturn true>
+        <cfelse>
+        	<cfreturn false>
+        </cfif>
+    </cffunction>
+    
+    <cffunction name="ObjectRecord" access="public" returntype="Res" output="no">
+    	<cfreturn #this.object_record#>
+    </cffunction>
 </cfcomponent>

@@ -20,6 +20,17 @@ You should have received a copy of the GNU General Public License
 along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
+<!-- Open the div element for the main client area -->    
+    <cfif session.loggedIn EQ "yes">
+    	<div class="bodyWrapper" id="appArea" style="height:auto; min-height:800px; width:100%; padding:0px; margin:0px; background-image:none;">
+    <cfelse>
+    	<div class="bodyWrapper" id="appArea" style="height:auto;  width:100%; padding:0px; margin:0px; background-image:none;">
+	</cfif>
+
+    <div id="dev-null" style="display:none;">
+    </div>
+	<cfoutput><input id="PMF_CurrentDate" type="hidden" value="#DateFormat(Now(), 'mm/dd/yyyy')#" /></cfoutput>
+
 <head>
 	<cfif session.loggedin NEQ "yes">
 		<cfif IsDefined("URL.View")>
@@ -182,15 +193,18 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <script src="/framework/UI/wz_tooltip.js" type="text/javascript"></script>
 
+<!---
 <cfmodule template="/sm2/demo/jsAMP-preview/musicplayer.cfm" playlist="__library" user_id="#session.userid#">
+--->
 
 <center>
 <div style="width:100%; background-color:#efefef; border-bottom:1px solid #c0c0c0;">
 <div id="tb" class="iPrefinitiToolbar" align="right">
 	
-    <cfset site_info = getSiteInformation(session.current_site_id)>
-    <cfset site_logo = "/SiteContent/#site_info.SiteID#/#site_info.logo#">
-	<div style="width:auto; float:left; padding-top:8px;"><cfoutput><img src="#site_logo#" height="30px"></cfoutput></div>
+    <!---<cfset site_info = getSiteInformation(session.current_site_id)>
+    <cfset site_logo = "/SiteContent/#site_info.SiteID#/#site_info.logo#">--->
+    <cfset site_logo = "/graphics/prenew-small.png">
+	<div style="width:auto; float:left; padding-top:8px;"><cfoutput><img src="#site_logo#"></cfoutput></div>
 	<input 	type="text" 
 			id="searchBox" 
 			name="searchBox" 
@@ -256,7 +270,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			ORMSLoad('#URL.view#', '#URL.section#');
 			</cfoutput>
 		<cfelse>
-			loadHomeView();
+			loadHomeView();						
 		</cfif>
 	}
 </script>

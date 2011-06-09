@@ -178,5 +178,50 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         
     
     </cffunction>
+    
+    <cffunction name="Employees" access="public" returntype="array" output="no">
+    	<cfset ret = ArrayNew(1)>
+        
+        <cfquery name="qryEmployees" datasource="sites">
+        	SELECT user_id FROM site_associations WHERE site_id=#this.r_pk# and assoc_type=1    
+		</cfquery>            
+        
+        <cfoutput query="qryEmployees">
+        	<cfset t_emp = CreateObject("component", "authentication.user").OpenByPK(user_id)>
+        	<cfset ArrayAppend(ret, t_emp)>
+        </cfoutput>
+    
+    	<cfreturn #ret#>
+    </cffunction>
+    
+    <cffunction name="Customers" access="public" returntype="array" output="no">
+    	<cfset ret = ArrayNew(1)>
+        
+        <cfquery name="qryCustomers" datasource="sites">
+        	SELECT user_id FROM site_associations WHERE site_id=#this.r_pk# and assoc_type=0    
+		</cfquery>            
+        
+        <cfoutput query="qryCustomers">
+        	<cfset t_cust = CreateObject("component", "authentication.user").OpenByPK(user_id)>
+        	<cfset ArrayAppend(ret, t_cust)>
+        </cfoutput>
+    
+    	<cfreturn #ret#>
+    </cffunction>
+    
+    <cffunction name="Friends" access="public" returntype="array" output="no">
+    	<cfset ret = ArrayNew(1)>
+        
+        <cfquery name="qryFriends" datasource="sites">
+        	SELECT user_id FROM site_associations WHERE site_id=#this.r_pk# and assoc_type=2   
+		</cfquery>            
+        
+        <cfoutput query="qryFriends">
+        	<cfset t_friend = CreateObject("component", "authentication.user").OpenByPK(user_id)>
+        	<cfset ArrayAppend(ret, t_friend)>
+        </cfoutput>
+    
+    	<cfreturn #ret#>
+    </cffunction>    
        	           
 </cfcomponent>

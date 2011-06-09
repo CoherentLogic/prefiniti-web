@@ -45,6 +45,12 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfparam name="session.authentication_key" default="">
   	<cfparam name="session.pd_enhanced" default="0">
     <cfparam name="session.pd_version" default="">
+    
+    <!--- next-gen integration --->
+    <cfparam name="session.user" default="">
+    <cfparam name="session.site" default="">
+    <cfparam name="session.active_membership" default="">
+    
 
     <div id="soundmanager-debug" style="display:none;"></div>
     
@@ -108,13 +114,4 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfinclude template="/gis/components/gis_controls.cfm">
     <cfinclude template="/gis/components/gis_map.cfm">
     
-    <!-- Open the div element for the main client area -->    
-    <cfif session.loggedIn EQ "yes">
-    	<div class="bodyWrapper" id="appArea" style="height:auto; min-height:800px; width:100%; padding:0px; margin:0px; background-image:none;">
-    <cfelse>
-    	<div class="bodyWrapper" id="appArea" style="height:auto;  width:100%; padding:0px; margin:0px; background-image:none;">
-	</cfif>
-
-    <div id="dev-null" style="display:none;">
-    </div>
-	<cfoutput><input id="PMF_CurrentDate" type="hidden" value="#DateFormat(Now(), 'mm/dd/yyyy')#" /></cfoutput>
+    

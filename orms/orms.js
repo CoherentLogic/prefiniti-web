@@ -99,3 +99,22 @@ function ShowNotifications()
 		notifications_shown = 0;
 	}
 }
+
+function ORMSBeginUpload() 
+{
+	document.forms["upload_file"].submit();	
+	showDivBlock('upload_progress');
+	hideDiv('file_uploader_form');
+	
+}
+
+
+
+function ORMSUploadFinished()
+{
+	showDivBlock('file_uploader_form');
+	hideDiv('upload_progress');
+	showDivBlock('upload_finished');
+	document.forms["upload_file"].reset();
+	
+}

@@ -1,0 +1,1 @@
+<cfmodule template="/socialnet/sections/notifications.cfm" r_pk="#url.r_pk#">
