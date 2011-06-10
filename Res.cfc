@@ -153,6 +153,17 @@
 		<cfreturn #p#>
 	</cffunction>
 	
+     <cffunction name="Picture" access="public" returntype="string" output="no">
+    	<cfargument name="width" type="numeric" required="yes">
+        <cfargument name="height" type="numeric" required="yes">
+        
+        <cfset pic_url = CreateObject("component", "Prefiniti").Config("Instance", "rooturl") & this.r_thumb>
+    	<!---<cfset po = CreateObject("component", "OpenHorizon.Graphics.Image")>
+        <cfset pic = po.Create(pic_url, width, height)> --->
+        
+		<cfreturn #pic_url#>    
+    </cffunction>
+    
 	<cffunction name="GetByOwner" returntype="array" access="public">
 		<cfargument name="user_id" type="numeric" required="yes">
 		
@@ -469,8 +480,21 @@
 		</cfif>
 	</cffunction>		
 									
-	<cffunction name="test" access="public" returntype="string">
-		<cfreturn "test">
+	<cffunction name="Files" access="public" returntype="array" output="no">
+		
+        <cfquery name="gf" datasource="webwarecl">
+        	SELECT om_uuid, file_uuid FROM orms_files WHERE om_uuid='#this.r_id#'
+        </cfquery>
+        
+        <cfset ret_val = ArrayNew(1)>
+      
+		<cfoutput query="gf">
+			<cfset tmp_file = CreateObject("component", "cms.file").Open(file_uuid)>
+            <cfset ArrayAppend(ret_val, tmp_file)>
+		</cfoutput>
+        
+        <cfreturn #ret_val#>
+
 	</cffunction>		
 
 </cfcomponent>

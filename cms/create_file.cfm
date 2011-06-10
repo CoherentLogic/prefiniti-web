@@ -1,3 +1,5 @@
+<cfset orms_rec = CreateObject("component", "Res").Get(URL.target_uuid)>
+
 <div style="height:100%;position:relative;">
 	<cfmodule template="/orms/dialog_header.cfm" icon="/graphics/navicons/files.png" caption="Upload File">
     
@@ -15,6 +17,10 @@
                 target="upload_target">
                 
         	<table width="100%" cellpadding="10" cellspacing="0" class="orms_dialog">            
+                <tr>
+                    <td align="right" width="30%"><strong><cfoutput>#orms_rec.r_type#</cfoutput></strong></td>
+                    <td align="left" width="70%"><cfoutput>#orms_rec.r_name#</cfoutput></td>
+                </tr>
                 <tr>
                     <td align="right" width="30%"><strong>File</strong></td>
                     <td align="left" width="70%"><input id="FileContents" name="FileContents" type="file" /></td>

@@ -39,7 +39,7 @@
 	<table cellpadding="3">
     <tr>
     	<td>
-			<img src="#session.user.Picture()#" width="64" height="64" align="texttop"  />
+			<img src="#session.user.Picture(64, 64)#" width="64" height="64" align="texttop"  />
         </td>
     	<td>
 		    <span class="LandingHeaderText" style="font-weight:bold;">#session.user.display_name#</span><br /> 
@@ -58,7 +58,7 @@
 
 	<cfif fr.Online()>
 		<cfoutput>
-            <img src="#fr.Picture()#" width="16" height="16" align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#fr.ObjectRecord().r_id#', '')">#fr.display_name#</a><br />
+            <img src="#fr.Picture(16, 16)#"  align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#fr.ObjectRecord().r_id#', '')">#fr.display_name#</a><br />
         </cfoutput>
     </cfif>
 </cfloop>
@@ -72,7 +72,7 @@
     
         <cfif fr.Online()>
             <cfoutput>
-                <img src="#fr.Picture()#" width="16" height="16" align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#fr.ObjectRecord().r_id#', '')">#fr.display_name#</a><br />
+                <img src="#fr.Picture(16, 16)#"  align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#fr.ObjectRecord().r_id#', '')">#fr.display_name#</a><br />
             </cfoutput>
         </cfif>
     </cfloop>
@@ -86,7 +86,7 @@
     
         <cfif fr.Online()>
             <cfoutput>
-                <img src="#fr.Picture()#" width="16" height="16" align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#fr.ObjectRecord().r_id#', '')">#fr.display_name#</a><br />
+                <img src="#fr.Picture(16, 16)#" align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#fr.ObjectRecord().r_id#', '')">#fr.display_name#</a><br />
             </cfoutput>
         </cfif>
     </cfloop>
