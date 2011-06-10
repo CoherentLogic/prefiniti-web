@@ -7,7 +7,7 @@
 
 <cfloop array="#common_friends#" index="sf">	
    	<cfoutput>
-       	<img src="#sf.Picture()#" width="16" height="16" align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#sf.ObjectRecord().r_id#', '')">#sf.display_name#</a><br />
+       	<img src="#sf.Picture(20, 20)#"  align="absmiddle" style="margin-left:3px;" /> <a href="##" onclick="ORMSLoad('#sf.ObjectRecord().r_id#', '')">#sf.display_name#</a><br />
     </cfoutput>
 </cfloop>    
 <Br />

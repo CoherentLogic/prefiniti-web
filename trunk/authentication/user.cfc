@@ -335,7 +335,13 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </cffunction>
     
     <cffunction name="Picture" access="public" returntype="string" output="no">
-		<cfreturn #this.user_picture#>    
+    	<cfargument name="width" type="numeric" required="yes">
+        <cfargument name="height" type="numeric" required="yes">
+        
+    	<cfset po = CreateObject("component", "OpenHorizon.Graphics.Image")>
+        <cfset pic = po.Create(this.user_picture, width, height)> 
+        
+		<cfreturn #pic#>    
     </cffunction>
     
     <cffunction name="Friends" access="public" returntype="array" output="no">
@@ -392,4 +398,5 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="ObjectRecord" access="public" returntype="Res" output="no">
     	<cfreturn #this.object_record#>
     </cffunction>
+        
 </cfcomponent>
