@@ -62,7 +62,7 @@
 
     <cfoutput>
 	<cfmodule template="/orms/view_header.cfm" r_type="Project" r_pk="#url.id#">
-	<cfset po = CreateObject("component","Res").GetByTypeAndPK("Project", url.id)>
+	<cfset po = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Project", url.id)>
 	<cfset po.DoAccess("View", url.calledByUser)>
 	
 	<div style="display:none;">

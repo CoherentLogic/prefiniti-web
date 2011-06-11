@@ -13,7 +13,7 @@
 	<cfquery name="gAU" datasource="sites">
 		SELECT user_id FROM site_associations WHERE assoc_type=1 AND site_id=#URL.current_site_id#
 	</cfquery>
-	<cfset orec = CreateObject("component", "Res")>
+	<cfset orec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 	<cfset orec.GetByTypeAndPK("Project", attributes.r_pk)>
 	
 	<cfif orec.CanWrite(URL.CalledByUser)>

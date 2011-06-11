@@ -40,7 +40,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfset this.written = false>
 
-	<cffunction name="Open" access="public" returntype="authentication.site">
+	<cffunction name="Open" access="public" returntype="OpenHorizon.Identity.Site">
 		<cfargument name="id" type="numeric" required="yes">
 
 		<cfquery name="s" datasource="sites">
@@ -73,7 +73,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #this#>
 	</cffunction>
     
-    <cffunction name="OpenByMembershipID" access="public" returntype="authentication.site" output="no">
+    <cffunction name="OpenByMembershipID" access="public" returntype="OpenHorizon.Identity.Site" output="no">
     	<cfargument name="membership_id" type="numeric" required="yes">
         
         <cfquery name="g_site" datasource="sites">
@@ -155,10 +155,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.r_pk = gwanr.SiteID>               
 	</cffunction>
     
-    <cffunction name="Create" access="public" output="no" returntype="authentication.site">
+    <cffunction name="Create" access="public" output="no" returntype="OpenHorizon.Identity.Site">
     	<cfargument name="site_name" type="string" required="yes">
         <cfargument name="industry" type="string" required="yes">
-        <cfargument name="owner" type="authentication.user" required="yes">
+        <cfargument name="owner" type="OpenHorizon.Identity.User" required="yes">
         
         <cfquery name="get_industry" datasource="sites">
         	SELECT id FROM industries WHERE industry_name='#industry#'
@@ -172,7 +172,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </cffunction>
 
     <cffunction name="Memberships" access="public" returntype="array" output="no">
-    	<cfargument name="user" type="authentication.user" required="yes">
+    	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
     	
         <cfset ret = ArrayNew(1)>
         
@@ -187,7 +187,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		</cfquery>            
         
         <cfoutput query="qryEmployees">
-        	<cfset t_emp = CreateObject("component", "authentication.user").OpenByPK(user_id)>
+        	<cfset t_emp = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(user_id)>
         	<cfset ArrayAppend(ret, t_emp)>
         </cfoutput>
     
@@ -202,7 +202,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		</cfquery>            
         
         <cfoutput query="qryCustomers">
-        	<cfset t_cust = CreateObject("component", "authentication.user").OpenByPK(user_id)>
+        	<cfset t_cust = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(user_id)>
         	<cfset ArrayAppend(ret, t_cust)>
         </cfoutput>
     
@@ -217,7 +217,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		</cfquery>            
         
         <cfoutput query="qryFriends">
-        	<cfset t_friend = CreateObject("component", "authentication.user").OpenByPK(user_id)>
+        	<cfset t_friend = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(user_id)>
         	<cfset ArrayAppend(ret, t_friend)>
         </cfoutput>
     

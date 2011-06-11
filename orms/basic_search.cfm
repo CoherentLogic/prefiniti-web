@@ -35,7 +35,7 @@
 </cfif>
 <div style="padding-left:30px; padding-top:10px;">
 <cfoutput query="doSearch">
-	<cfset orms_obj =  CreateObject("component", "Res")>
+	<cfset orms_obj =  CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 	<cfset r = orms_obj.Get(r_id)>
 	
 	<cfif search_mode EQ "key_and_value">

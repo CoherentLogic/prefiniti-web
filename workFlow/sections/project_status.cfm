@@ -2,7 +2,7 @@
 	SELECT status, SubStatus FROM projects WHERE id=#attributes.r_pk#
 </cfquery>
 
-<cfset o = CreateObject("component", "Res")>
+<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfset o.GetByTypeAndPK("Project", attributes.r_pk)>
 
 <cfset canEdit = false>

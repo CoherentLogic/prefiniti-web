@@ -28,7 +28,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 
 
-<cfset new_file = CreateObject("component", "cms.file")>
+<cfset new_file = CreateObject("component", "OpenHorizon.Storage.File")>
 <cfset new_file.Create(URL.target_uuid, cffile.clientfile, cffile.serverfile, cffile.clientfileext, cffile.contenttype, cffile.contentsubtype, cffile.filesize, session.user, form.keywords)>
 <cfset new_file.Save()>
 

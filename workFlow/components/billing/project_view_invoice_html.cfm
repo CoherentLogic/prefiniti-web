@@ -16,7 +16,7 @@
 	SELECT * FROM projects WHERE clsJobNumber='#get_billing_event.project_number#'
 </cfquery>
 
-<cfset orms = CreateObject("component", "Res")>
+<cfset orms = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfset orms_rec = orms.GetByTypeAndPK("Project", pi.id)>
 
 <cfquery name="orig_si" datasource="sites">

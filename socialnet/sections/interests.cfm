@@ -1,5 +1,5 @@
-<cfset viewed_user = CreateObject("component","authentication.user").OpenByPK(attributes.r_pk)>
-<cfset viewing_user = CreateObject("component","authentication.user").OpenByPK(url.calledByUser)>
+<cfset viewed_user = CreateObject("component","OpenHorizon.Identity.User").OpenByPK(attributes.r_pk)>
+<cfset viewing_user = CreateObject("component","OpenHorizon.Identity.User").OpenByPK(url.calledByUser)>
 
 <cfset common_friends = viewing_user.CommonFriends(viewed_user)>
 

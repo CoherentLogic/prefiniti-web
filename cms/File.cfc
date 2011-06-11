@@ -40,7 +40,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.root_url = CreateObject("component", "Prefiniti").Config("ORMS", "cmsurl")>
     <cfset this.written = false>
         
-	<cffunction name="Create" access="public" returntype="cms.file">
+	<cffunction name="Create" access="public" returntype="OpenHorizon.Storage.File">
 		<cfargument name="target_uuid" type="string" required="yes">
         <cfargument name="original_filename" type="string" required="yes">
         <cfargument name="new_filename" type="string" required="yes">
@@ -48,7 +48,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfargument name="mime_type" type="string" required="yes">
         <cfargument name="mime_subtype" type="string" required="yes">
         <cfargument name="file_size" type="numeric" required="yes">
-        <cfargument name="poster" type="authentication.user" required="yes">
+        <cfargument name="poster" type="OpenHorizon.Identity.User" required="yes">
         <cfargument name="keywords" type="string" required="yes">
         
         <cfset this.file_uuid = CreateUUID()>
@@ -59,7 +59,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.mime_subtype = mime_subtype>
 		<cfset this.file_size = file_size>        
     	<cfset this.poster_id = poster.r_pk>  
-        <cfset this.poster = CreateObject("component", "authentication.user").OpenByPK(this.poster_id)>  
+        <cfset this.poster = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.poster_id)>  
         <cfset this.post_date = CreateODBCDateTime(Now())>
         <cfset this.new_filename = new_filename>
         <cfset this.keywords = keywords>
@@ -67,7 +67,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfreturn #this#>
 	</cffunction>
     
-    <cffunction name="Open" access="public" returntype="cms.file">
+    <cffunction name="Open" access="public" returntype="OpenHorizon.Storage.File">
     	<cfargument name="file_uuid" type="string" required="yes">
         
         <cfquery name="o" datasource="webwarecl">
@@ -82,7 +82,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.mime_subtype = o.mime_subtype>
         <cfset this.file_size = o.file_size>
         <cfset this.poster_id = o.poster_id>
-        <cfset this.poster = CreateObject("component", "authentication.user").OpenByPK(this.poster_id)>
+        <cfset this.poster = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.poster_id)>
         <cfset this.post_date = o.post_date>
         <cfset this.new_filename = o.new_filename>
         <cfset this.keywords = o.keywords>
@@ -146,6 +146,17 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         </cfquery>
         
         <cfset this.r_pk = wanr_id.id>                        
+    </cffunction>
+    
+    <cffunction name="MIMEType" access="public" returntype="string" output="no">
+    	<cfset ret_val = this.mime_type & "/" & this.mime_subtype>    
+    </cffunction>
+    
+    <cffunction name="Datatype" access="public" returntype="any" output="no">
+    	<cfset dt = CreateObject("component", "Prefiniti").Config("Datatypes", this.MIMEType())>        
+        <cfset dto = CreateObject("component", dt)>
+        
+        <cfreturn #dto#>        
     </cffunction>
     
     <cffunction name="TypeIcon" returntype="struct" output="no" access="public">

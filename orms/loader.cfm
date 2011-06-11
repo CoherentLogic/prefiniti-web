@@ -9,7 +9,7 @@
 -->
 </cfoutput>
 
-<cfset po = CreateObject("component","Res").GetByTypeAndPK(ore.r_type, ore.r_pk)>
+<cfset po = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK(ore.r_type, ore.r_pk)>
 <cfif po.CanRead(URL.CalledByUser)>
 	<cfset po.DoAccess("View", url.calledByUser)>
 	<cfmodule template="/orms/view_header.cfm" r_type="#ore.r_type#" r_pk="#ore.r_pk#" section="#url.section#">

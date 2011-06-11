@@ -1,4 +1,4 @@
-<cfcomponent displayname="Res" hint="ORMS Entry">
+<cfcomponent displayname="OpenHorizon.Storage.ObjectRecord" hint="ORMS Entry">
 	<cfset this.r_id = "">
 	<cfset this.r_type = "">
 	<cfset this.r_owner = 0>
@@ -14,7 +14,7 @@
 	<cfset this.r_parent = "">
 	
 	
-	<cffunction name="Crup" hint="Create or update a ROMS entry"  returntype="Res" access="public">
+	<cffunction name="Crup" hint="Create or update a ROMS entry"  returntype="OpenHorizon.Storage.ObjectRecord" access="public">
 		<cfargument name="r_type" type="string" required="yes">
 		<cfargument name="r_owner" type="numeric" required="yes">
 		<cfargument name="r_site" type="numeric" required="yes">
@@ -104,7 +104,7 @@
 		<cfreturn #this#>
 	</cffunction>
 	
-	<cffunction name="Get" returntype="Res" access="public">
+	<cffunction name="Get" returntype="OpenHorizon.Storage.ObjectRecord" access="public">
 		<cfargument name="r_id" type="string" required="yes">
 		
 		<cfquery name="gRes" datasource="webwarecl">
@@ -137,7 +137,7 @@
 	</cffunction>		
 	
 	
-	<cffunction name="GetByTypeAndPK" returntype="Res" access="public">
+	<cffunction name="GetByTypeAndPK" returntype="OpenHorizon.Storage.ObjectRecord" access="public">
 		<cfargument name="r_type" type="string" required="yes">
 		<cfargument name="r_pk" type="numeric" required="yes">
 		
@@ -489,7 +489,7 @@
         <cfset ret_val = ArrayNew(1)>
       
 		<cfoutput query="gf">
-			<cfset tmp_file = CreateObject("component", "cms.file").Open(file_uuid)>
+			<cfset tmp_file = CreateObject("component", "OpenHorizon.Storage.File").Open(file_uuid)>
             <cfset ArrayAppend(ret_val, tmp_file)>
 		</cfoutput>
         

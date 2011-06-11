@@ -2,7 +2,7 @@
 <cfoutput>
 <input type="hidden" name="r_id" id="r_id" value="#attributes.r_id#">
 <input type="hidden" name="user_id" id="user_id" value="#attributes.user_id#">
-<cfset oo = CreateObject("component", "Res")>
+<cfset oo = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfset oo.Get(attributes.r_id)>
 </cfoutput>
 <label>Rate This <cfoutput>#oo.r_type#</cfoutput>: <select name="rating" id="rating">

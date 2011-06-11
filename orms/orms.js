@@ -108,13 +108,41 @@ function ORMSBeginUpload()
 	
 }
 
-
-
 function ORMSUploadFinished()
 {
 	showDivBlock('file_uploader_form');
 	hideDiv('upload_progress');
 	showDivBlock('upload_finished');
-	document.forms["upload_file"].reset();
+	document.forms["upload_file"].reset();	
+}
+
+function ORMSPreviewFile(file_uuid, orms_id)
+{
+	var url = '/cms/preview_file.cfm?file_uuid=' + escape(file_uuid) + '&orms_id=' + escape(orms_id);
+	AjaxLoadPageToDiv('file_preview', url);
+	var url = '/cms/file_actions.cfm?file_uuid=' + escape(file_uuid) + '&orms_id=' + escape(orms_id);
+	AjaxLoadPageToDiv('file_actions', url);
+}
+
+function ORMSPlaySound(URL)
+{
+	soundManager.createSound('orms_sound', URL);
+	soundManager.play('orms_sound');
+}
+
+function ORMSStopSound()
+{
+	soundManager.stop('orms_sound');
+}
+
+function ORMSSetThumbnail(orms_id, file_uuid)
+{
+	var url = '/cms/set_thumbnail.cfm?orms_id=' + escape(orms_id) + '&file_uuid=' + escape(file_uuid);
+	
+	var orc = new function () {
+		AjaxRefreshTarget();	
+	}
+	
+	AjaxLoadPageToDiv('dev-null', url, orc);
 	
 }

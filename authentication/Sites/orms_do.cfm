@@ -5,7 +5,7 @@
 	SELECT * FROM sites WHERE SiteID=#attributes.id#
 </cfquery>
 
-<cfset rt = CreateObject("component", "Res")>
+<cfset rt = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfoutput query="get_sites">
 		<cfset rtype = "Site">
 		<cfset rowner = admin_id>

@@ -36,7 +36,7 @@
 </cfquery>
 <div style="display:none;">
 <cfmodule template="/workFlow/orms_do.cfm" id="#get_r_pk.id#">
-<cfset po = CreateObject("component","Res").GetByTypeAndPK("Project", get_r_pk.id)>
+<cfset po = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Project", get_r_pk.id)>
 <cfset po.DoAccess("View", url.client_id)>
 </div>
 <cfoutput>

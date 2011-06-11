@@ -43,9 +43,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfset session.authentication_key = key>
         
         <!--- bring in the new API --->
-        <cfset session.user = CreateObject("component", "authentication.user").Open(session.username)>
-        <cfset session.site = CreateObject("component", "authentication.site").OpenByMembershipID(session.current_association)>
-        <cfset session.active_membership = CreateObject("component", "authentication.site_membership").OpenByPK(session.current_association)>
+        <cfset session.user = CreateObject("component", "OpenHorizon.Identity.User").Open(session.username)>
+        <cfset session.site = CreateObject("component", "OpenHorizon.Identity.Site").OpenByMembershipID(session.current_association)>
+        <cfset session.active_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").OpenByPK(session.current_association)>
         
 		<cfset urlstr = "">
 		<cfif IsDefined("Form.View")>

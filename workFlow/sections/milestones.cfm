@@ -12,7 +12,7 @@
 	<cfset percent_complete = 0>
 </cfif>
 
-<cfset o = CreateObject("component", "Res")>
+<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfset o.GetByTypeAndPK("Project", attributes.r_pk)>
 
 

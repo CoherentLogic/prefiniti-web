@@ -38,11 +38,11 @@
 <cfoutput>
 	<table cellpadding="3">
     <tr>
-    	<td>
-			<img src="#session.user.Picture(64, 64)#" width="64" height="64" align="texttop"  />
+    	<td>        	
+			<img src="#session.user.Picture(64, 64)#" width="64" height="64" align="texttop"  onclick="ORMSLoad('#session.user.ObjectRecord().r_id#', '')"/>
         </td>
     	<td>
-		    <span class="LandingHeaderText" style="font-weight:bold;">#session.user.display_name#</span><br /> 
+		    <a href="##" onclick="ORMSLoad('#session.user.ObjectRecord().r_id#', '')"><span class="LandingHeaderText" style="font-weight:bold;">#session.user.display_name#</span></a><br /> 
             #session.active_membership.membership_type# of #session.active_membership.site.site_name#      
 		</td>
 	</tr>
