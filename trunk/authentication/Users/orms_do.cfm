@@ -4,7 +4,7 @@
 	SELECT * FROM users WHERE id=#attributes.id#
 </cfquery>
 
-<cfset rt = CreateObject("component", "Res")>
+<cfset rt = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfoutput query="gusr">
 		<cfset rtype = "User Account">
 		<cfset rowner = id>

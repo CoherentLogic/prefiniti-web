@@ -33,8 +33,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset r_pk = 0>
 
 	<cffunction name="Open" access="public" returntype="socialnet.friendship">
-		<cfargument name="source_friend" type="authentication.user" required="yes">
-		<cfargument name="target_friend" type="authentication.user" required="yes">
+		<cfargument name="source_friend" type="OpenHorizon.Identity.User" required="yes">
+		<cfargument name="target_friend" type="OpenHorizon.Identity.User" required="yes">
 
 		<cfset this.source_friend = source_friend>
         <cfset this.target_friend = target_friend>

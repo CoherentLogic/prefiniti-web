@@ -56,7 +56,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfset this.written = false>    
     
-    <cffunction name="Create" access="public" returntype="authentication.user" output="no">    
+    <cffunction name="Create" access="public" returntype="OpenHorizon.Identity.User" output="no">    
 		<cfargument name="username" type="string" required="yes">
 		<cfargument name="password" type="string" required="yes">
 		<cfargument name="password_question" type="string" required="yes">
@@ -107,7 +107,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #fname#>
     </cffunction>
     
-    <cffunction name="Open" access="public" output="no" returntype="authentication.user">
+    <cffunction name="Open" access="public" output="no" returntype="OpenHorizon.Identity.User">
     	<cfargument name="username" type="string" required="yes">
         
         <cfquery name="UOpen" datasource="webwarecl">
@@ -153,7 +153,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #this#>
     </cffunction>
     
-    <cffunction name="OpenByPK" access="public" output="no" returntype="authentication.user">
+    <cffunction name="OpenByPK" access="public" output="no" returntype="OpenHorizon.Identity.User">
     	<cfargument name="pk" type="numeric" required="yes">
         
         <cfquery name="obpk" datasource="webwarecl">
@@ -352,7 +352,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset ret_val = ArrayNew(1)>
         
         <cfoutput query="qryFriends">
-        	<cfset t_user = CreateObject("component", "authentication.user").OpenByPK(source_id)>
+        	<cfset t_user = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(source_id)>
             
             <cfset ArrayAppend(ret_val, t_user)>
         </cfoutput>
@@ -361,7 +361,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </cffunction>
     
     <cffunction name="CommonFriends" access="public" returntype="array" output="no">
-    	<cfargument name="target_user" type="authentication.user" required="yes">
+    	<cfargument name="target_user" type="OpenHorizon.Identity.User" required="yes">
         
         <cfset source_friends = this.Friends()>
         <cfset target_friends = target_user.Friends()>
@@ -379,7 +379,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #ret_val#>    
     </cffunction>
     
-    <cffunction name="Online" access="public" returntype="boolean" output="no">       	>
+    <cffunction name="Online" access="public" returntype="boolean" output="no">       	
         
         <cfquery name="io" datasource="webwarecl">
         	SELECT 	*	
@@ -395,7 +395,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         </cfif>
     </cffunction>
     
-    <cffunction name="ObjectRecord" access="public" returntype="Res" output="no">
+    <cffunction name="ObjectRecord" access="public" returntype="OpenHorizon.Storage.ObjectRecord" output="no">
     	<cfreturn #this.object_record#>
     </cffunction>
         

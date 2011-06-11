@@ -1,5 +1,5 @@
 <cfparam name="totalHours" default="0">
-<cfset tco = CreateObject("component","Res").GetByTypeAndPK("Time Card", attributes.r_pk)>
+<cfset tco = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Time Card", attributes.r_pk)>
 
 <cfquery name="getHeader" datasource="webwarecl">
 	SELECT * FROM time_card WHERE id=#attributes.r_pk#

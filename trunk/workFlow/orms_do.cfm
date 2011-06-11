@@ -5,7 +5,7 @@
 	SELECT * FROM projects WHERE id=#attributes.id#
 </cfquery>
 
-<cfset rt = CreateObject("component", "Res")>
+<cfset rt = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfoutput query="gpr">
 		<cfset rtype = "Project">
 		<cfset rowner = clientID>

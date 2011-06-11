@@ -1,4 +1,4 @@
-<cfset usr = CreateObject("component","Res").GetByTypeAndPK("User Account", attributes.r_pk)>
+<cfset usr = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", attributes.r_pk)>
 
 <cfinclude template="/authentication/authentication_udf.cfm">
 

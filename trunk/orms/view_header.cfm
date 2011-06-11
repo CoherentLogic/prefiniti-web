@@ -1,6 +1,6 @@
 <cfinclude template="/socialnet/socialnet_udf.cfm">
 <cfinclude template="/authentication/authentication_udf.cfm">
-<cfset orms = CreateObject("component", "Res")>
+<cfset orms = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 
 <cfset orms_rec = orms.GetByTypeAndPK(attributes.r_type, attributes.r_pk)>
 

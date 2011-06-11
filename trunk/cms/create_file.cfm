@@ -1,4 +1,4 @@
-<cfset orms_rec = CreateObject("component", "Res").Get(URL.target_uuid)>
+<cfset orms_rec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(URL.target_uuid)>
 
 <div style="height:100%;position:relative;">
 	<cfmodule template="/orms/dialog_header.cfm" icon="/graphics/navicons/files.png" caption="Upload File">

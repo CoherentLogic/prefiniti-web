@@ -4,7 +4,7 @@
 	SELECT * FROM time_card WHERE id=#attributes.id#
 </cfquery>
 
-<cfset rt = CreateObject("component", "Res")>
+<cfset rt = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfoutput query="gtc">
 		<cfset rtype = "Time Card">
 		<cfset rowner = emp_id>

@@ -34,7 +34,7 @@
 <cfset apvar = "">
 <cfset ind = 1>
 <cfloop query="gro">
-	<cfset orms = CreateObject("component", "Res")>
+	<cfset orms = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 	<cfset apvar = orms.Get(r_id)>
 	
 	<cfset ArrayAppend(oAr, apvar)>

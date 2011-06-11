@@ -1,4 +1,4 @@
-<cfset o = CreateObject("component", "Res")>
+<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfset o.GetByTypeAndPK(attributes.r_type, attributes.r_pk)>
 
 <cfset kw = o.GetKeys()>

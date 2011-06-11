@@ -1,315 +1,402 @@
-<!--- 
-	Open Horizon
-	
-	User.cfc
-	 The Open Horizon User object
-	
-	Created by J Willis
-	Created on 1/16/2010
+<!---
 
-	$Revision: 1.5 $ 
+$Id: user.cfc 49 2011-06-10 04:48:46Z chocolatejollis38@gmail.com $
 
- 	Copyright (C) 2010 Coherent Logic Development LLC
- --->
+Copyright (C) 2011 John Willis
  
+This file is part of Prefiniti.
 
-<cfcomponent displayName="User" hint="Represents an Open Horizon User" extends="OpenHorizon.Framework" implements="OpenHorizon.ISystemObject">
-	<!--- FIELDS TO BE USED IN NEXT GEN FRAMEWORK --->
-    <cfset this.Username = "">
-    <cfset this.HashedPassword = "">
-    <cfset this.FirstName = "">
-    <cfset this.MiddleInitial = "">
-    <cfset this.LastName = "">
-    <cfset this.EMailAddress = "">
-    <cfset this.Gender = "">
-    <cfset this.SMSNumber = "">
-    <cfset this.AccountEnabled = 0>
-    <cfset this.Confirmed = 0>
-    <cfset this.PostalCode = "">
-	<cfset this.DBKey = 0>
-    <cfset this.SiteMemberships = "">
-    <cfset this.Authenticated = false>
-    <cfset this.CreationDate = CreateODBCDateTime(Now())>
-    <cfset this.LoginSession = "">
-    <cfset this.SessionReady = false>
-    <cfset this.Picture = "">
-	<cfset this.Birthday = "">
-    <cfset this.Written = false>
-    
-    <cffunction name="Create" displayName="Create" hint="Create a new user and write it to the database" access="public" returnType="OpenHorizon.Identity.User" output="false">
-    	<cfargument name="Username" hint="The name with which the user will log in" type="string" required="yes">
-        <cfargument name="FirstName" hint="The user's given name" type="string" required="yes">
-        <cfargument name="LastName" hint="The user's surname" type="string" required="yes">
-        <cfargument name="EMailAddress" hint="The user's e-mail address" type="string" required="yes">
-        <cfargument name="Gender" hint="The user's gender" type="string" required="yes">
-        <cfargument name="Birthday" hint="The user's birthday" type="date" required="yes">
-        <cfargument name="PostalCode" hint="The user's postal code" type="date" required="yes">
-        
-        <cfif this.Written>
-        	<cfreturn #this#>
-		</cfif>            
-        
-        <cfset this.Username = Username>
-        <cfset this.HashedPassword = Hash("h4989jgsduifjobui9384yodjfhojvb084w8h59o8uhnv")>
-        <cfset this.FirstName = FirstName>
-        <cfset this.MiddleInitial = "">
-		<cfset this.LastName = LastName>
-        <cfset this.EMailAddress = EMailAddress>
-        <cfset this.Gender = Gender>
-        <cfset this.Birthday = Birthday>
-        <cfset this.PostalCode = PostalCode>
-        <cfset this.SMSNumber = "">
-        <cfset this.Confirmed = 0>
-     	<cfset this.CreationDate = CreateODBCDateTime(Now())>
- 		<cfset this.SessionReady = false>
-     	<cfset this.Written = false>
+Prefiniti is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-		<!--- Create body --->
-		<cfreturn #this#>
+Prefiniti is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
+
+--->
+<cfcomponent displayname="user" output="no" hint="Represents a Prefiniti User" extends="OpenHorizon.Framework"> 
+<!-- CLASS									DATABASE FIELD -->
+	<cfset this.r_pk = 0>					<!--- id (primary key) --->
+    <cfset this.username = "">				<!--- username --->
+    <cfset this.password = "">				<!--- password --->
+    <cfset this.email = "">					<!--- email --->
+    <cfset this.sms_number = "">			<!--- smsNumber --->
+    <cfset this.user_picture = "">				<!--- picture --->
+    <cfset this.account_enabled = 0>		<!--- account_enabled --->
+    <cfset this.gender = "">				<!--- gender --->
+    <cfset this.account_confirmed = 0>		<!--- confirmed --->
+    <cfset this.sms_confirmed = 0>			<!--- sms_confirmed --->
+    <cfset this.first_name = "">			<!--- firstName --->
+    <cfset this.middle_initial = "">		<!--- middleInitial --->
+    <cfset this.last_name = "">				<!--- lastName --->
+    <cfset this.display_name = "">  		<!--- longName --->
+    <cfset this.allow_search = 0>			<!--- allowSearch --->
+    <cfset this.birthday = #CreateODBCDate(Now())#>				<!--- birthday --->
+    <cfset this.relationship_status = "Unlisted">	<!--- relationship_status --->
+    <cfset this.so_id = 0>					<!--- so_id --->
+    <cfset this.zip_code = "">				<!--- zip_code --->
+    <cfset this.password_question = "">		<!--- password_question --->
+    <cfset this.password_answer = "">		<!--- password_answer --->
+    <cfset this.status = "">				<!--- status --->
+    <cfset this.location = "">				<!--- location --->
+    <cfset this.om_uuid = "">				<!--- confirm_id --->
+    <cfset this.global_admin = 0>			<!--- webware_admin --->
+    <cfset this.creation_date = #CreateODBCDateTime(Now())#>		<!--- CreationDate --->
+    <cfset this.location_url = "">			<!--- location_url --->
+    <cfset this.active_membership_id = 0>		<!--- last_site_id --->
+   	<cfset this.first_login = 0>
+    <cfset this.object_record = "">				<!--- ORMS record --->
+    
+    
+    <cfset this.written = false>    
+    
+    <cffunction name="Create" access="public" returntype="OpenHorizon.Identity.User" output="no">    
+		<cfargument name="username" type="string" required="yes">
+		<cfargument name="password" type="string" required="yes">
+		<cfargument name="password_question" type="string" required="yes">
+		<cfargument name="password_answer" type="string" required="yes">		        
+        <cfargument name="email" type="string" required="yes">
+		<cfargument name="first_name" type="string" required="yes">
+		<cfargument name="middle_initial" type="string" required="yes">
+		<cfargument name="last_name" type="string" required="yes">
+		<cfargument name="birthday" type="string" required="yes">		
+        <cfargument name="allow_search" type="boolean" required="yes">
+		<cfargument name="zip_code" type="string" required="yes">
+		
+        <cfset this.om_uuid = CreateUUID()>
+        <cfset this.username = username>
+        <cfset this.password = Hash(password)>
+        <cfset this.password_question = password_question>
+        <cfset this.password_answer = password_answer>
+        <cfset this.email = email>
+        <cfset this.first_name = first_name>
+        <cfset this.middle_initial = middle_initial>
+        <cfset this.last_name = last_name>
+        <cfset this.display_name = FormatName()>
+        <cfset this.birthday = CreateODBCDate(birthday)>
+        <cfset this.account_confirmed = 0>
+        <cfset this.account_enabled = 1>
+    	<cfset this.first_login = 1>
+            
+        <cfif allow_search EQ true>
+        	<cfset this.allow_search = 1>
+        <cfelse>
+        	<cfset this.allow_search = 0>
+        </cfif>
+        <cfset this.zip_code = zip_code>
+        
+        <cfset this.Save()>
+        <cfset this.SendConfirmationEmail()>
+        
+        <cfreturn #this#>
 	</cffunction>
     
-     
-	<cffunction name="Save" displayName="Save" hint="Save this user account to the database" access="public" returnType="OpenHorizon.Datatypes.ReturnValue" output="false">
-		
-        <cfparam name="retVal" default="">
-       	<cfif NOT this.Written>
-        	<cfset retVal = this.WriteAsNewRecord()>
-		<cfelse>
-        	<cfset retVal = this.UpdateExistingRecord()>
-		</cfif>                        
+    <cffunction name="FormatName" access="public" returntype="string" output="no">
+    	<cfif Len(this.middle_initial) GT 0>
+        	<cfset fname = this.first_name & " " & this.middle_initial & ". " & this.last_name>
+        <cfelse>
+        	<cfset fname = this.first_name & " " & this.last_name>
+        </cfif>
         
-		<cfset retVal = createObject("component", "OpenHorizon.Datatypes.ReturnValue").Create(true, "", "", this)>
-		<cfreturn #retVal#>
-	</cffunction>
+        <cfreturn #fname#>
+    </cffunction>
     
-	<cffunction name="Delete" displayName="Delete" hint="Delete this user account" access="public" returnType="OpenHorizon.Datatypes.ReturnValue" output="false">
-		
-        <cfif NOT this.Written>
-        	<cfreturn false>
-		</cfif>            
+    <cffunction name="Open" access="public" output="no" returntype="OpenHorizon.Identity.User">
+    	<cfargument name="username" type="string" required="yes">
         
-        <cfquery name="qryDeleteUser" datasource="#this.BaseDatasource#">
-        	DELETE FROM users WHERE username='#this.Username#'
-		</cfquery>            
-       
-		<cfset retVal = createObject("component", "OpenHorizon.Datatypes.ReturnValue").Create(true, "", "", this)>
-		<cfreturn #retVal#>
-	</cffunction>
-   
-	
-	<cffunction name="Open" displayName="Load" hint="Read a user account from the database" access="public" output="false" returntype="boolean">
-		<cfargument name="Username" type="string" required="yes">
-        
-        <cfquery name="qryLoadUser" datasource="#this.BaseDatasource#">
-        	SELECT * FROM users WHERE username='#Username#'
+        <cfquery name="UOpen" datasource="webwarecl">
+        	SELECT 	*
+            FROM	users
+            WHERE	username='#username#'
 		</cfquery>
         
-        <cfset this.HashedPassword = qryLoadUser.password>
-    	<cfset this.FirstName = qryLoadUser.firstName>
-    	<cfset this.MiddleInitial = qryLoadUser.middleInitial>
-   		<cfset this.LastName = qryLoadUser.lastName>
-		<cfset this.EMailAddress = qryLoadUser.email>
-        <cfset this.Gender = qryLoadUser.gender>
-        <cfset this.SMSNumber = qryLoadUser.smsNumber>
-        <cfset this.AccountEnabled = qryLoadUser.account_enabled>
-        <cfset this.Confirmed = qryLoadUser.confirmed>
-        <cfset this.PostalCode = qryLoadUser.zip_code>
-		<cfset this.Birthday = qryLoadUser.birthday>
-        <cfset this.DBKey = qryLoadUser.id>
-        <cfset this.SiteMemberships = "">
-        <cfset this.Authenticated = false>
-        <cfset this.CreationDate = qryLoadUser.CreationDate>
-        <cfset this.Username = qryLoadUser.username>
-        <cfset this.Picture = qryLoadUser.picture>
-        <cfset this.Written = true>
+       	<cfset this.r_pk = UOpen.id>								<!--- id (primary key) --->
+		<cfset this.username = UOpen.username>						<!--- username --->
+        <cfset this.password = UOpen.password>						<!--- password --->
+        <cfset this.email = UOpen.email>							<!--- email --->
+        <cfset this.sms_number = UOpen.smsNumber>					<!--- smsNumber --->
+        <cfset this.user_picture = UOpen.picture>						<!--- picture --->
+        <cfset this.account_enabled = UOpen.account_enabled>		<!--- account_enabled --->
+        <cfset this.gender = UOpen.gender>							<!--- gender --->
+        <cfset this.account_confirmed = UOpen.confirmed>			<!--- confirmed --->
+        <cfset this.sms_confirmed = UOpen.sms_confirmed>			<!--- sms_confirmed --->
+        <cfset this.first_name = UOpen.firstName>					<!--- firstName --->
+        <cfset this.middle_initial = UOpen.middleInitial>			<!--- middleInitial --->
+        <cfset this.last_name = UOpen.lastName>						<!--- lastName --->
+        <cfset this.display_name = UOpen.longName>  				<!--- longName --->
+        <cfset this.allow_search = UOpen.allowSearch>				<!--- allowSearch --->
+        <cfset this.birthday = UOpen.birthday>						<!--- birthday --->
+        <cfset this.relationship_status = UOpen.relationship_status><!--- relationship_status --->
+        <cfset this.so_id = UOpen.so_id>							<!--- so_id --->
+        <cfset this.zip_code = UOpen.zip_code>						<!--- zip_code --->
+        <cfset this.password_question = UOpen.password_question>	<!--- password_question --->
+        <cfset this.password_answer = UOpen.password_answer>		<!--- password_answer --->
+        <cfset this.status = UOpen.status>							<!--- status --->
+        <cfset this.location = UOpen.location>						<!--- location --->
+        <cfset this.om_uuid = UOpen.confirm_id>						<!--- confirm_id --->
+        <cfset this.global_admin = UOpen.webware_admin>				<!--- webware_admin --->
+        <cfset this.creation_date = UOpen.CreationDate>				<!--- CreationDate --->
+        <cfset this.location_url = UOpen.location_url>				<!--- location_url --->
+        <cfset this.active_membership_id = UOpen.last_site_id>			<!--- last_site_id --->       
+        <cfset this.first_login = UOpen.first_login>
         
-        <cfreturn true>            
-	</cffunction>
+        <cfset this.object_record = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", this.r_pk)>
+        
+        <cfset this.written = true>
+        
+        <cfreturn #this#>
+    </cffunction>
+    
+    <cffunction name="OpenByPK" access="public" output="no" returntype="OpenHorizon.Identity.User">
+    	<cfargument name="pk" type="numeric" required="yes">
+        
+        <cfquery name="obpk" datasource="webwarecl">
+        	SELECT username FROM users WHERE id=#pk#
+        </cfquery>
+        
+        <cfset ret_val = this.Open(obpk.username)>
 
-    <cffunction name="OpenByDBKey" displayName="OpenByDBKey" hint="Read a user account from the database by its database key" access="public" output="false" returntype="OpenHorizon.Datatypes.ReturnValue">
-            <cfargument name="DBKey" hint="The PK field for this user account" type="numeric" required="yes">
-            
-            <cfquery name="qryLoadUser" datasource="#this.BaseDatasource#">
-                SELECT * FROM users WHERE id=#DBKey#
-            </cfquery>
-            
-            <cfset this.HashedPassword = qryLoadUser.password>
-            <cfset this.FirstName = qryLoadUser.firstName>
-            <cfset this.MiddleInitial = qryLoadUser.middleInitial>
-            <cfset this.LastName = qryLoadUser.lastName>
-            <cfset this.EMailAddress = qryLoadUser.email>
-            <cfset this.Gender = qryLoadUser.gender>
-            <cfset this.SMSNumber = qryLoadUser.smsNumber>
-            <cfset this.AccountEnabled = qryLoadUser.account_enabled>
-            <cfset this.Confirmed = qryLoadUser.confirmed>
-            <cfset this.PostalCode = qryLoadUser.zip_code>
-			<cfset this.Birthday = qryLoadUser.birthday>
-            <cfset this.DBKey = qryLoadUser.id>
-            <cfset this.SiteMemberships = "">
-            <cfset this.Authenticated = false>
-            <cfset this.CreationDate = qryLoadUser.CreationDate>
-            <cfset this.Username = qryLoadUser.username>
-            <cfset this.Picture = qryLoadUser.picture>
-            <cfset this.Written = true>
-            
-			<cfset retval = createObject("component", "OpenHorizon.Datatypes.ReturnValue")>
-			<cfset retval.Create(true, "", "", this)>
-			
-            <cfreturn #retval#>            
-            
-    </cffunction>
-        
-    <cffunction name="Authenticate" displayname="Authenticate" hint="Authenticate this user object" access="public" output="no" returntype="boolean">
-    	<cfargument name="password" type="string" required="yes">
-        
-        <cfif NOT this.Written>
-        	<cfreturn false>
-		</cfif>
-        
-        <cfif Hash(password) EQ this.HashedPassword>
-			<cfset this.EnsureStorage()>
-        	<cfset this.Authenticated = true>
-            <cfreturn true>
-		<cfelse>
-        	<cfreturn false>            
-		</cfif>                    
+        <cfreturn #ret_val#>
     </cffunction>
     
-    <cffunction name="OpenSession" displayname="GetSession" hint="Open a login session on the Open Horizon server." access="public" output="no" returntype="OpenHorizon.Identity.OHSession">
-   		<cfargument name="NetAddress" displayName="NetAddress" hint="The user's IP address" type="string" required="true">
-		<cfargument name="NetHostname" displayName="NetHostname" hint="The user's hostname" type="string" required="true">
-		<cfargument name="NetBrowser" displayName="NetBrowser" hint="The user's web browser" type="string" required="true">
+    <cffunction name="Save" access="public" output="no" returntype="void">
+    	<cfif this.written>
+      		<cfset this.UpdateExistingRecord()>
+    	<cfelse>
+      		<cfset this.WriteAsNewRecord()>
+    	</cfif>
+    	<cfmodule template="/authentication/Users/orms_do.cfm" id="#this.r_pk#">
+        <cfset this.written = true>
+  	</cffunction>
     
-    	
-		<cfset this.LoginSession = createObject("component", "OpenHorizon.Identity.OHSession").Open(this.Username, this.HashedPassword, NetAddress, NetHostname, NetBrowser)>
-       
-		<cfset this.SessionReady = true>
-        <cfreturn #this.LoginSession#>
-        
+    <cffunction name="UpdateExistingRecord" access="public" output="no" returntype="void">
+    	<cfquery name="uer" datasource="webwarecl">
+        	UPDATE 	users
+            SET		username='#this.username#',
+            		password='#this.password#',
+                    email='#this.email#',
+                    smsNumber='#this.sms_number#',
+                    picture='#this.user_picture#',
+                    account_enabled=#this.account_enabled#,
+                    gender='#this.gender#',
+                    confirmed=#this.account_confirmed#,
+                    sms_confirmed=#this.sms_confirmed#,
+                    firstName='#this.first_name#',
+                    middleInitial='#this.middle_initial#',
+                    lastName='#this.last_name#',
+                    longName='#this.display_name#',
+                    allowSearch=#this.allow_search#,
+                    birthday=#this.birthday#,
+                    relationship_status='#this.relationship_status#',
+                    so_id=#this.so_id#,
+                    zip_code='#this.zip_code#',
+                    password_question='#this.password_question#',
+                    password_answer='#this.password_answer#',
+                    status='#this.status#',
+                    location='#this.location#',
+                    confirm_id='#this.om_uuid#',
+                    webware_admin=#this.global_admin#,
+                    location_url='#this.location_url#',
+                    last_site_id=#this.active_membership_id#
+                    first_login=#this.first_login#
+			WHERE	id=#this.r_pk#                    
+        </cfquery>          
     </cffunction>
     
-    <cffunction name="CloseSession" displayname="CloseSession" hint="Closes the active login session on the OH server." access="public" output="no" returntype="OpenHorizon.Identity.OHSession">
-    	<cfscript>
-			this.LoginSession.Close();
-			this.SessionReady = false;
-		</cfscript>
-    
-    	<cfreturn #this.LoginSession#>
-    </cffunction>
-    
-    <cffunction name="FullName" displayname="FullName" hint="Get a formatted display of the OH user's full name." access="public" output="no" returntype="string">
-    	<cfparam name="tmpS" default="">
-        <cfset tmpS = this.FirstName & " " & this.LastName>
+    <cffunction name="WriteAsNewRecord" access="public" output="no" returntype="void">
+    	<cfset this.om_uuid = CreateUUID()>
         
-        <cfreturn #tmpS#>
-    </cffunction>
-    
-	
-	<cffunction name="EnsureStorage" displayname="EnsureStorage" hint="Ensure that the proper directory structure exists for this user's file storage" access="public" output="no" returntype="void">
-		<cfset proper_home = this.StorageRoot & this.PathDelimiter & this.DBKey>
-		<cfset proper_staging = this.Staging & this.PathDelimiter & this.DBKey>
-
-		<cfif NOT DirectoryExists(proper_home)>
-			<cfdirectory action="create" directory="#proper_home#">
-		</cfif>
-		
-		<cfif NOT DirectoryExists(proper_staging)>
-			<cfdirectory action="create" directory="#proper_staging#">
-		</cfif>
-		
-	</cffunction>
-	
-	<cffunction name="StorageArea" displayname="StorageArea" hint="Get the directory path for this user's storage area" access="public" output="no" returntype="string">
-		<cfset tmp_sr = this.StorageRoot & this.PathDelimiter & this.DBKey>
-		
-		<cfreturn #tmp_sr#>
-	</cffunction>
-	
-	<cffunction name="StagingArea" displayname="StagingArea" hint="Get the directory path for this user's download staging area" access="public" output="no" returntype="string">
-		<cfset tmp_sr = this.Staging & this.PathDelimiter & this.DBKey>
-		
-		<cfreturn #tmp_sr#>
-	</cffunction>
-	
-    <cffunction name="WriteAsNewRecord" displayname="WriteAsNewRecord" hint="Write this user object to the database" access="public" output="no" returntype="boolean">
-    	<cfparam name = "LocatorUUID" default="">
-        <cfset LocatorUUID = CreateUUID()>
+        <cfset this.creation_date = CreateODBCDateTime(Now())>
         
-        <cfquery name="qryWriteAsNewRecord" datasource="#this.BaseDatasource#">
+    	<cfquery name="wanr" datasource="webwarecl">
         	INSERT INTO users
             	(username,
                 password,
-                firstName,
-                lastName,
-                longName,
-                customerNumber,
                 email,
-                confirm_id,
+                smsNumber,
+                picture,
                 account_enabled,
                 gender,
                 confirmed,
-                webware_admin,
+                sms_confirmed,
+                firstName,
                 middleInitial,
+                lastName,
+                longName,
+                allowSearch,
                 birthday,
+                relationship_status,
+                so_id,
                 zip_code,
-                smsNumber,
-                CreationDate)
-            VALUES
-            	('#this.Username#'),
-                '#this.HashedPassword#',
-                '#this.FirstName#',
-                '#this.LastName#',
-                '#this.FirstName# #this.LastName#',
-                0,
-                '#this.EMailAddress#',
-                '#LocatorUUID#',
-                #this.AccountEnabled#,
-                '#this.Gender#',
-                #this.Confirmed#,
-                0,
-                '#this.MiddleInitial#',
-                #this.Birthday#,
-                '#this.PostalCode#',
-                '#this.SMSNumber#',
-                #CreateODBCDateTime(this.CreationDate)#)
-		</cfquery>   
+                password_question,
+                password_answer,
+                status,
+                location,
+                confirm_id,
+                webware_admin,
+                CreationDate,
+                location_url,
+                last_site_id,
+                first_login)
+			VALUES
+            	('#this.username#',
+                '#this.password#',
+                '#this.email#',
+                '#this.sms_number#',
+                '#this.user_picture#',
+                #this.account_enabled#,
+                '#this.gender#',
+                #this.account_confirmed#,
+                #this.sms_confirmed#,
+               	'#this.first_name#',
+                '#this.middle_initial#',
+                '#this.last_name#',
+                '#this.display_name#',
+                #this.allow_search#,
+                #CreateODBCDate(this.birthday)#,
+                '#this.relationship_status#',
+                #this.so_id#,
+                '#this.zip_code#',
+                '#this.password_question#',
+                '#this.password_answer#',
+                '#this.status#',
+                '#this.location#',
+                '#this.om_uuid#',
+                #this.global_admin#,
+                #this.creation_date#,
+                '#this.location_url#',
+                #this.active_membership_id#,
+                #this.first_login#)                                                              
+        </cfquery>
         
-        <cfquery name="qryGetDBKey" datasource='#this.BaseDatasource#'>
-        	SELECT id FROM users WHERE confirm_id='#LocatorUUID#'
-        </cfquery>               
+        <cfquery name="wanr_get_id" datasource="webwarecl">
+        	SELECT id FROM users WHERE confirm_id='#this.om_uuid#'
+        </cfquery>
         
-        <cfset this.DBKey = qryGetDBKey.id>
-        <cfset this.Written = true>
-        
-        <cfreturn true>
+        <cfset this.r_pk = wanr_get_id.id>               
     </cffunction>
     
-    <cffunction name="UpdateExistingRecord" displayname="UpdateExistingRecord" hint="Update this user object in the database" returntype="boolean" access="public">
+	<cffunction name="SendConfirmationEmail" access="public" returntype="void" output="no">
+    	<cfoutput>
+        <cfmail from="register@prefiniti.com" to="#this.email#" subject="Prefiniti Account Confirmation" type="html">
+            <h1>Account Created</h1>
+            
+            <p>Your Prefiniti account has been created. Please visit the link below to confirm your new account.</p>            
+            
+            <a href="http://prefiniti15.prefiniti.com/homeres/confirm_account.cfm?om_uuid=#this.om_uuid#">Confirm My Account</a>
+            
+            <p>Otherwise, copy the following text to your browser's URL bar:</p>
+            
+            <pre>http://prefiniti15.prefiniti.com/homeres/confirm_account.cfm?om_uuid=#this.om_uuid#</pre>
+            
+            <p>You will need <a href="http://www.mozilla.com/en-US/firefox/">Mozilla Firefox<a/>, <a href="http://www.google.com/chrome">Google Chrome</a>, or <a href="http://www.apple.com/safari/">Apple Safari</a> to use Prefiniti. We do not support Microsoft Internet Explorer at this time.</p>
+        </cfmail>
+        </cfoutput>
+        
+    </cffunction>
     
-    	<cfif NOT this.Written>
+    <cffunction name="ConfirmAccount" access="public" returntype="void" output="no">
+    	<cfset this.account_confirmed = 1>                    
+        <cfset this.Save()>
+    </cffunction>
+    
+    <cffunction name="Confirmed" access="public" returntype="boolean" output="no">
+    	<cfif this.account_confirmed EQ 0>
+        	<cfreturn false>
+		<cfelse>
+        	<cfreturn true>
+		</cfif>                                    
+    </cffunction>
+    
+    <cffunction name="SetPassword" access="public" returntype="void" output="no">
+    	<cfargument name="password" type="string" required="yes">
+        <cfargument name="password_question" type="string" required="yes">
+        <cfargument name="password_answer" type="string" required="yes">
+        
+        <cfset this.password = Hash(password)>
+        <cfset this.password_question = password_question>
+        <cfset this.password_answer = password_answer>
+        
+        <cfset this.Save()>
+    </cffunction>
+    
+    <cffunction name="FirstLogin" access="public" returntype="boolean" output="no">
+    	<cfif this.first_login EQ 1>
+        	<cfreturn true>
+        <cfelse>
         	<cfreturn false>
         </cfif>
+    </cffunction>
+    
+    <cffunction name="Picture" access="public" returntype="string" output="no">
+    	<cfargument name="width" type="numeric" required="yes">
+        <cfargument name="height" type="numeric" required="yes">
         
-    	<cfquery name="qryUpdateExistingRecord" datasource="#this.BaseDatasource#">
-        	UPDATE users
-            SET username='#this.Username#',
-                password='#this.HashedPassword#',
-                firstName='#this.FirstName#',
-                middleInitial='#this.MiddleInitial#',
-                lastName='#this.LastName#',
-                longName='#this.FirstName# #this.MiddleInitial#. #this.LastName#',
-                email='#this.EMailAddress#',
-                account_enabled=#this.AccountEnabled#,
-                gender='#this.Gender#',
-                confirmed=#this.Confirmed#,
-                birthday=#this.Birthday#,
-                zip_code='#this.PostalCode#',
-                smsNumber='#this.SMSNumber#',
-                CreationDate=#CreateODBCDateTime(this.CreationDate)#
-			WHERE id=#this.DBKey#
-		</cfquery>
+    	<cfset po = CreateObject("component", "OpenHorizon.Graphics.Image")>
+        <cfset pic = po.Create(this.object_record.r_thumb, width, height)> 
         
-        <cfreturn true>
-	</cffunction>                                    
-	                                                                
-</cfcomponent> 
+		<cfreturn #pic#>    
+    </cffunction>
+    
+    <cffunction name="Friends" access="public" returntype="array" output="no">
+    	<cfquery name="qryFriends" datasource="webwarecl">
+        	SELECT * FROM friends WHERE target_id=#this.r_pk#
+        </cfquery>
+        
+        <cfset ret_val = ArrayNew(1)>
+        
+        <cfoutput query="qryFriends">
+        	<cfset t_user = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(source_id)>
+            
+            <cfset ArrayAppend(ret_val, t_user)>
+        </cfoutput>
+            	               
+        <cfreturn #ret_val#>
+    </cffunction>
+    
+    <cffunction name="CommonFriends" access="public" returntype="array" output="no">
+    	<cfargument name="target_user" type="OpenHorizon.Identity.User" required="yes">
+        
+        <cfset source_friends = this.Friends()>
+        <cfset target_friends = target_user.Friends()>
+        
+        <cfset ret_val = ArrayNew(1)>
+        
+        <cfloop array="#source_friends#" index="sf">
+        	<cfloop array="#target_friends#" index="tf">
+            	<cfif sf.r_pk EQ tf.r_pk>
+                	<cfset ArrayAppend(ret_val, sf)>
+				</cfif>                    
+            </cfloop>
+        </cfloop>
+        
+        <cfreturn #ret_val#>    
+    </cffunction>
+    
+    <cffunction name="Online" access="public" returntype="boolean" output="no">       	
+        
+        <cfquery name="io" datasource="webwarecl">
+        	SELECT 	*	
+            FROM	auth_tokens
+            WHERE	username='#this.username#'
+            AND		active=1
+    	</cfquery>
+        
+        <cfif io.RecordCount GT 0>
+        	<cfreturn true>
+        <cfelse>
+        	<cfreturn false>
+        </cfif>
+    </cffunction>
+    
+    <cffunction name="ObjectRecord" access="public" returntype="OpenHorizon.Storage.ObjectRecord" output="no">
+    	<cfreturn #this.object_record#>
+    </cffunction>
+        
+</cfcomponent>

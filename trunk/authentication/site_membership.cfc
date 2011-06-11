@@ -28,9 +28,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfset this.written = false>
     
-    <cffunction name="Create" access="public" returntype="authentication.site_membership" output="no">
-		<cfargument name="site" type="authentication.site" required="yes">
-    	<cfargument name="user" type="authentication.user" required="yes">
+    <cffunction name="Create" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="no">
+		<cfargument name="site" type="OpenHorizon.Identity.Site" required="yes">
+    	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
         <cfargument name="membership_type" type="string" required="yes">
         
         <cfset this.site = site>
@@ -40,9 +40,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfreturn #this#>                                        
     </cffunction>
     
-    <cffunction name="Open" access="public" returntype="authentication.site_membership" output="no">
-    	<cfargument name="site" type="authentication.site" required="yes">
-    	<cfargument name="user" type="authentication.user" required="yes">
+    <cffunction name="Open" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="no">
+    	<cfargument name="site" type="OpenHorizon.Identity.Site" required="yes">
+    	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
         <cfargument name="membership_type" type="string" required="yes">
         
         <cfquery name="oid" datasource="sites">
@@ -67,7 +67,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #this#>
     </cffunction>
     
-    <cffunction name="OpenByPK" access="public" returntype="authentication.site_membership" output="no">
+    <cffunction name="OpenByPK" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="no">
     	<cfargument name="r_pk" type="numeric" required="yes">
         
         <cfquery name="opk" datasource="sites">
@@ -76,8 +76,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             WHERE	id=#r_pk#
 		</cfquery>            
         
-        <cfset this.site = CreateObject("component", "authentication.site").OpenByMembershipID(opk.id)>
-        <cfset this.user = CreateObject("component", "authentication.user").OpenByPK(opk.user_id)>    
+        <cfset this.site = CreateObject("component", "OpenHorizon.Identity.Site").OpenByMembershipID(opk.id)>
+        <cfset this.user = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(opk.user_id)>    
         
 		<cfquery name="gmt" datasource="sites">
         	SELECT association_type_name FROM association_types WHERE association_type=#opk.assoc_type#
@@ -93,8 +93,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     
     <cffunction name="Delete" access="public" returntype="void" output="no">
-    	<cfargument name="site" type="authentication.site" required="yes">
-    	<cfargument name="user" type="authentication.user" required="yes">
+    	<cfargument name="site" type="OpenHorizon.Identity.Site" required="yes">
+    	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
     	<cfargument name="membership_type" type="string" required="yes">
         
      

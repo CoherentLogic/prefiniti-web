@@ -53,5 +53,55 @@
         
         <cfreturn #tmpArray#>
 	</cffunction>        
+	
+    <cffunction name="FriendlySize" access="public" output="no" returntype="string">
+    	<cfargument name="bytes" type="numeric" required="yes">
+        
+        <cfset kilobyte = 1024>
+        <cfset megabyte = 1048576>
+        <cfset gigabyte = 1073741824>
+        <cfset terabyte = 1099511627776>
+        <cfset petabyte = 1125899906842624>
+        <cfset exabyte = petabyte * 1024>
+   
+   		<cfif bytes GE exabyte>
+        	<cfset nv = bytes / exabyte>
+            <cfset ret_val = Int(nv) & "EB">
+       		<cfreturn ret_val>
+        </cfif>
 
+   		<cfif bytes GE petabyte>
+        	<cfset nv = bytes / petabyte>
+            <cfset ret_val = Int(nv) & "PB">
+       		<cfreturn ret_val>
+        </cfif>
+
+   		<cfif bytes GE terabyte>
+        	<cfset nv = bytes / terabyte>
+            <cfset ret_val = Int(nv) & "TB">
+       		<cfreturn ret_val>
+        </cfif>
+
+   		<cfif bytes GE gigabyte>
+        	<cfset nv = bytes / gigabyte>
+            <cfset ret_val = Int(nv) & "GB">
+       		<cfreturn ret_val>
+        </cfif>
+       
+   		<cfif bytes GE megabyte>
+        	<cfset nv = bytes / megabyte>
+            <cfset ret_val = Int(nv) & "MB">
+       		<cfreturn ret_val>
+        </cfif>
+        
+        <cfif bytes GE kilobyte>
+        	<cfset nv = bytes / kilobyte>
+            <cfset ret_val = Int(nv) & "KB">
+       		<cfreturn ret_val>
+        </cfif>
+        
+        <cfset ret_val = bytes & " bytes">
+        <cfreturn #ret_val#>
+        
+    </cffunction>
 </cfcomponent>

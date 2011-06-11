@@ -7,7 +7,7 @@
 --->
 <cfinclude template="/socialnet/socialnet_udf.cfm">
 <cfinclude template="/authentication/authentication_udf.cfm">
-<cfset o = CreateObject("component", "Res")>
+<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfset o.GetByTypeAndPK(attributes.r_type, attributes.r_pk)>
 
 <table width="100%" cellpadding="0" cellspacing="0">

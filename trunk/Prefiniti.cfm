@@ -44,7 +44,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	</cfif>
 
 	<cfif IsDefined("URL.View")>
-		<cfset o = CreateObject("component", "Res").Get(URL.View)>
+		<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(URL.View)>
 		<cfoutput>
 			<title>#o.r_type# #o.r_name# - The Prefiniti Network</title>
 		</cfoutput>

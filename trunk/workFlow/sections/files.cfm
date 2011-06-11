@@ -7,7 +7,7 @@
 	</cfquery>
 	
 
-	<cfset orec = CreateObject("component", "Res")>
+	<cfset orec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 	<cfset orec.GetByTypeAndPK("Project", attributes.r_pk)>
 	
 	<cfif orec.CanWrite(URL.CalledByUser)>

@@ -1,164 +1,243 @@
-<!--- Open Horizon SiteMembership.cfc $Revision: 1.2 $--->
-<cfcomponent displayName="SiteMembership" hint="Encapsulates a membership to an Open Horizon site" extends="OpenHorizon.Framework">
-	
-    <cfset this.MembershipID = "">
-    <cfset this.SiteID = "">
-    <cfset this.MembershipType = "">
-    <cfset this.SiteName = "">
-    <cfset this.Site = "">
+<!---
+
+$Id: site_membership.cfc 47 2011-06-09 22:05:49Z chocolatejollis38@gmail.com $
+
+Copyright (C) 2011 John Willis
+ 
+This file is part of Prefiniti.
+
+Prefiniti is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Prefiniti is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
+
+--->
+<cfcomponent displayname="site_membership" output="no" extends="OpenHorizon.Framework">
+	<cfset this.site = "">
+    <cfset this.user = "">
+    <cfset this.membership_type = "">
+    <cfset this.r_pk = 0>
     
-    <cfset this.DBKey = "">
+    <cfset this.written = false>
     
-    <cffunction name="Create" displayName="Create" hint="Create a new site membership" access="public" returnType="OpenHorizon.Identity.SiteMembership" output="false">
-		<!--- Create body --->
-		<cfreturn #this#>
-	</cffunction>
-    
-    <cffunction name="Load" displayname="Load" hint="Load an existing site membership from the database" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="false">
-    	<cfargument name="SiteName" type="string" required="yes">
-        <cfargument name="MembershipType" type="string" required="yes">
+    <cffunction name="Create" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="no">
+		<cfargument name="site" type="OpenHorizon.Identity.Site" required="yes">
+    	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
+        <cfargument name="membership_type" type="string" required="yes">
         
+        <cfset this.site = site>
+        <cfset this.user = user>
+        <cfset this.membership_type = membership_type>
+                                        
+		<cfreturn #this#>                                        
+    </cffunction>
+    
+    <cffunction name="Open" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="no">
+    	<cfargument name="site" type="OpenHorizon.Identity.Site" required="yes">
+    	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
+        <cfargument name="membership_type" type="string" required="yes">
         
-        <cfquery name="qryLoadByID" datasource="#this.SitesDatasource#">
-			SELECT
-            	site_associations.id AS MembershipID,                
-                sites.SiteID AS SiteID,
-                sites.SiteName AS SiteName,
-                association_types.association_type_name AS MembershipType
-             FROM site_associations 
-             INNER JOIN sites 
-             ON site_associations.site_id=sites.SiteID
-             INNER JOIN association_types
-             ON site_associations.assoc_type=association_types.association_type
-             WHERE SiteName='#SiteName#' 
-             AND   MembershipType='#MembershipType#'   	        
+        <cfquery name="oid" datasource="sites">
+        	SELECT association_type FROM association_types WHERE association_type_name='#membership_type#'
         </cfquery>
         
-        <cfset this.MembershipID = qryLoadByID.MembershipID>
-        <cfset this.SiteID = qryLoadByID.SiteID>
-        <cfset this.MembershipType = qryLoadByID.MembershipType>
-        <cfset this.SiteName = qryLoadByID.SiteName>      
+        <cfquery name="open" datasource="sites">
+        	SELECT 	* 
+            FROM 	site_associations 
+            WHERE 	site_id=#site.r_pk# 
+            AND		user_id=#user.r_pk#
+            AND		assoc_type=#oid.association_type#
+        </cfquery>
         
+        <cfset this.site = site>
+        <cfset this.user = user>
+        <cfset this.membership_type = membership_type>
+        <cfset this.r_pk = open.id>
         
-        <cfset this.Site = createObject("component", "OpenHorizon.Identity.Site").Open(this.SiteName)>
+        <cfset this.written = true>
         
         <cfreturn #this#>
     </cffunction>
     
-    <cffunction name="LoadByID" displayname="LoadByID" hint="Load an existing site membership from the database by membership ID" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="false">
-    	<cfargument name="MembershipID" type="numeric" required="yes">
+    <cffunction name="OpenByPK" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="no">
+    	<cfargument name="r_pk" type="numeric" required="yes">
         
-        <cfquery name="qryLoadByID" datasource="#this.SitesDatasource#">
-			SELECT
-            	site_associations.id AS MembershipID,                
-                sites.SiteID AS SiteID,
-                sites.SiteName AS SiteName,
-                association_types.association_type_name AS MembershipType
-             FROM site_associations 
-             INNER JOIN sites 
-             ON site_associations.site_id=sites.SiteID
-             INNER JOIN association_types
-             ON site_associations.assoc_type=association_types.association_type
-             WHERE site_associations.id=#MembershipID#        	        
+        <cfquery name="opk" datasource="sites">
+        	SELECT  *
+            FROM	site_associations
+            WHERE	id=#r_pk#
+		</cfquery>            
+        
+        <cfset this.site = CreateObject("component", "OpenHorizon.Identity.Site").OpenByMembershipID(opk.id)>
+        <cfset this.user = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(opk.user_id)>    
+        
+		<cfquery name="gmt" datasource="sites">
+        	SELECT association_type_name FROM association_types WHERE association_type=#opk.assoc_type#
         </cfquery>
         
-        <cfset this.MembershipID = qryLoadByID.MembershipID>
-        <cfset this.SiteID = qryLoadByID.SiteID>
-        <cfset this.MembershipType = qryLoadByID.MembershipType>
-        <cfset this.SiteName = qryLoadByID.SiteName>      
+		<cfset this.membership_type = gmt.association_type_name>
+        <cfset this.r_pk = opk.id>
         
-		<cftry>
-        <cfset this.Site = createObject("component", "OpenHorizon.Identity.Site").Open(this.SiteName)>
-        <cfcatch>
-        	<cflog file="OpenHorizon.Identity.SiteMembership" type="error" text="Message: #cfcatch.Message#">
-        	<cflog file="OpenHorizon.Identity.SiteMembership" type="error" text="Detail: #cfcatch.Detail#">
-        </cfcatch>
-        </cftry>
-        <cfreturn #this#>
+        <cfset this.written = true>
+        
+    	<cfreturn #this#>
     </cffunction>
     
-    <cffunction name="InstalledApps" hint="Return an array of structures representing all installed apps." access="public" returntype="array" output="no">
-    	
-        <cfquery name="qryInstalledApps" datasource="#this.BaseDatasource#">
-        	SELECT * FROM apps_installed WHERE MembershipID = #this.MembershipID#
-		</cfquery>  
+    
+    <cffunction name="Delete" access="public" returntype="void" output="no">
+    	<cfargument name="site" type="OpenHorizon.Identity.Site" required="yes">
+    	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
+    	<cfargument name="membership_type" type="string" required="yes">
         
-        <cfparam name="tmpArray" default="">
-        <cfset tmpArray = ArrayNew(1)>
-        
-        
-        <cfparam name="appObj" default="">
-        
-        <cfoutput query="qryInstalledApps">
-        	<cfset appObj = createObject("component", "OpenHorizon.Apps.App").Open(AppID)>
-            
-          	#ArrayAppend(tmpArray, appObj)#
-        </cfoutput>          
-        
-        <cfreturn #tmpArray#>
+     
+        <cfquery name="delete_member" datasource="sites">
+        	DELETE FROM site_associations
+            WHERE		id=#this.r_pk#
+        </cfquery>        
     </cffunction>
     
-    <cffunction name="IsAppInstalled" hint="Is an application installed on this membership?" access="public" returntype="boolean" output="no">
-    	<cfargument name="AppID" hint="The UUID-format ID of the application in question" type="string" required="yes">
+    <cffunction name="Save" access="public" output="no" returntype="void">
+    	<cfif NOT this.written>      	
+      		<cfset this.WriteAsNewRecord()>
+    	</cfif>
+    	<cfmodule template="/authentication/Sites/orms_do.cfm" id="#this.r_pk#">
+        <cfset this.written = true>
+  	</cffunction>
+    
+    <cffunction name="WriteAsNewRecord" access="public" output="no" returntype="void">
+    	<cfset this.om_uuid = CreateUUID()>       
         
-        <cfquery name="qryIsAppInstalled" datasource="#this.BaseDatasource#">
-        	SELECT * FROM apps_installed WHERE AppID='#AppID#' AND MembershipID=#this.MembershipID#
-		</cfquery>
+        <cfquery name="mt" datasource="sites">
+        	SELECT association_type FROM association_types WHERE association_type_name='#this.membership_type#'
+        </cfquery>
         
-        <cfif qryIsAppInstalled.RecordCount GT 0>
-        	<cfreturn true>
-		<cfelse>
+        <cfquery name="wanr" datasource="sites">
+        	INSERT INTO site_associations
+            			(user_id,
+                        site_id,
+                        assoc_type,
+                        conf_id)
+			VALUES		(#this.user.r_pk#,
+            			#this.site.r_pk#,
+                        #mt.association_type#,
+                        '#this.om_uuid#')                                                
+        </cfquery>
+        
+        <cfquery name="wanr_id" datasource="sites">
+        	SELECT id FROM site_associations WHERE conf_id='#this.om_uuid#'
+        </cfquery>
+        
+        <cfset this.r_pk = wanr_id.id>
+    </cffunction>        
+    
+    <cffunction name="Grant" access="public" output="no" returntype="void">
+    	<cfargument name="permission_key" type="string" required="yes">
+                  
+        <cfparam name="tperm_id" default="">
+        
+        <cfquery name="get_perm_id" datasource="sites">
+            SELECT * FROM permissions WHERE perm_key='#permission_key#'
+        </cfquery>
+        
+        <cfset tperm_id = get_perm_id.id>
+ 		
+        <cfif this.Examine(permission_key)>   
+            <cfquery name="set_perm" datasource="sites">
+                INSERT INTO permission_entries
+                    (assoc_id,
+                    perm_id)
+                VALUES
+                    (#this.r_pk#,
+                    #tperm_id#)
+            </cfquery>                        
+        </cfif>
+    </cffunction>        
+    
+    <cffunction name="Revoke" access="public" output="no" returntype="void">
+    	<cfargument name="permission_key" type="string" required="yes">
+        
+        <cfparam name="tperm_id" default="">
+        
+        <cfquery name="get_perm_id" datasource="sites">
+            SELECT id FROM permissions WHERE perm_key='#permission_key#'
+        </cfquery>
+        
+        <cfset tperm_id = get_perm_id.id>  
+        
+        <cfquery name="rev_perm" datasource="site">
+        	DELETE FROM	permission_entries
+            WHERE		assoc_id=#this.r_pk#
+            AND			perm_id=#tperm_id#
+        </cfquery>              
+    </cffunction>
+
+
+    <cffunction name="Examine" access="public" output="no" returntype="boolean">
+    	<cfargument name="permission_key" type="string" required="yes">
+		
+        <cfparam name="tperm_id" default="">
+    
+        <cfquery name="get_perm_id" datasource="sites">
+            SELECT * FROM permissions WHERE perm_key='#permission_key#'
+        </cfquery>
+        
+        <cfset tperm_id = get_perm_id.id>
+        
+        <cfif tperm_id EQ "">
         	<cfreturn false>
-		</cfif>                                    
+        </cfif>
         
-    </cffunction>
-    
-    <cffunction name="Enumerate" displayname="Enumerate" hint="Enumerate site memberships for a user." access="public" returntype="query" output="false">
-    	<cfargument name="User" type="OpenHorizon.Identity.User" required="yes">
-        
-        <cfquery name="qryEnumerateSM" datasource="#this.SitesDatasource#">
-        	SELECT
-            	site_associations.id AS MembershipID,                
-                sites.SiteID AS SiteID,
-                sites.SiteName AS SiteName,
-                association_types.association_type_name AS MembershipType
-             FROM site_associations 
-             INNER JOIN sites 
-             ON site_associations.site_id=sites.SiteID
-             INNER JOIN association_types
-             ON site_associations.assoc_type=association_types.association_type
-             WHERE site_associations.user_id=#User.DBKey#             
+        <cfquery name="get_entry" datasource="sites">
+            SELECT * FROM permission_entries WHERE perm_id=#tperm_id# AND assoc_id=#this.r_pk#
         </cfquery>
         
-        <cfreturn #qryEnumerateSM#>
+        <cfif get_entry.RecordCount EQ 0>
+            <cfreturn "false">
+        <cfelse>
+            <cfreturn "true" > 
+        </cfif>                           
+    </cffunction>
+	
     
+    <cffunction name="GrantSet" access="public" output="no" returntype="void">
+    	<cfargument name="permission_keys" type="string" required="yes">    
+        	        
+        <cfset perm_array = ListToArray(permission_keys, ",")>
+            
+    	<cfloop array="#perm_array#" index="cp">
+        	<cfset this.Grant(cp)>
+        </cfloop>  
     </cffunction>
     
-    <cffunction name="EnumerateGrid" displayname="Enumerate" hint="Enumerate site memberships for a user in a grid format." access="public" returntype="query" output="false">
-    	<cfargument name="User" type="OpenHorizon.Identity.User" required="yes">
-        <cfargument name="Page" type="numeric" required="yes">
-        <cfargument name="PageSize" type="numeric" required="yes">
-        <cfargument name="SortColumn" type="string" required="yes">
-        <cfargument name="SortDirection" type="string" required="yes">
+    <cffunction name="RevokeSet" access="public" output="no" returntype="void">
+    	<cfargument name="permission_keys" type="string" required="yes">    
         
-        
-        <cfquery name="qryEnumerateSMGrid" datasource="#this.SitesDatasource#">
-        	SELECT
-            	site_associations.id AS MembershipID,                
-                sites.SiteID AS SiteID,
-                sites.SiteName AS SiteName,
-                association_types.association_type_name AS MembershipType
-             FROM site_associations 
-             INNER JOIN sites 
-             ON site_associations.site_id=sites.SiteID
-             INNER JOIN association_types
-             ON site_associations.assoc_type=association_types.association_type
-             WHERE site_associations.user_id=#User.DBKey#
-             
-        </cfquery>
-        <!--- ORDER BY #SortColumn# #SortDirection#
-            --->
-        <cfreturn #qryEnumerateSMGrid#>
+		<cfset perm_array = ListToArray(permission_keys, ",")>
+            
+    	<cfloop array="#perm_array#" index="cp">
+        	<cfset this.Revoke(cp)>
+        </cfloop>      
+    </cffunction>    
     
+    <cffunction name="ExamineSet" access="public" output="no" returntype="boolean">
+    	<cfargument name="permission_keys" type="string" required="yes">    
+    
+    	<cfset perm_array = ListToArray(permission_keys, ",")>
+            
+    	<cfloop array="#perm_array#" index="cp">
+        	<cfif NOT this.Examine(cp)>
+            	<cfreturn false>
+            </cfif>
+        </cfloop>  
+        
+        <cfreturn true>
     </cffunction>
-</cfcomponent>
+</cfcomponent> 

@@ -32,7 +32,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfset session.current_association=#getSites.id#>
 <cfset session.current_site_id=#getSites.site_id#>
 
-<cfset session.active_membership = CreateObject("component", "authentication.site_membership").OpenByPK(session.current_association)>
+<cfset session.active_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").OpenByPK(session.current_association)>
         
 
 <cfif getPermissionByKey("AS_LOGIN", #session.current_association#) EQ false>
