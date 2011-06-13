@@ -34,5 +34,5 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfset session.longname="">
 	<cfset session.userid="">
 	<cfset session.loadcount="0">
-	<cflocation url="/homeres/SignIn/SignIn.cfm" addtoken="no">
+	<cflocation url="/homeres/default.cfm" addtoken="no">
 	
