@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="login-submit.cfm" server="www.prefiniti.com/prefiniti15/" local="129522446529917465" remote="129522986400000000" />
-<file name="Prefiniti.cfm" server="www.prefiniti.com/prefiniti15/" local="129522446529697452" remote="129522986400000000" />
+<file name="login-submit.cfm" server="www.prefiniti.com/prefiniti15/" local="129525837301814695" remote="129525837000000000" />
+<file name="Prefiniti.cfm" server="www.prefiniti.com/prefiniti15/" local="129526579873697377" remote="129526579800000000" />
 <file name="Application.cfm" server="www.prefiniti.com/prefiniti15/" local="129522123189503451" remote="129522123000000000" />
 <file name="webwareConfigLoad.cfm" server="www.prefiniti.com/prefiniti15/" local="129514225273524164" remote="129514420800000000" />
 <file name="scriptIncludes.cfm" server="www.prefiniti.com/prefiniti15/" local="129514225273414158" remote="129514420800000000" />
-<file name="siteSelectSubmit2.cfm" server="www.prefiniti.com/prefiniti15/" local="129522446529997469" remote="129522986400000000" />
+<file name="siteSelectSubmit2.cfm" server="www.prefiniti.com/prefiniti15/" local="129526572485554800" remote="129526572000000000" />
 <file name="logoff.cfm" server="www.prefiniti.com/prefiniti15/" local="129522768303611867" remote="129522768000000000" />
 <file name="desktop_login.cfm" server="www.prefiniti.com/prefiniti15/" local="129514428373890840" remote="129514428000000000" />
 <file name="Res.cfc" server="www.prefiniti.com/prefiniti15/" local="129522115587398635" remote="129522115200000000" />
@@ -13,8 +13,10 @@
 <file name="migration_scripts.cfm" server="www.prefiniti.com/prefiniti15/" local="128451096000000000" remote="128451096000000000" />
 <file name="jumploader_z.jar" server="www.prefiniti.com/prefiniti15/" local="129520433537780900" remote="129520446600000000" />
 <file name="Prefiniti.cfc" server="www.prefiniti.com/prefiniti15/" local="129521043907682062" remote="129521043600000000" />
-<file name="prefiniti.ini" server="www.prefiniti.com/prefiniti15/" local="129522379857033994" remote="129522379800000000" />
+<file name="prefiniti.ini" server="www.prefiniti.com/prefiniti15/" local="129526438668890924" remote="129526438200000000" />
 <file name="ORMS.cfm" server="www.prefiniti.com/prefiniti15/" local="129522114277923738" remote="129522114000000000" />
 <file name="soundManagerDiv.cfm" server="www.prefiniti.com/prefiniti15/" local="128614392000000000" remote="128614392000000000" />
 <file name="soundmanager.js" server="www.prefiniti.com/prefiniti15/" local="127412568000000000" remote="127412568000000000" />
+<file name="siteSelect.cfm" server="www.prefiniti.com/prefiniti15/" local="129526342040404091" remote="129526341600000000" />
+<file name="bad_site_permissions.cfm" server="www.prefiniti.com/prefiniti15/" local="129526345597847565" remote="129526345200000000" />
 </dwsync>

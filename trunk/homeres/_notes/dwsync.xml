@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="bad_password.cfm" server="www.prefiniti.com/prefiniti15/" local="129513492763021630" remote="129513658800000000" />
-<file name="challenge_answer.cfm" server="www.prefiniti.com/prefiniti15/" local="128605752000000000" remote="128605752000000000" />
-<file name="retrieve_password.cfm" server="www.prefiniti.com/prefiniti15/" local="128605752000000000" remote="128605752000000000" />
-<file name="set_password.cfm" server="www.prefiniti.com/prefiniti15/" local="128605752000000000" remote="128605752000000000" />
-<file name="account_disabled.cfm" server="www.prefiniti.com/prefiniti15/" local="129513658634588941" remote="129513658800000000" />
-<file name="default.cfm" server="www.prefiniti.com/prefiniti15/" local="129522973450025571" remote="129522973200000000" />
-<file name="home.css" server="www.prefiniti.com/prefiniti15/" local="129522766419614109" remote="129522766200000000" />
+<file name="bad_password.cfm" server="www.prefiniti.com/prefiniti15/" local="129525830739099329" remote="129525830400000000" />
+<file name="challenge_answer.cfm" server="www.prefiniti.com/prefiniti15/" local="129525834677414588" remote="129525834600000000" />
+<file name="retrieve_password.cfm" server="www.prefiniti.com/prefiniti15/" local="129525828867602285" remote="129525828600000000" />
+<file name="set_password.cfm" server="www.prefiniti.com/prefiniti15/" local="129525836116136878" remote="129525835800000000" />
+<file name="account_disabled.cfm" server="www.prefiniti.com/prefiniti15/" local="129525841816692931" remote="129525841800000000" />
+<file name="default.cfm" server="www.prefiniti.com/prefiniti15/" local="129526240460884075" remote="129526240200000000" />
+<file name="home.css" server="www.prefiniti.com/prefiniti15/" local="129526225915692137" remote="129526240200000000" />
+<file name="home.js" server="www.prefiniti.com/prefiniti15/" local="129525824024285264" remote="129525823800000000" />
+<file name="confirm_account.cfm" server="www.prefiniti.com/prefiniti15/" local="129525834517815459" remote="129525834000000000" />
+<file name="account_not_confirmed.cfm" server="www.prefiniti.com/prefiniti15/" local="129525838505813560" remote="129525838200000000" />
+<file name="resend_confirmation.cfm" server="www.prefiniti.com/prefiniti15/" local="129525840646936025" remote="129525840600000000" />
 </dwsync>

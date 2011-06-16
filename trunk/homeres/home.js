@@ -1,28 +1,24 @@
 /*
- * home.js
- * DHTML/AJAX functions for the home page
+ * $Id$
  *
- * John Willis
- * john@prefiniti.com
+ * Copyright (C) 2011 John Willis
  *
- * Created 27 Jun 2008
+ * This file is part of Prefiniti.
+ *
+ * Prefiniti is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Prefiniti is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
  
-var LAST_IMAGE = 5; //change this to increase or decrease the range of images scrolled
-
-var imgIndex = 1;
-function HScrollBackground()
-{
-	var imgURL = 'url(/homeres/back_0' + imgIndex.toString() + '.jpg)';
-	document.getElementById('mainArea').style.backgroundImage = imgURL;
-	
-	window.setTimeout("HScrollBackground();", 10000);
-	
-	if (imgIndex < LAST_IMAGE) {
-		imgIndex++;
-	}
-	else {
-		imgIndex = 1;
-	}
-}
+ 
+ 

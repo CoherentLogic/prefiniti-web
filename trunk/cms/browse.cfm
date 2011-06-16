@@ -47,7 +47,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </div>
     
     <div style="height:270px; width:34%; float:left; border-left:1px solid #efefef;" id="file_preview">
-    	
+    	<div style="padding:20px;" class="LandingHeaderText">Click one of the files on the left.</div>
     </div>
     
     <div style="position:absolute; bottom:0px; border-top:1px solid #c0c0c0; width:100%; height:45px; background-color:#efefef;">

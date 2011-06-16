@@ -682,3 +682,12 @@ function wwSetEvent(site_id, department_id, event_id, value)
 	
 	AjaxLoadPageToDiv('userActionTarget', url);
 }
+
+function SCreateSite()
+{
+	var onLoadEventHandler = function () {		
+		AjaxLoadPageToDiv('site_creator_form', '/authentication/Sites/creator/site_ready.cfm');		
+	}
+	
+	AjaxSubmitForm(AjaxGetElementReference('create_site'), '/authentication/Sites/creator/submit_site.cfm', 'create_site_buttons', onLoadEventHandler);	
+}

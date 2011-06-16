@@ -24,10 +24,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(url.orms_id)>
 
 <cfoutput>
-<a class="button" href="####"><span>View</span></a>
+<a class="button" href="#f.URL()#" target="_blank"><span>View</span></a>
 <a class="button" href="/cms/download.cfm?filename=#f.new_filename#" target="download_target"><span>Download</span></a>
 <cfif o.IsOwner(session.user.r_pk)>
-	<a class="button" href="####"><span>Delete</span></a>
+	<a class="button" onclick="ORMSDeleteFile('#url.orms_id#', '#url.file_uuid#');" href="####"><span>Delete</span></a>
 </cfif>
 <cfif f.mime_type EQ "image" AND o.IsOwner(session.user.r_pk)>
 	<a class="button" href="####" onclick="ORMSSetThumbnail('#url.orms_id#', '#url.file_uuid#')"><span>Set as Default</span></a>

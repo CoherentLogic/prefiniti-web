@@ -60,7 +60,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.site = site>
         <cfset this.user = user>
         <cfset this.membership_type = membership_type>
-        <cfset this.r_pk = open.id>
+        <cfset this.r_pk = open.id>                	
         
         <cfset this.written = true>
         
@@ -149,7 +149,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         
         <cfset tperm_id = get_perm_id.id>
  		
-        <cfif this.Examine(permission_key)>   
+        <cfif NOT this.Examine(permission_key)>   
             <cfquery name="set_perm" datasource="sites">
                 INSERT INTO permission_entries
                     (assoc_id,

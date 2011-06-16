@@ -45,8 +45,9 @@
 	
 	<cfloop array="#oAr#" index="x">
 		<cfoutput>
+        <cfset thumb = CreateObject("component", "OpenHorizon.Graphics.Image").Create(x.r_thumb, 48, 48)>
 		<tr>
-			<td width="50" valign="top" align="center" onclick="ORMSLoad('#x.r_id#', '');"><img src="#x.r_thumb#" align="absmiddle" width="48" height="48"></td>
+			<td width="50" valign="top" align="center" onclick="ORMSLoad('#x.r_id#', '');"><img src="#thumb#" align="absmiddle" width="48" height="48"></td>
 			<td valign="top" onclick="ORMSLoad('#x.r_id#', '');">
 				<p style="font-size:14px; margin-top:0px;"><strong style="color:##2957a2;">#x.r_type# #x.r_name#</strong> (#x.r_status#)<br><br>
 				<cftry>

@@ -65,9 +65,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfargument name="first_name" type="string" required="yes">
 		<cfargument name="middle_initial" type="string" required="yes">
 		<cfargument name="last_name" type="string" required="yes">
-		<cfargument name="birthday" type="string" required="yes">		
+		<cfargument name="gender" type="string" required="yes">
+        <cfargument name="birthday" type="string" required="yes">		
         <cfargument name="allow_search" type="boolean" required="yes">
-		<cfargument name="zip_code" type="string" required="yes">
+		<cfargument name="zip_code" type="string" required="yes">       
 		
         <cfset this.om_uuid = CreateUUID()>
         <cfset this.username = username>
@@ -79,20 +80,19 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.middle_initial = middle_initial>
         <cfset this.last_name = last_name>
         <cfset this.display_name = FormatName()>
+        <cfset this.gender = gender>
         <cfset this.birthday = CreateODBCDate(birthday)>
         <cfset this.account_confirmed = 0>
         <cfset this.account_enabled = 1>
     	<cfset this.first_login = 1>
+        <cfset this.picture = this.URLBase & "graphics/AppIconResources/crystal_project/256x256/apps/personal.png">
             
         <cfif allow_search EQ true>
         	<cfset this.allow_search = 1>
         <cfelse>
         	<cfset this.allow_search = 0>
         </cfif>
-        <cfset this.zip_code = zip_code>
-        
-        <cfset this.Save()>
-        <cfset this.SendConfirmationEmail()>
+        <cfset this.zip_code = zip_code>                        
         
         <cfreturn #this#>
 	</cffunction>
@@ -110,7 +110,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="Open" access="public" output="no" returntype="OpenHorizon.Identity.User">
     	<cfargument name="username" type="string" required="yes">
         
-        <cfquery name="UOpen" datasource="webwarecl">
+        <cfquery name="UOpen" datasource="#this.BaseDatasource#">
         	SELECT 	*
             FROM	users
             WHERE	username='#username#'
@@ -146,8 +146,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.active_membership_id = UOpen.last_site_id>			<!--- last_site_id --->       
         <cfset this.first_login = UOpen.first_login>
         
+        <cftry>
         <cfset this.object_record = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", this.r_pk)>
-        
+        <cfcatch type="any">
+        </cfcatch>
+        </cftry>
         <cfset this.written = true>
         
         <cfreturn #this#>
@@ -156,7 +159,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="OpenByPK" access="public" output="no" returntype="OpenHorizon.Identity.User">
     	<cfargument name="pk" type="numeric" required="yes">
         
-        <cfquery name="obpk" datasource="webwarecl">
+        <cfquery name="obpk" datasource="#this.BaseDatasource#">
         	SELECT username FROM users WHERE id=#pk#
         </cfquery>
         
@@ -168,15 +171,26 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="Save" access="public" output="no" returntype="void">
     	<cfif this.written>
       		<cfset this.UpdateExistingRecord()>
-    	<cfelse>
-      		<cfset this.WriteAsNewRecord()>
+    	<cfelse>      	
+            <cfset this.WriteAsNewRecord()>
+			<cfset first_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").Create(this.MainSite(), this, 'Friend')>
+            <cfset first_membership.Save()>
+            <cfset second_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").Create(this.MainSite(), this, 'Customer')>
+            <cfset second_membership.Save()>
+            <cfset this.active_membership_id = first_membership.r_pk>
+            <cfset first_membership.GrantSet(this.PermissionSet('Basic User'))>
+            <cfset second_membership.GrantSet(this.PermissionSet('Customer'))>
+            
+            <cfset this.UpdateExistingRecord()>
+			
+            
     	</cfif>
     	<cfmodule template="/authentication/Users/orms_do.cfm" id="#this.r_pk#">
         <cfset this.written = true>
   	</cffunction>
     
     <cffunction name="UpdateExistingRecord" access="public" output="no" returntype="void">
-    	<cfquery name="uer" datasource="webwarecl">
+    	<cfquery name="uer" datasource="#this.BaseDatasource#">
         	UPDATE 	users
             SET		username='#this.username#',
             		password='#this.password#',
@@ -203,7 +217,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                     confirm_id='#this.om_uuid#',
                     webware_admin=#this.global_admin#,
                     location_url='#this.location_url#',
-                    last_site_id=#this.active_membership_id#
+                    last_site_id=#this.active_membership_id#,
                     first_login=#this.first_login#
 			WHERE	id=#this.r_pk#                    
         </cfquery>          
@@ -214,7 +228,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         
         <cfset this.creation_date = CreateODBCDateTime(Now())>
         
-    	<cfquery name="wanr" datasource="webwarecl">
+    	<cfquery name="wanr" datasource="#this.BaseDatasource#">
         	INSERT INTO users
             	(username,
                 password,
@@ -275,7 +289,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 #this.first_login#)                                                              
         </cfquery>
         
-        <cfquery name="wanr_get_id" datasource="webwarecl">
+        <cfquery name="wanr_get_id" datasource="#this.BaseDatasource#">
         	SELECT id FROM users WHERE confirm_id='#this.om_uuid#'
         </cfquery>
         
@@ -345,7 +359,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </cffunction>
     
     <cffunction name="Friends" access="public" returntype="array" output="no">
-    	<cfquery name="qryFriends" datasource="webwarecl">
+    	<cfquery name="qryFriends" datasource="#this.BaseDatasource#">
         	SELECT * FROM friends WHERE target_id=#this.r_pk#
         </cfquery>
         
@@ -381,7 +395,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cffunction name="Online" access="public" returntype="boolean" output="no">       	
         
-        <cfquery name="io" datasource="webwarecl">
+        <cfquery name="io" datasource="#this.BaseDatasource#">
         	SELECT 	*	
             FROM	auth_tokens
             WHERE	username='#this.username#'

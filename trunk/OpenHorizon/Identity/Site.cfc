@@ -37,9 +37,23 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.om_uuid = ""> 					<!--- conf_id --->
     <cfset this.salestax_rate = 0>
     <cfset this.logo_invoice = "">
+    <cfset this.object_record = "">
     
     <cfset this.written = false>
 
+
+  
+
+    <cffunction name="Picture" access="public" returntype="string" output="no">
+    	<cfargument name="width" type="numeric" required="yes">
+        <cfargument name="height" type="numeric" required="yes">
+        
+    	<cfset po = CreateObject("component", "OpenHorizon.Graphics.Image")>
+        <cfset pic = po.Create(this.object_record.r_thumb, width, height)> 
+        
+		<cfreturn #pic#>    
+    </cffunction>
+    
 	<cffunction name="Open" access="public" returntype="OpenHorizon.Identity.Site">
 		<cfargument name="id" type="numeric" required="yes">
 
@@ -50,7 +64,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.r_pk = s.SiteID>
         <cfset this.site_name = s.SiteName>
         <cfset this.admin_id = s.admin_id>
-        <cfset this.enabled = s.enabled>
+        <cfif s.enabled EQ 1>
+			<cfset this.enabled = true>
+        <cfelse>
+        	<cfset this.enabled = false>
+        </cfif>
         <cfset this.summary = s.summary>
         <cfset this.about = s.about>
         <cfset this.industry = s.industry>
@@ -66,6 +84,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         	SELECT industry_name FROM industries WHERE id=#this.industry#
         </cfquery>
         
+        <cfset this.object_record = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Site", this.r_pk)>
         <cfset this.industry_name = g_ind.industry_name>
         
         <cfset this.written = true>
@@ -100,7 +119,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfquery name="uer" datasource="sites">
 			UPDATE	sites
             SET		SiteName='#this.site_name#',
-            		enabled=#this.enabled#,
+            		<cfif this.enabled EQ true>
+                    	enabled=1,
+                    <cfelse>
+                    	enabled=0,
+                    </cfif>
                     summary='#this.summary#',
                     about='#this.about#',
                     industry=#this.industry#,
@@ -134,7 +157,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                         admin_id,
                         conf_id)
 			VALUES		('#this.site_name#',
-            			#this.enabled#,
+            			<cfif this.enabled EQ true>
+                        	1,
+                        <cfelse>
+                        	0,
+                        </cfif>
                         '#this.summary#',
                         '#this.about#',
                         #this.industry#,
@@ -158,7 +185,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="Create" access="public" output="no" returntype="OpenHorizon.Identity.Site">
     	<cfargument name="site_name" type="string" required="yes">
         <cfargument name="industry" type="string" required="yes">
-        <cfargument name="owner" type="OpenHorizon.Identity.User" required="yes">
+        <cfargument name="salestax_rate" type="numeric" required="yes">
         
         <cfquery name="get_industry" datasource="sites">
         	SELECT id FROM industries WHERE industry_name='#industry#'
@@ -166,7 +193,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         
         <cfset this.site_name = site_name>
         <cfset this.industry = get_industry.id>
-        <cfset this.admin_id = owner.r_pk>
+        <cfset this.salestax_rate = salestax_rate>
         
         <cfreturn #this#>        
     </cffunction>
@@ -223,5 +250,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     	<cfreturn #ret#>
     </cffunction>    
+    
+    <cffunction name="ObjectRecord" access="public" returntype="OpenHorizon.Storage.ObjectRecord" output="no">
+    	<cfreturn #this.object_record#>
+    </cffunction>
        	           
 </cfcomponent>

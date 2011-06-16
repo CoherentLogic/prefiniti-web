@@ -60,8 +60,13 @@
 			<cfparam name="tmpImage" default="">
 			<cfset tmpImage = this.CopyLocal()>						<!--- copy the source image to the local server --->
 			
-			<cfimage source="#tmpImage#" name="SourceImage">			<!--- read the source image into coldfusion --->
-			
+            <cftry>            
+				<cfimage source="#tmpImage#" name="SourceImage">			<!--- read the source image into coldfusion --->
+				
+                <cfcatch type="any">
+            		<cfreturn #InputURL#>
+            	</cfcatch>
+            </cftry>		
 			<cfif this.Width GT 0 AND this.Height GT 0>				<!--- if width or height are zero, do not scale. --->
 				<cfset ImageSetAntialiasing(SourceImage, "on")>		<!--- turn on antialiasing for the SourceImage and scale it--->
 				<cfset ImageScaleToFit(SourceImage, this.Width, this.Height, "highestQuality")>

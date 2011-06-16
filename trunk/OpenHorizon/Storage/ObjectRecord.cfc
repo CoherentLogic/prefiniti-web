@@ -18,10 +18,15 @@
         
         <cfset this.r_thumb = t_url>
         
-        <cfquery name="setthumb" datasource="webwarecl">
+        <cfquery name="setthumb" datasource="#this.BaseDatasource#">
         	UPDATE orms SET r_thumb='#this.r_thumb#' WHERE id='#this.r_id#'
 		</cfquery>
-                    
+        
+        <cfif this.r_pk EQ session.user.ObjectRecord().r_pk>        
+        	<cfset session.user = CreateObject("component", "OpenHorizon.Identity.User").Open(session.username)>
+       		<cfset session.site = CreateObject("component", "OpenHorizon.Identity.Site").OpenByMembershipID(session.current_association)>
+        	<cfset session.active_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").OpenByPK(session.current_association)>
+		</cfif>                    
     </cffunction>
     
 	
@@ -50,7 +55,7 @@
 		<cfset this.r_status = r_status>
 		<cfset this.r_parent = r_parent>
 		
-		<cfquery name="existsp" datasource="webwarecl">
+		<cfquery name="existsp" datasource="#this.BaseDatasource#">
 			SELECT id FROM orms WHERE r_type='#r_type#' AND r_pk=#r_pk#
 		</cfquery>
 		
@@ -62,7 +67,7 @@
 		
 		<cfif NOT rexists>
 			<cfset this.r_id = CreateUUID()>
-			<cfquery name="CreateORMSRecord" datasource="webwarecl">
+			<cfquery name="CreateORMSRecord" datasource="#this.BaseDatasource#">
 				INSERT INTO orms
 					(id,
 					r_type,
@@ -92,7 +97,7 @@
 			</cfquery>					
 		<cfelse>
 			<cfset this.r_id = existsp.id>
-			<cfquery name="UpdateORMSRecord" datasource="webwarecl">
+			<cfquery name="UpdateORMSRecord" datasource="#this.BaseDatasource#">
 				UPDATE 	orms
 				SET		r_type='#this.r_type#',
 						r_owner=#this.r_owner#,
@@ -118,7 +123,7 @@
 	<cffunction name="Get" returntype="OpenHorizon.Storage.ObjectRecord" access="public">
 		<cfargument name="r_id" type="string" required="yes">
 		
-		<cfquery name="gRes" datasource="webwarecl">
+		<cfquery name="gRes" datasource="#this.BaseDatasource#">
 			SELECT * FROM orms WHERE id='#r_id#'
 		</cfquery>
 		
@@ -152,7 +157,7 @@
 		<cfargument name="r_type" type="string" required="yes">
 		<cfargument name="r_pk" type="numeric" required="yes">
 		
-		<cfquery name="gu" datasource="webwarecl">
+		<cfquery name="gu" datasource="#this.BaseDatasource#">
 			SELECT id FROM orms WHERE r_type='#r_type#' AND r_pk=#r_pk#
 		</cfquery>
 		<cfif gu.RecordCount GT 0>
@@ -180,7 +185,7 @@
 		
 		<cfset reserings = ArrayNew(1)>
 		
-		<cfquery name="gbo" datasource="webwarecl">
+		<cfquery name="gbo" datasource="#this.BaseDatasource#">
 			SELECT id FROM orms WHERE r_owner=#user_id#
 		</cfquery>
 		
@@ -195,7 +200,7 @@
 		<cfargument name="a_type" type="string" required="yes">		
 		<cfargument name="a_user_id" type="numeric" required="yes">
 		
-		<cfquery name="wal" datasource="webwarecl">
+		<cfquery name="wal" datasource="#this.BaseDatasource#">
 			INSERT INTO orms_access_log
 				(r_id,
 				a_type,
@@ -214,7 +219,7 @@
 		<cfargument name="rel_type" type="string" required="yes">
 		<cfargument name="rel_expires" type="string" required="no">
 		
-		<cfquery name="rel" datasource="webwarecl">
+		<cfquery name="rel" datasource="#this.BaseDatasource#">
 			INSERT INTO orms_relationships
 				(rel_source,
 				rel_target,
@@ -232,19 +237,19 @@
 		<cfargument name="k_word" type="string" required="yes">
 		<cfargument name="k_val" type="string" required="yes">
 		
-		<cfquery name="ap_ce" datasource="webwarecl">
+		<cfquery name="ap_ce" datasource="#this.BaseDatasource#">
 			SELECT id FROM orms_keywords WHERE k_word='#k_word#' AND r_id='#this.r_id#'
 		</cfquery>
 						
 		<cfif ap_ce.RecordCount GT 0>
-			<cfquery name="ap_update" datasource="webwarecl">
+			<cfquery name="ap_update" datasource="#this.BaseDatasource#">
 				UPDATE 	orms_keywords
 				SET		k_value='#k_val#'
 				WHERE	k_word='#k_word#'
 				AND		r_id='#this.r_id#'
 			</cfquery>
 		<cfelse>
-			<cfquery name="ap_insert" datasource="webwarecl">							
+			<cfquery name="ap_insert" datasource="#this.BaseDatasource#">							
 				INSERT INTO orms_keywords
 					(k_word,
 					k_value,
@@ -260,7 +265,7 @@
 	<cffunction name="GetPair" returntype="string" access="public">
 		<cfargument name="k_word" type="string" required="yes">
 		
-		<cfquery name="gp" datasource="webwarecl">
+		<cfquery name="gp" datasource="#this.BaseDatasource#">
 			SELECT k_value FROM orms_keywords WHERE k_word='#k_word#' AND r_id='#this.r_id#'
 		</cfquery>
 		
@@ -280,7 +285,7 @@
 		<cfparam name="keyArray" default="">
 		<cfset keyArray=ArrayNew(1)>
 		
-		<cfquery name="gk" datasource="webwarecl">
+		<cfquery name="gk" datasource="#this.BaseDatasource#">
 			SELECT k_word FROM orms_keywords WHERE r_id='#this.r_id#'
 		</cfquery>
 	
@@ -357,7 +362,7 @@
 	<cffunction name="IsPrefinitiAdmin" returntype="boolean" access="public">
 		<cfargument name="user_id" type="numeric" required="yes">
 		
-		<cfquery name="ipa_user" datasource="webwarecl">
+		<cfquery name="ipa_user" datasource="#this.BaseDatasource#">
 			SELECT webware_admin FROM users WHERE id=#user_id#
 		</cfquery>
 		
@@ -371,7 +376,7 @@
 	<cffunction name="IsSiteAdmin" returntype="boolean" access="public">
 		<cfargument name="user_id" type="numeric" required="yes">
 		
-		<cfquery name="isa_get_site_admin" datasource="sites">
+		<cfquery name="isa_get_site_admin" datasource="#this.SitesDatasource#">
 			SELECT * FROM sites WHERE SiteID=#this.r_site#
 		</cfquery>
 		
@@ -411,7 +416,7 @@
 			1.	Find out if user_id has a site_association of assoc_type to this.r_site
 		--->
 		
-		<cfquery name="peer_check" datasource="sites">
+		<cfquery name="peer_check" datasource="#this.SitesDatasource#">
 			SELECT 	* 
 			FROM 	site_associations 
 			WHERE 	user_id=#user_id# 
@@ -429,7 +434,7 @@
 	
 	<cffunction name="GetRating" returntype="numeric" access="public">
 	
-		<cfquery name="get_rcount" datasource="webwarecl">
+		<cfquery name="get_rcount" datasource="#this.BaseDatasource#">
 			SELECT 	rating 
 			FROM 	orms_comments 
 			WHERE 	r_id='#this.r_id#'
@@ -437,7 +442,7 @@
 		</cfquery>
 		
 		<cfif get_rcount.RecordCount GT 0>
-			<cfquery name="get_rating" datasource="webwarecl">
+			<cfquery name="get_rating" datasource="#this.BaseDatasource#">
 				SELECT 	AVG(rating) as arate
 				FROM 	orms_comments 
 				WHERE 	r_id='#this.r_id#'
@@ -452,7 +457,7 @@
 			
 	<cffunction name="GetSections" returntype="query" access="public">
 
-		<cfquery name="get_app_industry" datasource="sites">
+		<cfquery name="get_app_industry" datasource="#this.SitesDatasource#">
 			SELECT industry FROM sites WHERE SiteID=#this.r_site#
 		</cfquery>
 		
@@ -463,7 +468,7 @@
 			<cfset tmpIndustry = 0>
 		</cfif>
 
-		<cfquery name="get_app_sections" datasource="webwarecl">
+		<cfquery name="get_app_sections" datasource="#this.BaseDatasource#">
 			SELECT 	* 
 			FROM 	orms_app_sections 
 			WHERE 	r_type='#this.r_type#'
@@ -480,7 +485,7 @@
 	<cffunction name="GetCreator" returntype="string" access="public">
 		<cfargument name="r_type" type="string" required="yes">
 		
-		<cfquery name="get_creator" datasource="webwarecl">
+		<cfquery name="get_creator" datasource="#this.BaseDatasource#">
 			SELECT * FROM orms_creators WHERE r_type='#r_type#'
 		</cfquery>
 		
@@ -493,7 +498,7 @@
 									
 	<cffunction name="Files" access="public" returntype="array" output="no">
 		
-        <cfquery name="gf" datasource="webwarecl">
+        <cfquery name="gf" datasource="#this.BaseDatasource#">
         	SELECT om_uuid, file_uuid FROM orms_files WHERE om_uuid='#this.r_id#'
         </cfquery>
         
