@@ -32,12 +32,14 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <form name="siteSelect2" action="/siteSelectSubmit2.cfm" method="post" style="display:inline;">
     <select name="siteAssociation2" style="width:160px;" onchange="document.siteSelect2.submit();">
     	<cfoutput query="getSites">
-        	<option value="#id#" <cfif #id# EQ #url.current_association#>selected</cfif>>
+        	<option value="#id#" <cfif id EQ url.current_association>selected</cfif>>
             	<cfmodule template="/authentication/components/siteNameByID.cfm" id="#site_id#">
-				<cfif #assoc_type# EQ 0>
+				<cfif assoc_type EQ 0>
                     &nbsp;- Customer
-                <cfelse>
+                <cfelseif assoc_type EQ 1>
                     &nbsp;- Employee
+                <cfelse>
+                	&nbsp;- Friend
                 </cfif>
             </option>
         </cfoutput>

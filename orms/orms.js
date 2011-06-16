@@ -1,3 +1,24 @@
+/*
+ * $Id$
+ *
+ * Copyright (C) 2011 John Willis
+ *
+ * This file is part of Prefiniti.
+ *
+ * Prefiniti is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Prefiniti is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 // prefiniti ORMS search
 // copyright (c) 2010 prefiniti inc
 
@@ -124,6 +145,23 @@ function ORMSPreviewFile(file_uuid, orms_id)
 	AjaxLoadPageToDiv('file_actions', url);
 }
 
+function ORMSDeleteFile(orms_id, file_uuid)
+{
+	var answer = confirm("Are you sure you wish to delete this file? Neither you nor any member of Prefiniti customer service will be able to get it back later.");
+	if(answer) {	
+		var url = '/cms/delete_file.cfm?file_uuid=' + escape(file_uuid);
+		
+		var OnRequestCompleted = new function () {
+			
+			CloseORMSDialog();		
+		}
+		
+		AjaxLoadPageToDiv('dev-null', url, OnRequestCompleted);
+	}
+	
+	
+}
+
 function ORMSPlaySound(URL)
 {
 	soundManager.createSound('orms_sound', URL);
@@ -141,6 +179,7 @@ function ORMSSetThumbnail(orms_id, file_uuid)
 	
 	var orc = new function () {
 		AjaxRefreshTarget();	
+		AjaxRefreshTarget();
 	}
 	
 	AjaxLoadPageToDiv('dev-null', url, orc);

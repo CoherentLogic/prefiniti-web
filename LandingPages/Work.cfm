@@ -36,13 +36,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         	<td valign="bottom"><img src="http://us-production-r1g1s1.prefiniti.com/graphics/AppIconResources/crystal_project/32x32/actions/contents.png" /></td>
             <td>
             	<span class="LandingHeaderText">Project Management</span><br />
-                <p style="margin-left:10px;">
-	                <img class="LandingLink" src="/graphics/page_white_add.png" align="absmiddle"/>&nbsp;
-                	<cfmodule template="/framework/link.cfm" perm="WF_CREATE" linkname="New Project..." url="NewProject"><br />
-	                <img class="LandingLink" src="/graphics/find.png" align="absmiddle"/>&nbsp;
-					<cfmodule template="/framework/link.cfm" perm="WF_VIEW" linkname="Find Projects..." url="FindProject"><br />
-	                <img class="LandingLink" src="/graphics/wand.png" align="absmiddle"/>&nbsp;
-                    <cfmodule template="/framework/link.cfm" perm="WF_PROCESSORDER" linkname="Approve Projects..." url="/jobViews/newJobs.cfm"><br />    				
+                <p style="margin-left:10px;">	                
+                	<cfmodule template="/framework/link.cfm" icon="/graphics/page_white_add.png" perm="WF_CREATE" linkname="New Project..." url="NewProject"><br />					<cfmodule template="/framework/link.cfm" icon="/graphics/find.png"  perm="WF_VIEW" linkname="Find Projects..." url="FindProject"><br />                    <cfmodule template="/framework/link.cfm" icon="/graphics/wand.png" perm="WF_PROCESSORDER" linkname="Approve Projects..." url="/jobViews/newJobs.cfm"><br />    				
 				</p>
             </td>
         </tr>
@@ -55,10 +50,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             <td>
             	<span class="LandingHeaderText">Time Collection</span><br />
                 <p style="margin-left:10px;">
-	                <img class="LandingLink" src="/graphics/page_white_add.png" align="absmiddle"/>&nbsp;
-                	<cfmodule template="/framework/link.cfm" perm="TS_CREATE" linkname="New Timesheet..." url="NewTimesheet"><br />
-                    <img class="LandingLink" src="/graphics/find.png" align="absmiddle"/>&nbsp;
-					<cfmodule template="/framework/link.cfm" perm="TS_VIEW" linkname="Find Timesheet..." url="FindTimesheet" ><br />
+	                
+                	<cfmodule template="/framework/link.cfm" icon="/graphics/page_white_add.png" perm="TS_CREATE" linkname="New Timesheet..." url="NewTimesheet"><br />
+					<cfmodule template="/framework/link.cfm" icon="/graphics/find.png" perm="TS_VIEW" linkname="Find Timesheet..." url="FindTimesheet" ><br />
 				</p>
             </td>
         </tr>
@@ -70,15 +64,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         	<td valign="bottom"><img src="http://us-production-r1g1s1.prefiniti.com/graphics/AppIconResources/crystal_project/32x32/actions/info.png" /></td>
             <td>
             	<span class="LandingHeaderText">Customize Business</span><br />
-                <p style="margin-left:10px;">
-	                <img class="LandingLink" src="/graphics/user_edit.png" align="absmiddle"/>&nbsp;
-                    <cfmodule template="/framework/link.cfm" perm="AS_VIEW" linkname="Employees and customers..." url="/authentication/components/associationManager.cfm" help="Manage employees and customers"><br />	
-                    <img class="LandingLink" src="/graphics/page.png" align="absmiddle"/>&nbsp;
-                	<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Change site information..." url="/authentication/components/maintenancePanel.cfm?section=site_information.cfm"><br />
-                    <img class="LandingLink" src="/graphics/group_edit.png" align="absmiddle"/>&nbsp;
-					<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Manage departments..." url="/authentication/components/maintenancePanel.cfm?section=departments.cfm"><br />
-					<img class="LandingLink" src="/graphics/lightning.png" align="absmiddle"/>&nbsp;
-					<cfmodule template="/framework/link.cfm" perm="WW_SITEMAINTAINER" linkname="Manage event notifications..." url="/authentication/components/maintenancePanel.cfm?section=order_settings.cfm"><br />
+                <p style="margin-left:10px;">	               
+                    <cfmodule template="/framework/link.cfm" icon="/graphics/user_edit.png" perm="AS_VIEW" linkname="Employees and customers..." url="/authentication/components/associationManager.cfm" help="Manage employees and customers"><br />	
+                	<cfmodule template="/framework/link.cfm" icon="/graphics/page.png" perm="WW_SITEMAINTAINER" linkname="Change site information..." url="/authentication/components/maintenancePanel.cfm?section=site_information.cfm"><br />                   
+					<cfmodule template="/framework/link.cfm" icon="/graphics/group_edit.png" perm="WW_SITEMAINTAINER" linkname="Manage departments..." url="/authentication/components/maintenancePanel.cfm?section=departments.cfm"><br />					
+					<cfmodule template="/framework/link.cfm" icon="/graphics/lightning.png" perm="WW_SITEMAINTAINER" linkname="Manage event notifications..." url="/authentication/components/maintenancePanel.cfm?section=order_settings.cfm"><br />
                    
 				</p>
             </td>

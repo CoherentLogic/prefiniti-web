@@ -21,28 +21,40 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
 
-<cfif IsDefined("url.PDKey")>
-	<cfset turl = "/desktop_login.cfm?PDKey=#URL.PDKey#&PDVersion=#URL.PDVersion#">
-	<cflocation url="#turl#">
-	
-</cfif>
-
-<center>
-<div align="center" style="width:450px; height:310px; padding:20px; background-color:white; color:black; border:1px solid black; margin-top:60px;">
-<h1><img src="/graphics/prenew-medium.png" /></h1>
-<p><strong>Prefiniti</strong><br />Version 1.6</p>
-
-
-<cfset view = "">
-<cfset section = "">
-
-<cfif IsDefined("URL.View")>
-    <cfset view = URL.View>
-</cfif>
-<cfif IsDefined("URL.Section")>
-    <cfset section = URL.Section>
-</cfif>
-
-<cfmodule template="/authentication/components/NewLogin.cfm" siteid="1" width="100%" BrowserType="#session.browserType#" View="#view#" Section="#section#">
-</div>
-</center>	
+<table width="100%" cellpadding="0">
+<tr>
+<td align="left">
+	<a href="/homeres/default.cfm">
+    <img src="/graphics/prenew-small.png" style="padding-top:20px; border:none;" border="0" />
+    </a>
+</td>
+<td align="right">
+    <form name="login" id="login" method="post" action="/login-submit.cfm">
+        <cfif IsDefined("URL.View") AND IsDefined("URL.Section")>
+            <cfif url.View NEQ "">
+                <input type="hidden" name="view" value="#url.View#">
+            </cfif>
+            <cfif url.Section NEQ "">
+                <input type="hidden" name="section" value="#url.Section#">
+            </cfif>
+        </cfif>
+        <table>
+        <tr>
+        <td>
+        <label>Username<br /> <input type="text" name="login_username" /></label>
+        </td>
+        <td>
+        <label>Password<br /> <input type="password" name="login_password"  /></label>
+        </td>
+        <td>
+            <!--- <input type="submit" name="submit" id="submit" value="submit" style="visibility:hidden;display:none;" /> --->
+            <a class="button" href="##" onclick="document.forms['login'].submit()"><span>Login</span></a>
+        </tr>
+        </table>
+    </form>
+    <cfif IsDefined("url.BadLogin")>
+        <span class="form_error">Invalid username or password.</span>
+    </cfif>
+</td>
+</tr>
+</table>

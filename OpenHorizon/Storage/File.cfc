@@ -36,8 +36,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.poster = "">    
     <cfset this.new_filename = "">
     <cfset this.keywords = "">
-    <cfset this.root_storage = CreateObject("component", "Prefiniti").Config("ORMS", "filestorage")>
-    <cfset this.root_url = CreateObject("component", "Prefiniti").Config("ORMS", "cmsurl")>
+    <cfset this.root_storage = this.StorageRoot>
+    <cfset this.root_url = this.CMSURL>
     <cfset this.written = false>
         
 	<cffunction name="Create" access="public" returntype="OpenHorizon.Storage.File">
@@ -67,10 +67,16 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfreturn #this#>
 	</cffunction>
     
+    <cffunction name="FullPath" access="public" returntype="string" output="no">
+    	<cfset retval = this.StorageRoot & this.PathDelimiter & this.new_filename>
+        
+        <cfreturn #retval#>
+    </cffunction>
+    
     <cffunction name="Open" access="public" returntype="OpenHorizon.Storage.File">
     	<cfargument name="file_uuid" type="string" required="yes">
         
-        <cfquery name="o" datasource="webwarecl">
+        <cfquery name="o" datasource="#this.BaseDatasource#">
         	SELECT * FROM orms_files WHERE file_uuid='#file_uuid#'
         </cfquery>
         
@@ -92,6 +98,14 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #this#>     
     </cffunction>
     
+    <cffunction name="Delete" access="public" returntype="void" output="no">
+    	<cffile action="delete" file="#this.FullPath()#">
+        
+        <cfquery name="delete_file" datasource="#this.BaseDatasource#">
+        	DELETE FROM orms_files WHERE file_uuid='#this.file_uuid#'
+        </cfquery>
+    </cffunction>
+    
     <cffunction name="URL" access="public" output="no" returntype="string">
     	<cfset ret_val = this.root_url & this.new_filename>
         
@@ -109,13 +123,13 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
   	</cffunction>
     
     <cffunction name="UpdateExistingRecord" access="public" output="no" returntype="void">
-    	<cfquery name="uer" datasource="webwarecl">
+    	<cfquery name="uer" datasource="#this.BaseDatasource#">
         
         </cfquery>       
 	</cffunction>
     
     <cffunction name="WriteAsNewRecord" access="public" output="no" returntype="void">
-    	<cfquery name="wanr" datasource="webwarecl">
+    	<cfquery name="wanr" datasource="#this.BaseDatasource#">
         	INSERT INTO orms_files
             			(om_uuid,
                         poster_id,
@@ -141,7 +155,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                         '#this.file_extension#')                                                                       
         </cfquery>
         
-        <cfquery name="wanr_id" datasource="webwarecl">
+        <cfquery name="wanr_id" datasource="#this.BaseDatasource#">
         	SELECT id FROM orms_files WHERE file_uuid='#this.file_uuid#'
         </cfquery>
         

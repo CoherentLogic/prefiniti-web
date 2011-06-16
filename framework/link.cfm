@@ -30,8 +30,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	}
 </style>
 
-<cfif getPermissionByKey('#attributes.perm#', #url.current_association#) EQ true>
-	<cfoutput>    
+<cfif getPermissionByKey(attributes.perm, url.current_association) EQ true>
+	<cfoutput>        
+    		<cfif IsDefined("attributes.icon")>
+            	<img src="#attributes.icon#" align="absmiddle" style="padding:5px;" width="16" height="16" />
+            </cfif>
         <cfswitch expression="#attributes.url#">        
 			<cfcase value="FindProject">
             	<a class="LandingLink" href="javascript:hideDiv('landing_work_links'); showDivBlock('landing_project_search');">#attributes.linkname#</a>

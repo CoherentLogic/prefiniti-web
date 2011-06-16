@@ -1599,6 +1599,10 @@ a.button span {
     display: block;
     line-height: 14px;
     padding: 5px 0 5px 18px;
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	color:#2957a2;
+	font-weight:lighter;
+	font-size:12px;
 } 
 
 a.button:active {

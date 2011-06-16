@@ -28,17 +28,17 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	UPDATE users SET last_site_id=#form.siteAssociation2# WHERE id=#session.userid# 
 </cfquery>    
 
-<cfset session.usertype=#getSites.assoc_type#>
-<cfset session.current_association=#getSites.id#>
-<cfset session.current_site_id=#getSites.site_id#>
+<cfset session.usertype = getSites.assoc_type>
+<cfset session.current_association = getSites.id>
+<cfset session.current_site_id = getSites.site_id>
 
 <cfset session.active_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").OpenByPK(session.current_association)>
-        
+<cfset session.site = CreateObject("component", "OpenHorizon.Identity.Site").OpenByMembershipID(session.current_association)>
 
-<cfif getPermissionByKey("AS_LOGIN", #session.current_association#) EQ false>
+<cfif session.active_membership.Examine("AS_LOGIN") EQ false>
 	<center>
     <div style="margin:30px; padding:30px; width:300px; border:1px solid #EFEFEF;" align="center">
-        <img src="/graphics/webware.png" style="padding-bottom:20px;">
+        <img src="/graphics/prenew-small.png" style="padding-bottom:20px;">
         <h3 class="stdHeader">Permission Denied</h3>
         
         <p>You do not have the <strong>AS_LOGIN</strong> permission on this site.</p>
@@ -47,18 +47,15 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfabort>
 </cfif>
     
-<cfquery name="getASite" datasource="sites">
-	SELECT * FROM sites WHERE SiteID=#session.current_site_id# 
-</cfquery>    
 
 
 
-<cfif #getASite.enabled# EQ 1>
+<cfif session.site.enabled>
 	<cflocation url="/Prefiniti.cfm" addtoken="no">
 <cfelse>
 	<center>
     <div align="center" style="margin:30px; padding:30px; width:300px; border:1px solid #EFEFEF;">
-		<img src="/graphics/webware.png" style="padding-bottom:20px;"/>
+		<img src="/graphics/prenew-small.png" style="padding-bottom:20px;"/>
 		<h3 class="stdHeader">Site Disabled</h3>
         
         <p>Logins to this site have been disabled by the Prefiniti administration team.</p><p>Please try again later.</p>

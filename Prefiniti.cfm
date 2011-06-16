@@ -39,9 +39,15 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			<cfelse>
 				<cfset sec = "">
 			</cfif>
-			<cflocation url="/homeres/SignIn/SignIn.cfm?view=#URL.View#&section=#sec#" addtoken="no">
+			<cflocation url="/homeres/default.cfm?view=#URL.View#&section=#sec#" addtoken="no">
 		</cfif>
+        <cfif NOT session.active_membership.Examine('AS_LOGIN')>
+        	<cflocation url="/bad_site_permissions.cfm" addtoken="no">
+        </cfif>
+        	
 	</cfif>
+    
+    
 
 	<cfif IsDefined("URL.View")>
 		<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(URL.View)>
@@ -82,7 +88,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	
 	.ContentBar {
 		
-		width:900px;
+		width:980px;
 		margin-left:auto;
 		margin-right:auto;
 		height:auto;
@@ -168,7 +174,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		margin-top:0px;
 		
 		repeat:no-repeat;
-		width:900px;
+		width:980px;
 		background-color:#efefef;
 	}
 	
@@ -201,10 +207,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <div style="width:100%; background-color:#efefef; border-bottom:1px solid #c0c0c0;">
 <div id="tb" class="iPrefinitiToolbar" align="right">
 	
-    <!---<cfset site_info = getSiteInformation(session.current_site_id)>
-    <cfset site_logo = "/SiteContent/#site_info.SiteID#/#site_info.logo#">--->
-    <cfset site_logo = "/graphics/prenew-small.png">
-	<div style="width:auto; float:left; padding-top:8px;"><cfoutput><img src="#site_logo#"></cfoutput></div>
+
+    <cfset site_logo = session.site.object_record.r_thumb>
+    <!--- <cfset site_logo = "/graphics/prenew-small.png"> --->
+	<div style="width:auto; float:left; padding-top:8px;"><cfoutput><img src="#site_logo#" height="30"></cfoutput></div>
 	<input 	type="text" 
 			id="searchBox" 
 			name="searchBox" 
@@ -218,13 +224,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<tr>
 	<td align="left" width="50%" style="background-color:transparent;">
 	
-	<span id="file_action" style="display:none;">
-    <input type="hidden" name="selected_file_id" id="selected_file_id" value="">
-    <input type="hidden" name="current_mode" id="current_mode" value="" />
-    <span id="cms_send_file"><img src="/graphics/email_attach.png" border="0" align="absmiddle"> <a href="javascript:mailWithAttachments(GetValue('selected_file_id'))">Send File</a> |&nbsp;</span>
-    <span id="cms_delete_file"><img src="/graphics/bin.png" border="0" align="absmiddle"> <a href="javascript:cmsDeleteFile(GetValue('selected_file_id'), GetValue('current_mode'));">Delete File</a> |&nbsp;</span>
-    <img src="/graphics/zoom.png" border="0" align="absmiddle"> <a href="javascript:cmsViewFile(GetValue('selected_file_id'), GetValue('current_mode'));">View File</a>
-	</span>  
+	
 
 	</td>
 	<td align="right" width="50%" style="background-color:transparent;">
@@ -236,7 +236,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<a class="hdr_tools" href="##" onClick="OpenLanding('UploadAndStore.cfm')">Files</a>
 		<a class="hdr_tools" href="##" onClick="OpenLanding('Customize.cfm')">Account Center</a>
 		</div>
-		<!--- <input type="button" class="normalButton" value="Go" onclick="ORMSSearch(GetValue('searchBox'))"> --->
+		
 	</td>
 	</tr>
 	</table>

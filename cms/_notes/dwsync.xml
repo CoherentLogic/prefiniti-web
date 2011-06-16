@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
 <file name="upload.cfm" server="www.prefiniti.com/prefiniti15/" local="129522115177225175" remote="129522114600000000" />
-<file name="create_file.cfm" server="www.prefiniti.com/prefiniti15/" local="129522113840388712" remote="129522113400000000" />
+<file name="create_file.cfm" server="www.prefiniti.com/prefiniti15/" local="129525499789100072" remote="129525499800000000" />
 <file name="upload_progress.gif" server="www.prefiniti.com/prefiniti15/" local="129521229289385288" remote="129521265000000000" />
-<file name="browse.cfm" server="www.prefiniti.com/prefiniti15/" local="129522442312716254" remote="129522442200000000" />
-<file name="file_tile.cfm" server="www.prefiniti.com/prefiniti15/" local="129522443388087762" remote="129522442800000000" />
+<file name="browse.cfm" server="www.prefiniti.com/prefiniti15/" local="129524712267356405" remote="129524712000000000" />
+<file name="file_tile.cfm" server="www.prefiniti.com/prefiniti15/" local="129524741688799215" remote="129524741400000000" />
 <file name="preview_file.cfm" server="www.prefiniti.com/prefiniti15/" local="129522340488232227" remote="129522340200000000" />
-<file name="file_actions.cfm" server="www.prefiniti.com/prefiniti15/" local="129522420687439359" remote="129522420600000000" />
+<file name="file_actions.cfm" server="www.prefiniti.com/prefiniti15/" local="129524739127682727" remote="129524739000000000" />
 <file name="download.cfm" server="www.prefiniti.com/prefiniti15/" local="129522314507596220" remote="129522314400000000" />
 <file name="set_thumbnail.cfm" server="www.prefiniti.com/prefiniti15/" local="129522420001840145" remote="129522420000000000" />
+<file name="delete_file.cfm" server="www.prefiniti.com/prefiniti15/" local="129525499898276316" remote="129525499800000000" />
 </dwsync>

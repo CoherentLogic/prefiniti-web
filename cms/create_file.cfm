@@ -1,3 +1,26 @@
+<!---
+
+$Id$
+
+Copyright (C) 2011 John Willis
+ 
+This file is part of Prefiniti.
+
+Prefiniti is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Prefiniti is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
+
+--->
+
 <cfset orms_rec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(URL.target_uuid)>
 
 <div style="height:100%;position:relative;">
@@ -46,8 +69,11 @@
     
     <div style="position:absolute; bottom:0px; border-top:1px solid #c0c0c0; width:100%; height:45px; background-color:#efefef;">
 		<div style="padding:8px; float:right;" id="create_timesheet_buttons" >
-			<a class="button" href="##" onclick="CloseORMSDialog();"><span>Cancel</span></a>
-			<a class="button" href="##" onclick="ORMSBeginUpload();"><span><strong>Next</strong></span></a>
+			<a class="button" href="##" onclick="CloseORMSDialog();"><span>Close</span></a>
+            <cfoutput>
+            <a class="button" href="##" onclick="ORMSDialog('/cms/browse.cfm?target_uuid=#orms_rec.r_id#');"><span>Browse Files</span></a>
+            </cfoutput>
+			<a class="button" href="##" onclick="ORMSBeginUpload();"><span><strong>Upload</strong></span></a>
 			
 		</div>
 	</div>
