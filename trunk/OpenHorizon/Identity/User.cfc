@@ -97,6 +97,42 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #this#>
 	</cffunction>
     
+    <cffunction name="Age" access="public" returntype="numeric" output="no">
+    	<cfset user_age = DateDiff("yyyy", this.birthday, Now())>
+        
+        <cfreturn #user_age#>
+    </cffunction>
+    
+    <cffunction name="GenderString" access="public" returntype="string" output="no">
+    	<cfif this.gender EQ "F">
+        	<cfreturn "Female">
+        <cfelse>
+        	<cfreturn "Male">
+        </cfif>
+    </cffunction>
+    
+    <cffunction name="GenderAndAge" access="public" returntype="string" output="no">
+    	<cfif this.Age() GE 18>
+        	<cfif this.gender EQ "F">
+            	<cfset desc = "woman">
+            <cfelse>
+        		<cfset desc = "man">
+            </cfif>                        
+        </cfif>   
+        
+        <cfif this.Age() LT 18>
+        	<cfif this.gender EQ "F">
+            	<cfset desc = "girl">
+            <cfelse>
+            	<cfset desc = "boy">
+            </cfif>
+        </cfif>
+        
+        <cfset retval = this.Age() & " year old " & desc>
+        
+        <cfreturn #retval#>
+    </cffunction>
+    
     <cffunction name="FormatName" access="public" returntype="string" output="no">
     	<cfif Len(this.middle_initial) GT 0>
         	<cfset fname = this.first_name & " " & this.middle_initial & ". " & this.last_name>
@@ -296,6 +332,58 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.r_pk = wanr_get_id.id>               
     </cffunction>
     
+    <cffunction name="SendEventNotificationEmail" access="public" returntype="void" output="no">
+    	<cfargument name="event" type="OpenHorizon.Storage.ObjectEvent" required="yes">
+        
+        
+        <cfmail from="notifications@prefiniti.com" 
+        		to="#this.email#" 
+                subject="#event.event_user.display_name# #LCase(event.event_name)# on #event.object_record.r_type# #event.object_record.r_name#"
+                type="html">
+        	<cfmodule template="/OpenHorizon/Storage/EventViews/MailNotification.cfm" r_pk="#event.r_pk#">
+        </cfmail>        
+    
+    </cffunction>
+    
+    <cffunction name="SendNotification" access="public" returntype="void" output="no">
+    	<cfargument name="notify_text" type="string" required="yes">        
+        <cfargument name="event" type="OpenHorizon.Storage.ObjectEvent" required="yes">
+        
+        <cfquery name="qrySendNotification" datasource="#this.BaseDatasource#">
+        	INSERT INTO orms_site_notifications
+            			(notify_text,
+                        user_id,
+                        orms_id,
+                        received,
+                        acknowledged,
+                        event_id,
+                        event_date)
+			VALUES		('#notify_text#',
+            			#this.r_pk#,
+                        '#event.object_record.r_id#',
+                        0,
+                        0,
+                        #event.r_pk#,
+                        #CreateODBCDateTime(Now())#)            			                     
+        </cfquery>
+    </cffunction>
+    
+    <cffunction name="ReceiveNotification" access="public" returntype="void" output="no">
+    	<cfargument name="id" type="numeric" required="yes">
+        
+        <cfquery name="RN" datasource="#this.BaseDatasource#">
+        	UPDATE orms_site_notifications SET received=1 WHERE id=#id#
+        </cfquery>
+	</cffunction>        
+    
+    <cffunction name="AcknowledgeNotification" access="public" returntype="void" output="no">
+    	<cfargument name="id" type="numeric" required="yes">
+        
+        <cfquery name="RN" datasource="#this.BaseDatasource#">
+        	UPDATE orms_site_notifications SET acknowledged=1 WHERE id=#id#
+        </cfquery>
+	</cffunction>        
+
 	<cffunction name="SendConfirmationEmail" access="public" returntype="void" output="no">
     	<cfoutput>
         <cfmail from="register@prefiniti.com" to="#this.email#" subject="Prefiniti Account Confirmation" type="html">

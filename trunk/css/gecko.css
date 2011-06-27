@@ -1575,6 +1575,16 @@ label {
 	border:1px solid #3399cc;
 }
 	
+.comment_inactive {
+	border:1px solid #c0c0c0;
+	height:20px;
+}
+
+.comment_active {
+
+	border:1px solid #2957a2;
+	height:20px;
+}	
 
 .clear { /* generic container (i.e. div) for floating buttons */
     overflow: hidden;
@@ -1653,3 +1663,165 @@ a.button:active span {
 	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
 }
 
+
+ h2 {
+		font-weight:lighter; 
+		font-size:16px; 
+		color:#2957A2; 
+		font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	}
+	
+td {
+	background-color:transparent;
+}
+
+.notification_box {
+	width:220px;
+	height:auto;
+	position:absolute;
+	left:20px;
+	bottom:20px;
+	background-color:#efefef;
+	border:1px solid #c0c0c0;	
+	font-family:"Segoe UI", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	color:#2957a2;
+	padding-left:20px;
+	padding-right:20px;
+	padding-bottom:20px;
+	padding-top:0px;
+	font-size:14px;
+}
+
+	body {
+		white;
+		background-repeat:repeat-x;
+	}
+	#PrefinitiToolbar {
+		width:100%;
+		clear:left;
+	}
+	
+	.LargeButton {
+		font-size:16px;
+		font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+		
+		margin-left:5px;
+		margin-top:5px;
+		
+		
+		
+	}
+	
+	.TabBar {
+		margin-top:0px;
+		margin-left:10px;
+		width:100%;
+	}
+	
+	.ContentBar {
+		
+		width:980px;
+		margin-left:auto;
+		margin-right:auto;
+		height:auto;
+		clear:left;
+		/*border-left:1px solid #efefef;
+		border-right:1px solid #efefef;
+		border-top:none;
+		border-bottom:1px solid #efefef;*/
+		
+		
+		
+	}
+
+	#LandingPage {		
+		display:none;
+		background-color:#efefef;
+		text-align:left;
+		margin-left:auto;
+		margin-right:auto;
+		width:550px;
+		height:auto;
+		padding:10px;
+		font-family:Verdana, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		
+		-moz-border-radius:4px;
+	}
+	
+	#LandingPage td {
+		font-family:Verdana, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		background-color:transparent;
+	}
+	
+	#LandingPageShadow {
+		-moz-border-radius:5px;
+		display:none;
+		z-index:1800;
+		background-color:gray;
+		border:1px solid gray;
+		position:absolute;
+		left:85px;
+		top:95px;
+		width:550px;
+		height:450px;
+		padding:10px;
+	}
+	
+	#SiteStatsDiv {
+		width:100%;
+		padding:0px;
+		margin:0px;
+		height:20px;
+		
+	}
+	
+	#tcTarget {
+		
+		border-bottom:none;
+		border-left:none;
+		border-right:none;
+	}
+	
+	.PNotifyText {
+		font-family:Verdana;
+		font-size:10px;
+		font-weight:normal;
+		color:#3300CC;
+		text-transform:uppercase;
+	}
+	
+	.bigBox {
+		width:792px;
+		height:289px;
+		background-image:url(/homeres/back_01.jpg);
+		background-repeat:no-repeat;
+		margin-top:20px;
+	}
+	
+	.iPrefinitiToolbar {		
+		padding-bottom:0px;
+		margin-bottom:0px;
+		margin-top:0px;
+		margin-left:auto;
+		margin-right:auto;
+		repeat:no-repeat;
+		width:980px;
+		background-color:#efefef;
+	}
+	
+	.hdr_tools {
+		display:block;
+		float:left;
+		border-left:1px solid #c0c0c0;		
+		font-size:14px;
+		padding:8px;
+		color:#999999;
+	}
+	
+	.hdr_tools_wrapper a:hover {
+		text-decoration:none;
+		color:#3399cc;
+		
+	}

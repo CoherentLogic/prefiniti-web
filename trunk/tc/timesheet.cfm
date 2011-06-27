@@ -15,7 +15,7 @@
 </cfquery>
 
 <cfquery name="chkDup" datasource="webwarecl">
-	SELECT * FROM time_card WHERE date=#CreateODBCDate(Now())# AND site_id=#url.current_site_id# AND emp_id=#url.calledByUser#
+	SELECT * FROM time_card WHERE date=#CreateODBCDate(Now())# AND site_id=#url.current_site_id# AND emp_id=#session.user.r_pk#
 </cfquery>    
 
 <cfswitch expression="#URL.action#">

@@ -26,7 +26,7 @@ function ORMSSearch(search_value)
 {
 	var url = '/orms/basic_search.cfm?search_value=' + escape(search_value);
 	
-	AjaxLoadPageToDiv('tcTarget', url);
+	AjaxLoadPageToDiv('orms_active_section', url);
 }		
 
 function ORMSSearchKeyPress(e)
@@ -53,20 +53,56 @@ function ORMSSearchClick()
 	SetValue('searchBox', '');
 }
 
-function ORMSPostComment(r_id, user_id)
+function ORMSCommentClick()
 {
-	var onResponse = function () {
-		//alert("r_id=" + r_id + " user_id=" + user_id);
-		var comment_form_url = "/orms/comment_form_loader.cfm?r_id=" + escape(r_id) + "&user_id=" + escape(user_id);
-		var comment_view_url = "/orms/comment_view_page_loader.cfm?r_id=" + escape(r_id);
-		
-		AjaxLoadPageToDiv('orms_comment_form', comment_form_url);
-		AjaxLoadPageToDiv('orms_comments', comment_view_url);
-			
-	}
-	
-	AjaxSubmitForm(AjaxGetElementReference('orms_post_comment'), '/orms/comment_post.cfm', 'orms_comment_form', onResponse);
+	setClass('object_comment', 'comment_active');
+	SetValue('object_comment', '');
 }
+
+function ORMSCommentReset()
+{
+	setClass('object_comment', 'comment_inactive');
+	SetValue('object_comment', 'Enter your comment...');
+}
+
+function ORMSPostComment(e)
+{
+	if (window.event) { 
+		e = window.event; 
+	}
+	if (e.keyCode == 13) {
+		comment = GetValue('object_comment');
+		orms_id = GetValue('orms_id');
+		
+		var url = '/orms/comment_post.cfm?comment=' + escape(comment) + "&orms_id=" + escape(orms_id);
+		
+		AjaxLoadPageToDiv('object_feed', url);
+		
+		ORMSCommentReset();
+	}
+}
+
+function ORMSPostEventComment(e, event_r_pk)
+{
+	var post_target = 'all_comments_' + event_r_pk;
+	var comment_box = 'event_comment_' + event_r_pk;
+	
+	
+	if (window.event) { 
+		e = window.event; 
+	}
+	if (e.keyCode == 13) {
+		comment = GetValue(comment_box);
+		
+		var url = '/orms/post_event_comment.cfm?comment=' + escape(comment) + "&event_id=" + escape(event_r_pk);
+			
+		SetValue(comment_box, '');
+		
+		showDivBlock(post_target);
+		AjaxLoadPageToDiv(post_target, url);				
+	}
+}
+
 
 function ORMSLoadSection(r_pk, section_loader)
 {
@@ -76,21 +112,32 @@ function ORMSLoadSection(r_pk, section_loader)
 
 function ORMSDialog(url)
 {
+	
+	/*var loadWin = new function () {
+		ColdFusion.navigate(url, 'orms_window');
+	};
+	
+	ColdFusion.Window.create('orms_window', '', url, {height:400,width:640,modal:true,closable:false,draggable:true,resizable:false,center:true,initshow:true,callbackHandler:loadWin});
+	*/
+	
 	showDiv('oh_dialog_background');
 	AjaxLoadPageToDiv('orms_dialog_container', url);
 		
 }
 
+
+
 function CloseORMSDialog() 
 {
+	
 	hideDiv('oh_dialog_background');
 }
 
 function ORMSLoad(orms_id, section)
 {
-	var url = "/orms/loader.cfm?orms_id=" + escape(orms_id);
-	url += "&section=" + section;
-	AjaxLoadPageToDiv('tcTarget', url);	
+	var url = "/Prefiniti.cfm?View=" + escape(orms_id);
+	url += "&Section=" + section;
+	location.replace(url);	
 }
 
 var orms_sidebar_shown = 1;
@@ -162,15 +209,20 @@ function ORMSDeleteFile(orms_id, file_uuid)
 	
 }
 
-function ORMSPlaySound(URL)
+function ORMSPlaySound(URL, id)
 {
-	soundManager.createSound('orms_sound', URL);
-	soundManager.play('orms_sound');
+	var sound_id = 'orms_sound_' + id;
+	
+	ORMSStopSound();
+	soundManager.createSound(sound_id, URL);
+	soundManager.play(sound_id);
 }
 
-function ORMSStopSound()
+function ORMSStopSound(id)
 {
-	soundManager.stop('orms_sound');
+	var sound_id = 'orms_sound_' + id;
+	
+	soundManager.stop(sound_id);
 }
 
 function ORMSSetThumbnail(orms_id, file_uuid)
@@ -184,4 +236,107 @@ function ORMSSetThumbnail(orms_id, file_uuid)
 	
 	AjaxLoadPageToDiv('dev-null', url, orc);
 	
+}
+
+
+function ORMSLoadHistory(start, user_id) 
+{
+	var url = '/orms/object_history.cfm?FirstRecord=' + escape(start) + '&user_id=' + escape(user_id);
+	AjaxLoadPageToDiv('object_history', url);	
+}
+
+function ORMSSwitchSites(assoc_id)
+{
+	SetValue('assoc', assoc_id);
+	document.forms['site_selection'].submit();
+}
+
+function ORMSLoadFeed(uuid)
+{
+	var url = '/orms/feed.cfm?uuid=' + escape(uuid);
+	
+	AjaxLoadPageToDiv('object_feed', url);
+}
+
+function ORMSLoadFeedFull(uuid)
+{
+	var url = '/orms/feed_loader.cfm?uuid=' + escape(uuid);
+	
+	var orc = new function () {
+		ORMSLoadFeed(uuid);
+	};
+	
+	AjaxLoadPageToDiv('orms_active_section', url, orc);
+}
+
+/*
+ *  notification code
+ */
+var sendReq = getXmlHttpRequestObject();
+var receiveReq = getXmlHttpRequestObject();
+var mTimer = setTimeout('getNotifyText();', 2000);
+var pTimer = "";
+
+function getXmlHttpRequestObject() 
+{
+	if (window.XMLHttpRequest) {
+		return new XMLHttpRequest();
+	} else if(window.ActiveXObject) {
+		return new ActiveXObject("Microsoft.XMLHTTP");
+	} else {
+		alert('Status: Cound not create XmlHttpRequest Object.' + 'Consider upgrading your browser.');
+	}
+}
+
+function getNotifyText() 
+{
+	var url = '/OpenHorizon/Storage/EventFeed/EventXML.cfm?user_id=' + escape(glob_userid) + '&acknowledged=0&received=0';
+	
+	if (receiveReq.readyState == 4 || receiveReq.readyState == 0) {
+		receiveReq.open("GET", url, true);
+		receiveReq.onreadystatechange = handleReceiveNotify; 
+		receiveReq.send(null);
+	}			
+}
+
+function handleReceiveNotify() 
+{
+	if (receiveReq.readyState == 4) {
+		var notify_div = document.getElementById('notify_target');
+		var xmldoc = receiveReq.responseXML;
+		var message_nodes = xmldoc.getElementsByTagName("event"); 
+		var n_messages = message_nodes.length;
+		
+		if (n_messages > 0) {
+			notify_div.innerHTML = "";
+		}
+		
+		for (i = 0; i < n_messages; i++) {
+			var id_node = message_nodes[i].getElementsByTagName("id");
+			var text_node = message_nodes[i].getElementsByTagName("text");
+			var time_node = message_nodes[i].getElementsByTagName("timestamp");
+			var user_node = message_nodes[i].getElementsByTagName("user");
+			var object_node = message_nodes[i].getElementsByTagName("object");
+			var event_node = message_nodes[i].getElementsByTagName("objectevent");
+									
+			n_id = id_node[0].firstChild.nodeValue;
+			n_text = text_node[0].firstChild.nodeValue;
+			n_time = time_node[0].firstChild.nodeValue;
+			n_user = user_node[0].firstChild.nodeValue;
+			n_object = object_node[0].firstChild.nodeValue;
+			n_event = event_node[0].firstChild.nodeValue;								
+			
+			var message_html = '<a href="http://www.prefiniti.com/Prefiniti.cfm?View=' + escape(n_object) + '">' + n_text + '</a><br><br>';
+			notify_div.innerHTML += message_html;			
+			
+		}
+		
+		if (n_messages > 0) {
+			showDivBlock('notify_wrapper');
+		}
+		
+		
+		mTimer = setTimeout('getNotifyText();',2000);
+		//pTimer = setTimeout("hideDiv('notify_wrapper');", 120000);
+	}
 }

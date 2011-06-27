@@ -4,7 +4,7 @@
 
 <strong class="OH_HEADER">Basic Information</strong>
 
-<cfif usr.CanWrite(URL.CalledByUser)>
+<cfif usr.CanWrite(session.user.r_pk)>
 	<cfparam name="u" default="">
 	<cfset u = getUserInformation(attributes.r_pk)>
 	
@@ -48,7 +48,7 @@
 	        	<td>Time Zone:</td>
 	            <td>
 	            	<cfparam name="tOffset" default="">
-	                <cfset tOffset = wwReadConfig(URL.CalledByUser, "PF:TIMEZONE")>
+	                <cfset tOffset = wwReadConfig(session.user.r_pk, "PF:TIMEZONE")>
 	                <cfif tOffset EQ "WW_NOT_CONFIGURED">
 	                	<cfset tOffset = 0>
 					</cfif>

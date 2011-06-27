@@ -26,11 +26,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <cfoutput>
     <div style="width:100%; text-align:center; margin-top:20px;" class="LandingHeaderText">        
-    	<div align="center" style="width:150px; height:150px; margin:auto; overflow:hidden;">
+    	<div align="center" style="width:130px; height:130px; margin:auto; overflow:hidden;">
         <cfif Datatype EQ "">
         	<span style="color:black; font-size:12px;">No Preview Available<br />(#f.MIMEType()#)</span>
         <cfelse>    
-         	<cfset data_type = CreateObject("component", Datatype).Render(f.URL(), 150, 150)>
+         	<cfset data_type = CreateObject("component", Datatype).Render(f.URL(), f.FullPath(), 130, 130)>
         </cfif>
         </div>
         <br />

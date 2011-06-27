@@ -59,7 +59,6 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
      
     <!-- Include the WebWare API files -->
     <cfinclude template="scriptIncludes.cfm">
-    <cfinclude template="/screenFader.cfm">
 	  
     <!-- Detect the browser type -->
     <cfinclude template="browserDetection.cfm">
@@ -69,8 +68,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
     <!-- Configure the shortcut icon and site RSS feed -->
 	<cfinclude template="configRSS.cfm">
+  
 </head>
-<body id="PGlobalScreen" onresize="handleAppResize();">
+<body>
  	<!-- Load the SoundManager div -->
     <cfinclude template="soundManagerDiv.cfm">
 
@@ -87,31 +87,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <!-- Check for maintenance condition -->	
     <cfinclude template="maintCheck.cfm">
     
+	
     <script src="/framework/UI/wz_tooltip.js" type="text/javascript"></script>
 
-    
-    <!-- Load the generic message template -->
-    <cfinclude template="genericMessage.cfm">
-    
-    <!-- Load the help window resources -->
-    <cfinclude template="/help/components/helpWrapper.cfm">
-    
-    <!-- Load the SmartDesk Info Manager resources -->
-    <cfinclude template="/contentManager/components/fileBrowserWrapper.cfm">
-    
-    <!-- Load the upload wrapper -->
-    <cfinclude template="/uploadWrapper.cfm">
-    
-    <!-- Load the file association wrapper -->
-    <cfinclude template="/cms_add_file_assoc_wrapper.cfm">
-    
-    <!-- Load the CMS minibrowser wrapper -->
-    <cfinclude template="/cms_minibrowser_wrapper.cfm">
-    
-    <!-- Load the generic window wrapper -->
-    <cfinclude template="/windowWrapper.cfm">
-    
-    <cfinclude template="/gis/components/gis_controls.cfm">
-    <cfinclude template="/gis/components/gis_map.cfm">
+
+
     
     

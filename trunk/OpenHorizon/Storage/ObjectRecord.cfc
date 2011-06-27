@@ -1,4 +1,4 @@
-<cfcomponent displayname="ObjectRecord" hint="ORMS Entry" extends="OpenHorizon.Framework">
+<cfcomponent displayname="ObjectRecord" hint="ORMS record" extends="OpenHorizon.Framework">
 	<cfset this.r_id = "">
 	<cfset this.r_type = "">
 	<cfset this.r_owner = 0>
@@ -12,6 +12,8 @@
 	<cfset this.r_pk = 0>
 	<cfset this.r_status = "">
 	<cfset this.r_parent = "">
+    <cfset this.generic_thumbnail = "">
+    <cfset this.sidebar_path = "">    
 	
     <cffunction name="SetThumbnail" access="public" returntype="void" output="no">
     	<cfargument name="t_url" type="string" required="yes">
@@ -30,7 +32,7 @@
     </cffunction>
     
 	
-	<cffunction name="Crup" hint="Create or update a ROMS entry"  returntype="OpenHorizon.Storage.ObjectRecord" access="public">
+	<cffunction name="Crup" hint="Create or update an ORMS record"  returntype="OpenHorizon.Storage.ObjectRecord" access="public">
 		<cfargument name="r_type" type="string" required="yes">
 		<cfargument name="r_owner" type="numeric" required="yes">
 		<cfargument name="r_site" type="numeric" required="yes">
@@ -145,6 +147,14 @@
 				
 				
 			</cfoutput>
+            
+            <cfquery name="gc" datasource="#this.BaseDatasource#">
+            	SELECT * FROM orms_creators WHERE r_type='#this.r_type#'
+            </cfquery>
+            
+            <cfset this.sidebar_path = gc.sidebar>
+            <cfset this.generic_thumbnail = gc.icon>
+            
 		<cfelse>
 			<cfset this.r_id="NO ORMS ENTRY AVAILABLE">
 		</cfif>			
@@ -512,6 +522,24 @@
         <cfreturn #ret_val#> 
         
 
-	</cffunction>		
+	</cffunction>	
+    
+    <cffunction name="Events" access="public" returntype="array" output="no">
+    	<cfargument name="starting_with" type="numeric" required="yes">
+        <cfargument name="max_count" type="numeric" required="yes">
+        
+        <cfset ret_val = ArrayNew(1)>
+        
+        <cfquery name="e" datasource="#this.BaseDatasource#">
+        	SELECT id FROM orms_events WHERE target_uuid='#this.r_id#' ORDER BY event_date DESC
+        </cfquery>
+        
+        <cfoutput query="e" startrow="#starting_with#" maxrows="#max_count#">
+        	<cfset t = CreateObject("component", "OpenHorizon.Storage.ObjectEvent").OpenByPK(id)>
+            <cfset ArrayAppend(ret_val, t)>
+        </cfoutput>
+        
+        <cfreturn #ret_val#>
+    </cffunction>	
 
 </cfcomponent>

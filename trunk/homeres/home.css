@@ -1,0 +1,169 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin:0;
+	font-size:12px;
+	font-family:"Segoe UI", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	color:black;
+}
+
+html {
+	margin:0;
+}
+
+#header_container {
+	width:980px;
+	margin:0 auto;
+}
+
+#header_bar {
+	width:100%;
+	height:100px;
+	background-color:#efefef;
+	border-bottom:1px solid #c0c0c0;
+}
+
+#header_bar img {
+	border:none;
+}
+
+#home_container {
+	width:980px;
+	margin:0 auto;
+}
+
+#home_sidebar {
+	float:left;
+	width:420px;
+	line-height:20x;
+}
+
+#home_sidebar  {
+	padding:0 30px 0 5px;
+	margin:20px 0 20px 0;
+	font-size:12px;
+}
+
+#home_sidebar p {
+	font-size:14px;
+	font-family:Garamond, Georgia, "Times New Roman", Times, serif;
+	font-style:italic;
+}
+
+#home_content {
+	margin:0 0 0 420px;
+	font-size:12px;
+}	
+
+
+
+#home_footer {
+	padding:15px;
+	border-top:1px solid #c0c0c0;
+	border-bottom:1px solid #c0c0c0;
+	background-color:#efefef;
+	margin:50px 0 50px 0;
+	font-family:"Segoe UI", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	
+}
+
+
+#home_footer_content {
+	width:980px;
+	margin:0 auto 0 auto;
+}
+
+.clear { /* generic container (i.e. div) for floating buttons */
+    overflow: hidden;
+    width: 100%;
+}
+
+a.button {
+    background: transparent url('/graphics/bg_button_a.png') no-repeat scroll top right;
+    color: #444;
+    display: block;
+    float: left;
+    font: normal 12px arial, sans-serif;
+    height: 24px;
+    margin-right: 6px;
+    padding-right: 18px; /* sliding doors padding */
+    text-decoration: none;
+
+}
+
+a.button span {
+    background: transparent url('/graphics/bg_button_span.png') no-repeat;
+    display: block;
+    line-height: 14px;
+    padding: 5px 0 5px 18px;
+	font-size:12px;
+} 
+
+a.button:active {
+    background-position: bottom right;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+
+a.button:active span {
+    background-position: bottom left;
+    padding: 6px 0 4px 18px; /* push text down 1px */
+} 
+
+.LandingHeaderText
+{
+	font-weight:lighter; 
+	font-size:16px; 
+	color:#2957A2; 
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	margin-left:0px;
+	padding-left:0px;
+	text-indent:0px;
+	font-weight:lighter; 
+	font-size:24px; 
+	color:#2957A2; 
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;	
+}
+
+form span {
+	font-weight:lighter; 
+	font-size:16px; 
+	color:#2957A2; 
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+}
+
+input {
+	border:1px solid #c0c0c0;
+	margin:5px;
+	padding:5px;
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+}
+
+select {
+	border:1px solid #c0c0c0;
+	margin:5px;
+	padding:5px;
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+}
+
+.form_error {
+	font-weight:lighter; 
+	font-size:12px; 
+	color:red; 
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+}
+
+p {
+	margin-left:50px;
+	font-weight:lighter; 
+	font-size:12px; 
+	color:#2957a2; 
+	font-family:"Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+}
+
+

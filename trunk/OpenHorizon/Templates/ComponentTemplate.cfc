@@ -27,9 +27,12 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.object_record = "">		<!--- ORMS record --->
     
     <cfset this.written = false>
-        
     
-    <cffunction name="OpenByPK" access="public" returntype="string" output="no">
+    <cffunction name="Create" access="public" returntype="[should return this component's type]" output="no">
+    
+    </cffunction>
+        
+    <cffunction name="OpenByPK" access="public" returntype="[should return this component's type]" output="no">
 		<cfargument name="pk" type="numeric" required="yes">
 		
         <cfset this.written = true>
@@ -37,7 +40,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfreturn #this#>
 	</cffunction>
     
-    <cffunction name="Open" access="public" returntype="string" output="no">
+    <cffunction name="Open" access="public" returntype="[should return this component's type]" output="no">
     
     
     	<cfset this.written = true>
@@ -55,6 +58,18 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
         <cfset this.written = true>
   	</cffunction>        
+    
+    <cffunction name="Delete" access="public" output="no" returntype="void">
+    	
+        <cfif this.written>
+        	<cfquery name="qryDeleteRecord" datasource="#this.BaseDatasource#">
+            	DELETE FROM foo 
+                WHERE 		id=#this.r_pk#
+            </cfquery>
+        	
+            <cfset this.written = false>
+        </cfif>
+	</cffunction> 
     
     <cffunction name="UpdateExistingRecord" access="public" output="no" returntype="void">
     	<cfquery name="qryUpdateExistingRecord" datasource="#this.BaseDatasource#">

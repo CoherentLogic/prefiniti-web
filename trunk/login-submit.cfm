@@ -65,7 +65,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 </cfif>
             </cfif>
                        
-            <cflocation url="http://prefiniti15.prefiniti.com/Prefiniti.cfm#urlstr#" addtoken="no">	
+            <cflocation url="#session.framework.URLBase#Prefiniti.cfm#urlstr#" addtoken="no">	
 		<cfelse>
         	<!--- the user's account is not yet confirmed --->
             <cflocation url="/homeres/account_not_confirmed.cfm?id=#qryGetLogin.id#" addtoken="no">

@@ -124,61 +124,16 @@ var LoaderUniqueValue = 0;
 function AjaxLoadPageToDiv(DivID, PageURL, onTransferCompleted, onTransferStart, onTransferProgress, onTransferError)
 {
 	showDiv('tcTarget');
-	hideDiv('ngTW');
 	
 	if (DivID == 'tcTarget') {
 		lastBaseURL = PageURL;
-		dispatch();
 	}
 	
 	try {
 		UnTip();
 	} catch (ex) {}
 	
-	document.body.style.cursor="wait";
-
-	LoaderUniqueValue++;
-	
-	try {
-	document.getElementById(nextToClose).style.display="none";
-	}
-	catch (e) {
-	}
-	
-	if (PageURL.indexOf('?') != -1) {
-		if(PageURL.indexOf('calledByUser') == -1) {
-			PageURL += "&calledByUser=" + escape(glob_userid);
-		}
-	}
-	else {
-		if(PageURL.indexOf('calledByUser') == -1) {
-			PageURL += "?calledByUser=" + escape(glob_userid);
-		}
-	}
-	
-
-	if(PageURL.indexOf('userName') == -1) {
-		PageURL += "&userName=" + escape(glob_userName);
-	}
-	
-	if(PageURL.indexOf('longName') == -1) {
-		PageURL += "&longName=" + escape(glob_longName);
-	}
-
-	if(PageURL.indexOf('current_association') == -1) {
-		PageURL += "&current_association=" + escape(glob_current_association);
-	}
-	
-	if(PageURL.indexOf('current_site_id') == -1) {
-		PageURL += "&current_site_id=" + escape(glob_current_site_id);
-	}
-	
-	var FrameworkRevision = "1.0";
-	
-	if(PageURL.indexOf('FrameworkRevision') == -1) {
-		PageURL += "&FrameworkRevision=" + escape(FrameworkRevision);
-	}
-	
+	document.body.style.cursor="wait";	
 
 	
 	if(DivID == "tcTarget") {
@@ -193,48 +148,13 @@ function AjaxLoadPageToDiv(DivID, PageURL, onTransferCompleted, onTransferStart,
 		location.replace("http://www.mozilla.com");
 	}
 
-	AjaxNullRequest('/framework/components/update_last_event.cfm');
 	
 	xmlHttp.onreadystatechange = function()
 	{
 		switch(xmlHttp.readyState) {
 			case 4:
 				SetInnerHTML(DivID, '');
-				
-				if (DivID != 'PLInfoArea') {
-					if(glob_steel) {
-						var navRef = AjaxGetElementReference('PrefinitiLauncher');
-						navRef.style.display = "none";
-					}
-				}
-			
-	
-			    // regexp which parses text for value between <title> .. </title> tags
-        		var re_title = new RegExp("<wwafcomponent>[\n\r]*(.*)[\n\r]*</wwafcomponent>", "gmi");
-        		// page text
-        		var content = xmlHttp.responseText;
-        		var title = re_title.exec(content);
-				
-				try {
-				lastTitle = title[1];
-				} catch(ex) {}
-				
-				var re_packageName = new RegExp("<wwafpackage>[\n\r\s]*(.*)[\n\r\s]*</wwafpackage>", "gmi");
-				var packageName = re_packageName.exec(content);
-				
-				var re_packageIcon = new RegExp("<wwaficon>[\n\r\s]*(.*)[\n\r\s]*</wwaficon>", "gmi");
-				var packageIcon = re_packageIcon.exec(content);
-				
-
-				
-				
-				if (title != null) {	
-					if (DivID == 'tcTarget') {						
-						// we're NOT running steel. create it in a tab.
-						addTabButton(title[1], PageURL);																									
-					}					
-				}
-				
+					
 				document.getElementById(DivID).innerHTML = xmlHttp.responseText;
 				
 				try {
@@ -244,7 +164,6 @@ function AjaxLoadPageToDiv(DivID, PageURL, onTransferCompleted, onTransferStart,
 					//do nothing					
 				}
 				
-				//hideDiv('st_busy');
 				document.body.style.cursor="default";				
 				break;
 			case 1:
@@ -298,10 +217,7 @@ function shiftOpacity(id, millisec) {
 } 
 
 
-function fwStatus(smsg)
-{
-	SetInnerHTML('framework_status', '<img src="/graphics/pi-16x16.png" align="absmiddle"> ' + smsg);
-}
+
 
 function AjaxSubmitForm(formRef, postTarget, targetDiv, onLoadEventHandler)
 {

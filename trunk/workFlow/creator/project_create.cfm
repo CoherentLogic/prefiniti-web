@@ -1,5 +1,5 @@
 <cfquery name="getSites" datasource="sites">
-	SELECT * FROM site_associations WHERE assoc_type=1 AND user_id=#url.CalledByUser#
+	SELECT * FROM site_associations WHERE assoc_type=1 AND user_id=#session.user.r_pk#
 </cfquery>
 
 <div style="height:100%;position:relative;">
