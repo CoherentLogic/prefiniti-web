@@ -1,0 +1,1 @@
+<cfmodule template="/orms/object_events.cfm" user_id="#session.user.r_pk#" orms_id="#url.uuid#">

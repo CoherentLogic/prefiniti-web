@@ -112,13 +112,29 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfreturn #ret_val#>
     </cffunction>
     
+    <!---
+		<cffunction name="Create" access="public" returntype="OpenHorizon.Storage.ObjectEvent" output="no">
+		<cfargument name="object_record" type="OpenHorizon.Storage.ObjectRecord" required="yes">
+        <cfargument name="event_user" type="OpenHorizon.Identity.User" required="yes">
+        <cfargument name="event_name" type="string" required="yes">
+        <cfargument name="body_copy" type="string" required="yes">
+        <cfargument name="orms_file_rec" type="OpenHorizon.Storage.File" required="no">
+	--->
+    
     <cffunction name="Save" access="public" output="no" returntype="void">
     	<cfif this.written>
       		<cfset this.UpdateExistingRecord()>
     	<cfelse>
       		<cfset this.WriteAsNewRecord()>
-    	</cfif>
-    	<!--- <cfmodule template="/authentication/Users/orms_do.cfm" id="#this.r_pk#"> --->
+    	
+			<cfset evnt = CreateObject("component", "OpenHorizon.Storage.ObjectEvent")>
+            <cfset obj = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(this.target_uuid)>
+            
+            <cfset evnt.Create(obj, this.poster, "Posted a file", this.keywords, this)>
+            <cfset evnt.Save()>        	    
+		</cfif>
+
+		
         <cfset this.written = true>
   	</cffunction>
     

@@ -1,10 +1,25 @@
-<cfinclude template="/socialnet/socialnet_udf.cfm">
-<cfinclude template="/authentication/authentication_udf.cfm">
-<cfoutput>
-<!--
-	<wwafcomponent>Search Results - #url.search_value#</wwafcomponent>
--->
-</cfoutput>
+<!---
+
+$Id$
+
+Copyright (C) 2011 John Willis
+ 
+This file is part of Prefiniti.
+
+Prefiniti is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Prefiniti is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
+
+--->
 
 <cfif Find(":", url.search_value)> <!-- we are searching on both keyword and value -->
 	<cfset search_mode = "key_and_value">
@@ -46,14 +61,16 @@
 		<cfset res_string_key = k_word>	
 	</cfif>
 	
-	<cfif r.CanRead(URL.CalledByUser)>
-		<table>
+	<cfif r.CanRead(session.user.r_pk)>
+		<cfset owner = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(r.r_owner)>
+        <cfset site = CreateObject("component", "OpenHorizon.Identity.Site").Open(r.r_site)>
+    	<table>
 		<tr>
 		<td valign="top" width="48">
 		<img src="#r.r_thumb#" width="48" style="border:none;" align="top"> 
 		</td>
 		<td valign="top">
-		<a style="font-size:18px; font-weight:bold; color:##2957a2; margin-left:15px;" href="####" onclick="ORMSLoad('#r_id#', '')"> #getLongname(r.r_owner)# - #getSiteNameByID(r.r_site)# #r.r_type# #r.r_name# (#r.r_status#)</a>
+		<a style="font-size:18px; font-weight:bold; color:##2957a2; margin-left:15px;" href="####" onclick="ORMSLoad('#r_id#', '')"> #owner.display_name# - #site.site_name# #r.r_type# #r.r_name# (#r.r_status#)</a>
 		<p style="margin-left:30px; margin-bottom:10px; font-size:14px;">
 			<strong>Found in:</strong> #res_string_key#: #res_string_value#<br>
 			<span style="color:##999999; font-size:10px;">Last modified on #DateFormat(r.r_created, "mm/dd/yyyy")# at #TimeFormat(r.r_created, "h:mm tt")#</span>
@@ -63,14 +80,7 @@
 		</tr>
 		</table>
 	
-		<!--- <tr>
-			<td></td>
-			<td></td>
-			<td>#r.r_name#</td>
-			<td>#getLongname(r.r_owner)#</td>
-			<td></td>
-			<td><a href="#Replace(r.r_view, '"', "'", "all")#"><span>Open</span></a></td>
-		</tr> --->
+
 	</cfif>
 </cfoutput>	
 </div>

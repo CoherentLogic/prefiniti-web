@@ -9,7 +9,7 @@
 		<cfset rtype = "User Account">
 		<cfset rowner = id>
 		<cfset rsite = 5>
-		<cfset rname = username>
+		<cfset rname = longName>
 		<cfset redit = 'javascript:editUser(#id#,"basic_information.cfm")'>
 		<cfset rview = 'javascript:viewProfile(#id#)'>
 		<cfset rdel = "javascript:ORMSNoAction();">

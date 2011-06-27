@@ -12,7 +12,7 @@
 		
 		<cfparam name="realName" default="">
 		<cfset realName = LCase(Icon)>
-		<cfset realName = Replace(realName, " ", "_")>
+		<cfset realName = Replace(realName, " ", "_", "all")>
 		<cfset realName = "#this.URLBase#/OpenHorizon/Resources/Graphics/Silk/" & realName & ".png">
 		
 		<cfreturn this.Create(realName, Dimension, Dimension)>

@@ -49,7 +49,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                     <td align="left" width="70%"><input id="FileContents" name="FileContents" type="file" /></td>
                 </tr>
                 <tr>
-                    <td align="right" width="30%"><strong>Keywords</strong></td>
+                    <td align="right" width="30%"><strong>Comments</strong></td>
                     <td align="left" width="70%"><textarea name="Keywords" id="Keywords"></textarea></td>
                 </tr>
                                         

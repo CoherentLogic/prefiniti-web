@@ -20,6 +20,9 @@ You should have received a copy of the GNU General Public License
 along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
+
+<cfajaximport tags="cfmenu,cfwindow">
+
 <!-- Open the div element for the main client area -->    
     <cfif session.loggedIn EQ "yes">
     	<div class="bodyWrapper" id="appArea" style="height:auto; min-height:800px; width:100%; padding:0px; margin:0px; background-image:none;">
@@ -32,6 +35,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfoutput><input id="PMF_CurrentDate" type="hidden" value="#DateFormat(Now(), 'mm/dd/yyyy')#" /></cfoutput>
 
 <head>
+	<!--- jump back to login page with redirect clues if the session is not logged in --->
 	<cfif session.loggedin NEQ "yes">
 		<cfif IsDefined("URL.View")>
 			<cfif IsDefined("URL.Section")>
@@ -43,174 +47,58 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		</cfif>
         <cfif NOT session.active_membership.Examine('AS_LOGIN')>
         	<cflocation url="/bad_site_permissions.cfm" addtoken="no">
-        </cfif>
-        	
+        </cfif>        	
 	</cfif>
     
-    
+    <!--- set up the current ORMS object and section --->
+    <cfif IsDefined("URL.view")>
+		<cfset CurrentObject = URL.View>
+        <cfif IsDefined("URL.section")>
+            <cfset CurrentSection = URL.section>
+        <cfelse>
+            <cfset CurrentSection = "">
+        </cfif>       
+    <cfelse>
+        <cfquery name="GetFirst" datasource="#session.framework.BaseDatasource#" maxrows="1">
+            SELECT r_id FROM orms_access_log WHERE a_user_id=#session.user.r_pk# ORDER BY a_date DESC
+        </cfquery>
+        <cfset CurrentObject = GetFirst.r_id>
+		<cfset CurrentSection = "">                       
+    </cfif>
 
-	<cfif IsDefined("URL.View")>
-		<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(URL.View)>
-		<cfoutput>
-			<title>#o.r_type# #o.r_name# - The Prefiniti Network</title>
-		</cfoutput>
-	<cfelse>
-		<title>The Prefiniti Network</title>
-	</cfif>
+	<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(CurrentObject)>
+	<cfoutput>
+		<title>#o.r_type# #o.r_name# - The Prefiniti Network</title>
+	</cfoutput>
+	
 
 
-<style type="text/css">
-	body {
-		white;
-		background-repeat:repeat-x;
-	}
-	#PrefinitiToolbar {
-		width:100%;
-		clear:left;
-	}
-	
-	.LargeButton {
-		font-size:16px;
-		font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
-		
-		margin-left:5px;
-		margin-top:5px;
-		
-		
-		
-	}
-	
-	.TabBar {
-		margin-top:0px;
-		margin-left:10px;
-		width:100%;
-	}
-	
-	.ContentBar {
-		
-		width:980px;
-		margin-left:auto;
-		margin-right:auto;
-		height:auto;
-		clear:left;
-		/*border-left:1px solid #efefef;
-		border-right:1px solid #efefef;
-		border-top:none;
-		border-bottom:1px solid #efefef;*/
-		
-		
-		
-	}
 
-	#LandingPage {		
-		display:none;
-		background-color:#efefef;
-		text-align:left;
-		margin-left:auto;
-		margin-right:auto;
-		width:550px;
-		height:auto;
-		padding:10px;
-		font-family:Verdana, Arial, Helvetica, sans-serif;
-		font-size:12px;
-		
-		-moz-border-radius:4px;
-	}
-	
-	#LandingPage td {
-		font-family:Verdana, Arial, Helvetica, sans-serif;
-		font-size:12px;
-		background-color:transparent;
-	}
-	
-	#LandingPageShadow {
-		-moz-border-radius:5px;
-		display:none;
-		z-index:1800;
-		background-color:gray;
-		border:1px solid gray;
-		position:absolute;
-		left:85px;
-		top:95px;
-		width:550px;
-		height:450px;
-		padding:10px;
-	}
-	
-	#SiteStatsDiv {
-		width:100%;
-		padding:0px;
-		margin:0px;
-		height:20px;
-		
-	}
-	
-	#tcTarget {
-		
-		border-bottom:none;
-		border-left:none;
-		border-right:none;
-	}
-	
-	.PNotifyText {
-		font-family:Verdana;
-		font-size:10px;
-		font-weight:normal;
-		color:#3300CC;
-		text-transform:uppercase;
-	}
-	
-	.bigBox {
-		width:792px;
-		height:289px;
-		background-image:url(/homeres/back_01.jpg);
-		background-repeat:no-repeat;
-		margin-top:20px;
-	}
-	
-	.iPrefinitiToolbar {		
-		padding:12px;
-		margin-bottom:0px;
-		margin-top:0px;
-		
-		repeat:no-repeat;
-		width:980px;
-		background-color:#efefef;
-	}
-	
-	.hdr_tools {
-		display:block;
-		float:left;
-		border-left:1px solid #c0c0c0;		
-		font-size:14px;
-		padding:8px;
-		color:#999999;
-	}
-	
-	.hdr_tools_wrapper a:hover {
-		text-decoration:none;
-		color:#3399cc;
-		
-	}
-</style>
-</head>
-<body onLoad="LoadHandler15();">
-<a name="top"></a>
 
 <script src="/framework/UI/wz_tooltip.js" type="text/javascript"></script>
 
-<!---
-<cfmodule template="/sm2/demo/jsAMP-preview/musicplayer.cfm" playlist="__library" user_id="#session.userid#">
---->
+<div class="notification_box" id="notify_wrapper" style="display:none;">
+	<h2><img src="/graphics/wand.png" align="absmiddle"> Notifications</h2>           
+    <div id="notify_target">
+    
+    </div>
+    <hr>
+    <a href="##" onclick="hideDiv('notify_wrapper');">Close</a> 
+</div>
 
-<center>
-<div style="width:100%; background-color:#efefef; border-bottom:1px solid #c0c0c0;">
+
+
+<div style="width:100%; background-color:#efefef; border-bottom:1px solid #c0c0c0; margin-bottom:0px;">
 <div id="tb" class="iPrefinitiToolbar" align="right">
 	
-
-    <cfset site_logo = session.site.object_record.r_thumb>
-    <!--- <cfset site_logo = "/graphics/prenew-small.png"> --->
-	<div style="width:auto; float:left; padding-top:8px;"><cfoutput><img src="#site_logo#" height="30"></cfoutput></div>
+    
+	<div style="padding:10px;width:960px;margin-bottom:20px;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+    <td style="background-color:transparent;">
+	<div style="width:auto; float:left; padding-top:8px;"><cfoutput><img src="/graphics/prenew-small.png" height="30"></cfoutput></div>
+    </td>
+    <td  style="background-color:transparent;" align="right">
 	<input 	type="text" 
 			id="searchBox" 
 			name="searchBox" 
@@ -218,66 +106,45 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			value="Type your search terms and press Enter"
 			onkeypress="ORMSSearchKeyPress(event);"
 			onclick="ORMSSearchClick();">		
-		
-	
-	<table width="900" style="margin-top:8px;">
-	<tr>
-	<td align="left" width="50%" style="background-color:transparent;">
-	
-	
-
-	</td>
-	<td align="right" width="50%" style="background-color:transparent;">
-		
-		<div class="hdr_tools_wrapper" style="width:auto; float:right;">		
-		<a class="hdr_tools" style="border-left:none;" href="##" onClick="OpenLanding('Work.cfm')">Work</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('Socialize.cfm')">Friends</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('Organize.cfm')">Calendar</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('UploadAndStore.cfm')">Files</a>
-		<a class="hdr_tools" href="##" onClick="OpenLanding('Customize.cfm')">Account Center</a>
-		</div>
-		
-	</td>
+	</td>	
 	</tr>
 	</table>
+	</div>
+    <cfmodule template="/orms/object_menu.cfm" orms_id="#CurrentObject#" section="#CurrentSection#">
 </div>
 </div>
 
-	
-
-</center>
 	
 
 <!--- END TOOLBAR --->
-<div id="sbTarget" class="ContentBar" style="height:40px; background-color:white; -moz-box-shadow:none; -moz-border-radius:0px;"></div>
-<div class="ContentBar" style="background-color:white;">	
-	<div id="SiteStatsDiv" style="width:100%; height:0px; color:black; font-weight:normal; background-color:white; "></div>
-	<div id="tcTarget"></div>
+
+<div class="ContentBar" style="background-color:white;margin-top:0px;">	
+    <div id="tcTarget" style="margin-top:0px;">    			
+        <cfmodule template="/orms/loader_noajax.cfm" orms_id="#CurrentObject#" section="#CurrentSection#"> 		
+    </div>	
 </div>
 
+<div style="display:none;">
+<form name="site_selection" action="/siteSelectSubmit2.cfm" method="post">
+    <input type="hidden" name="siteAssociation2" id="assoc" >
+</form>
+</div>
 
-<script type="text/javascript">
-	function LoadHandler15 () {
-		hideDiv('ClassicSiteSelect');
-		hideDiv('ClassicMenus');
-		
-
-		PrefinitiLegacyInit();
-		//fwRegisterAutoUpdate("/framework/components/sitestats_widget.cfm", "SiteStatsDiv");
+<cfoutput>
+<script>
+	ORMSLoadHistory(1, #session.user.r_pk#);
 	
-		<cfif IsDefined("URL.view")>
-			<cfoutput>
-			ORMSLoad('#URL.view#', '#URL.section#');
-			</cfoutput>
-		<cfelse>
-			loadHomeView();						
-		</cfif>
-	}
+
+
+	
+	<cfif NOT IsDefined("URL.section")>
+		ORMSLoadFeed('#CurrentObject#');
+	<cfelse>
+		<cfif URL.section EQ "">
+			ORMSLoadFeed('#CurrentObject#');
+		</cfif>			
+	</cfif>
 </script>
+</cfoutput>
 
-
-
-<div class="OH_DIALOG_BG" id="oh_dialog_background" style="display:none;">
-	<div id="orms_dialog_container"></div>
-</div>
 
