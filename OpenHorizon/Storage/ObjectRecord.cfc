@@ -14,7 +14,11 @@
 	<cfset this.r_parent = "">
     <cfset this.generic_thumbnail = "">
     <cfset this.sidebar_path = "">    
-	
+	<cfset this.r_latitude = 0>
+    <cfset this.r_longitude = 0>
+    <cfset this.r_ask_location = 1>
+    <Cfset this.r_has_location = 0>
+    
     <cffunction name="SetThumbnail" access="public" returntype="void" output="no">
     	<cfargument name="t_url" type="string" required="yes">
         
@@ -82,7 +86,11 @@
 					r_thumb,
 					r_pk,
 					r_status,
-					r_parent)
+					r_parent,
+                    r_latitude,
+                    r_longitude,
+                    r_ask_location,
+                    r_has_location)
 				VALUES
 					('#this.r_id#',
 					'#this.r_type#',
@@ -95,7 +103,11 @@
 					'#this.r_thumb#',
 					#r_pk#,
 					'#this.r_status#',
-					'#this.r_parent#')
+					'#this.r_parent#',
+                    #this.r_latitude#,
+                    #this.r_longitude#,
+                    #this.r_ask_location#,
+                    #this.r_has_location#)
 			</cfquery>					
 		<cfelse>
 			<cfset this.r_id = existsp.id>
@@ -111,7 +123,11 @@
 						r_thumb='#this.r_thumb#',
 						r_pk=#this.r_pk#,
 						r_status='#this.r_status#',
-						r_parent='#this.r_parent#'
+						r_parent='#this.r_parent#',
+                        r_latitude=#this.r_latitude#,
+                        r_longitude=#this.r_longitude#,
+                        r_ask_location=#this.r_ask_location#,
+                        r_has_location=#this.r_has_location#                   
 				WHERE	id='#this.r_id#'
 			</cfquery>
 		</cfif>		
@@ -122,7 +138,83 @@
 		<cfreturn #this#>
 	</cffunction>
 	
-	<cffunction name="Get" returntype="OpenHorizon.Storage.ObjectRecord" access="public">
+    <cffunction name="Save" access="public" returntype="void" output="no">
+    	<cfquery name="existsptwo" datasource="#this.BaseDatasource#">
+			SELECT id FROM orms WHERE id='#this.r_id#'
+		</cfquery>
+		
+		<cfif existsptwo.RecordCount GT 0>
+			<cfset rexists = true>
+		<cfelse>
+			<cfset rexists = false>
+		</cfif>
+		
+		<cfif NOT rexists>
+			<cfset this.r_id = CreateUUID()>
+			<cfquery name="CreateORMSRecord" datasource="#this.BaseDatasource#">
+				INSERT INTO orms
+					(id,
+					r_type,
+					r_owner,
+					r_site,
+					r_name,
+					r_edit,
+					r_view,
+					r_delete,
+					r_thumb,
+					r_pk,
+					r_status,
+					r_parent,
+                    r_latitude,
+                    r_longitude,
+                    r_ask_location,
+                    r_has_location)
+				VALUES
+					('#this.r_id#',
+					'#this.r_type#',
+					#this.r_owner#,
+					#this.r_site#,
+					'#this.r_name#',
+					'#this.r_edit#',
+					'#this.r_view#',
+					'#this.r_delete#',
+					'#this.r_thumb#',
+					#r_pk#,
+					'#this.r_status#',
+					'#this.r_parent#',
+                    #this.r_latitude#,
+                    #this.r_longitude#,
+                    #this.r_ask_location#,
+                    #this.r_has_location#)
+			</cfquery>					
+		<cfelse>
+			
+			<cfquery name="UpdateORMSRecord" datasource="#this.BaseDatasource#">
+				UPDATE 	orms
+				SET		r_type='#this.r_type#',
+						r_owner=#this.r_owner#,
+						r_site=#this.r_site#,
+						r_name='#this.r_name#',
+						r_edit='#this.r_edit#',
+						r_view='#this.r_view#',
+						r_delete='#this.r_delete#',
+						r_thumb='#this.r_thumb#',
+						r_pk=#this.r_pk#,
+						r_status='#this.r_status#',
+						r_parent='#this.r_parent#',
+                        r_latitude=#this.r_latitude#,
+                        r_longitude=#this.r_longitude#,
+                        r_ask_location=#this.r_ask_location#,
+                        r_has_location=#this.r_has_location#                   
+				WHERE	id='#this.r_id#'
+			</cfquery>
+		</cfif>		
+		
+		<cfset sync_url="http://picasso.coherent-logic.com:8500/sync/resource.cfm?om_uuid=#this.r_id#">				
+		<cfhttp url="#sync_url#">
+    </cffunction>
+    
+	<cffunction name="Get" returntype="OpenHorizon.Storage.ObjectRecord" access="public" output="no">
 		<cfargument name="r_id" type="string" required="yes">
 		
 		<cfquery name="gRes" datasource="#this.BaseDatasource#">
@@ -144,8 +236,10 @@
 				<cfset this.r_status = r_status>
 				<cfset this.r_parent = r_parent>	
 				<cfset this.r_created = r_created>		
-				
-				
+				<cfset this.r_longitude = r_longitude>
+                <cfset this.r_latitude = r_latitude>
+                <cfset this.r_ask_location = r_ask_location>
+				<cfset this.r_has_location = r_has_location>
 			</cfoutput>
             
             <cfquery name="gc" datasource="#this.BaseDatasource#">
@@ -156,7 +250,7 @@
             <cfset this.generic_thumbnail = gc.icon>
             
 		<cfelse>
-			<cfset this.r_id="NO ORMS ENTRY AVAILABLE">
+			<cfset this.Err("ORMS001")>
 		</cfif>			
 		
 		<cfreturn #this#>
@@ -173,8 +267,8 @@
 		<cfif gu.RecordCount GT 0>
 			<cfset p = this.Get(gu.id)>
 		<cfelse>
-			<cfset this.r_id="NO ORMS ENTRY AVAILABLE">
-			<cfset p = this>
+        	<cfset ctx = "{" & r_type & "/" & r_pk & "}">
+			<cfset this.Err("ORMS002", ctx)>
 		</cfif>			
 		<cfreturn #p#>
 	</cffunction>
@@ -229,19 +323,28 @@
 		<cfargument name="rel_type" type="string" required="yes">
 		<cfargument name="rel_expires" type="string" required="no">
 		
-		<cfquery name="rel" datasource="#this.BaseDatasource#">
-			INSERT INTO orms_relationships
-				(rel_source,
-				rel_target,
-				rel_type
-				<cfif IsDefined("rel_expires")>,rel_expires</cfif>)
-			VALUES
-				('#this.r_id#',
-				'#rel_target#',
-				'#rel_type#'
-				<cfif IsDefined("rel_expires")>,#CreateODBCDateTime(rel_expires)#</cfif>)										
-		</cfquery>
-	</cffunction>	
+        <cfquery name="chk_rel" datasource="#this.BaseDatasource#">
+        	SELECT * FROM 	orms_relations
+            WHERE			rel_source='#this.r_id#'
+            AND				rel_target='#rel_target#'
+            AND				rel_type='#rel_type#'
+        </cfquery>
+        
+        <cfif chk_rel.RecordCount EQ 0>
+            <cfquery name="rel" datasource="#this.BaseDatasource#">
+                INSERT INTO orms_relations
+                    (rel_source,
+                    rel_target,
+                    rel_type
+                    <cfif IsDefined("rel_expires")>,rel_expires</cfif>)
+                VALUES
+                    ('#this.r_id#',
+                    '#rel_target#',
+                    '#rel_type#'
+                    <cfif IsDefined("rel_expires")>,#CreateODBCDateTime(rel_expires)#</cfif>)										
+            </cfquery>
+        </cfif>
+	</cffunction>	       
 	
 	<cffunction name="AddPair" returntype="void" access="public">
 		<cfargument name="k_word" type="string" required="yes">

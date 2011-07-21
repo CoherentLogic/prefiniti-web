@@ -26,5 +26,5 @@
 </cfoutput>	
 
 <cfoutput>
-#ntBusinessEventNotify("TC_TIMESHEET_REVERSED", url.current_site_id, "A timesheet for #getLongname(gtc.emp_id)# was reversed by #getLongname(url.CalledByUser)#.", "")#
+#ntBusinessEventNotify("TC_TIMESHEET_REVERSED", url.current_site_id, "A timesheet for #getLongname(gtc.emp_id)# was reversed by #getLongname(session.user.r_pk)#.", "")#
 </cfoutput>	

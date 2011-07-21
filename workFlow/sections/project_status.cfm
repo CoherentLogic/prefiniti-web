@@ -6,7 +6,7 @@
 <cfset o.GetByTypeAndPK("Project", attributes.r_pk)>
 
 <cfset canEdit = false>
-<cfif o.CanWrite(URL.CalledByUser) AND o.IsPeer(URL.CalledByUser, "Employee")>
+<cfif o.CanWrite(session.user.r_pk) AND o.IsPeer(session.user.r_pk, "Employee")>
 	<cfset canEdit = true>
 </cfif>
 

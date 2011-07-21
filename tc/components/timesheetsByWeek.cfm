@@ -10,7 +10,7 @@
     </div>
     <br />
     <br />
-<cfmodule template="/controls/weekCalendarOld.cfm" viewer="/tc/components/tsDay.cfm" userid="#url.calledByUser#" showWeekend="false" startDate="firstDayOfWeek">
+<cfmodule template="/controls/weekCalendarOld.cfm" viewer="/tc/components/tsDay.cfm" userid="#session.user.r_pk#" showWeekend="false" startDate="firstDayOfWeek">
 <div id="tsInfo" style="display:block;">
 <p>No timesheet selected</p>
 </div>

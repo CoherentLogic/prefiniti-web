@@ -63,7 +63,7 @@
     <cfoutput>
 	<cfmodule template="/orms/view_header.cfm" r_type="Project" r_pk="#url.id#">
 	<cfset po = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Project", url.id)>
-	<cfset po.DoAccess("View", url.calledByUser)>
+	<cfset po.DoAccess("View", session.user.r_pk)>
 	
 	<div style="display:none;">
     <div style="clear:both;width:89%; padding-top:-5px; padding-left:5px; padding-bottom:5px;">    
@@ -79,7 +79,7 @@
                         <img src="/graphics/printer.png" align="absmiddle"/> <cfoutput><a href="javascript:viewPrintable('#url.id#')">Printable View</a></cfoutput> |&nbsp;
                         
                         <cfif getPermissionByKey("TS_VIEW", #url.current_association#) EQ true>
-                        	<cfoutput><img src="/graphics/time_go.png" align="absmiddle"/> <a href="javascript:loadTimesheetView('tcTarget', #url.calledByUser#, '1/1/1980', '12/31/2999', 'none', 'no', '#projectInfo.clsJobNumber#')">My Time (This Project)</a></cfoutput> |&nbsp;
+                        	<cfoutput><img src="/graphics/time_go.png" align="absmiddle"/> <a href="javascript:loadTimesheetView('tcTarget', #session.user.r_pk#, '1/1/1980', '12/31/2999', 'none', 'no', '#projectInfo.clsJobNumber#')">My Time (This Project)</a></cfoutput> |&nbsp;
                         <cfif getPermissionByKey("TS_VIEWALL", #url.current_association#) EQ true>
                         	<cfoutput><img src="/graphics/time_go.png" align="absmiddle"/> <a href="javascript:loadTimesheetView('tcTarget', 'noUserFilter', '1/1/1980', '12/31/2999', 'none', 'no', '#projectInfo.clsJobNumber#')">All Timesheets</a> |&nbsp;</cfoutput>
                         </cfif>

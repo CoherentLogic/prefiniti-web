@@ -1,7 +1,7 @@
 <cfparam name="qry" default="">
 
 	<cfif URL.permissionlevel EQ 0>
-    	<cfset qry = "SELECT * FROM projects WHERE subdivision=#URL.SubID# AND clientID=#URL.CalledByUser# ORDER BY clsJobNumber">
+    	<cfset qry = "SELECT * FROM projects WHERE subdivision=#URL.SubID# AND clientID=#session.user.r_pk# ORDER BY clsJobNumber">
     <cfelse>
     	<cfset qry = "SELECT * FROM projects WHERE subdivision=#URL.SubID# AND site_id=#URL.current_site_id# ORDER BY clsJobNumber">
     </cfif>

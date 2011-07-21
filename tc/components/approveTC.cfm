@@ -14,9 +14,9 @@
 <cfmodule template="/tc/components/tcStatus.cfm" id="#url.id#">
 
 <cfoutput>
-#ntBusinessEventNotify("TC_TIMESHEET_APPROVED", url.current_site_id, "A timesheet was approved for #getLongname(gtc.emp_id)# by #getLongname(url.CalledByUser)#.", "")#
+#ntBusinessEventNotify("TC_TIMESHEET_APPROVED", url.current_site_id, "A timesheet was approved for #getLongname(gtc.emp_id)# by #getLongname(session.user.r_pk)#.", "")#
 </cfoutput>	
 
 <cfoutput>
-#ntNotify(gtc.emp_id, "TC_TIMESHEET_APPROVED", "One of your signed timesheets was approved by #getLongname(url.CalledByUser)#.", "")#
+#ntNotify(gtc.emp_id, "TC_TIMESHEET_APPROVED", "One of your signed timesheets was approved by #getLongname(session.user.r_pk)#.", "")#
 </cfoutput>	

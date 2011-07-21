@@ -22,10 +22,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 --->
 
 <cfquery name="getSites" datasource="sites">
-	SELECT * FROM site_associations WHERE assoc_type=1 AND user_id=#url.CalledByUser#
+	SELECT * FROM site_associations WHERE assoc_type=1 AND user_id=#session.user.r_pk#
 </cfquery>
 <cfquery name="userinfo" datasource="webwarecl">
-	SELECT longname FROM Users WHERE id=#URL.calledByUser#
+	SELECT longname FROM Users WHERE id=#session.user.r_pk#
 </cfquery>
 
 <div style="height:100%;position:relative;">
@@ -36,7 +36,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<form name="create_timesheet" id="create_timesheet">
 	<cfoutput>
 	<input type="hidden" name="om_uuid" id="om_uuid" value="#CreateUUID()#">
-	<input type="hidden" name="client_id" id="client_id" value="#URL.CalledByUser#">
+	<input type="hidden" name="client_id" id="client_id" value="#session.user.r_pk#">
 	</cfoutput>
 	<table width="100%" cellpadding="10" cellspacing="0" class="orms_dialog">
 	<tr>

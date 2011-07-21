@@ -63,12 +63,16 @@
 		<cfmenuitem display="Sign Out..." image="#img.Silk('door out', 16)#" href="/logoff.cfm" />        
     </cfmenuitem>
     <cfmenuitem display="#session.site.site_name#" image="/graphics/world.png">
-    
+    	<cfset home_url = session.framework.URLBase & "?View=" & session.site.ObjectRecord().r_id>
+    	<cfmenuitem display="#session.site.site_name# Home" image="/graphics/house.png" href="#home_url#" />
     </cfmenuitem>
     <cfmenuitem display="#orms_rec.r_type#" image="/graphics/bricks.png">
     	<cfmenuitem display="Create Another..." image="#img.Silk('page white', 16)#" href="javascript:ORMSDialog('#createObjectLink#');"/>
         <cfmenuitem display="Subscription..." image="#img.Silk('rss', 16)#" href="javascript:ORMSDialog();" />
-    	<cfmenuitem divider />
+		
+        <cfmenuitem display="Location..." image="#img.Silk('map', 16)#" href="javascript:current_object.ShowLocation();" />
+    	
+        <cfmenuitem divider />
     	<cfmenuitem display="#orms_rec.r_type# Events" image="#img.Silk('newspaper', 16)#" href="javascript:ORMSLoadFeedFull('#attributes.orms_id#');" />
     	
 		<cfoutput query="sections">
@@ -83,7 +87,7 @@
         </cfmenuitem>  
     </cfif>
     
-    <cfmenuitem display="View" image="/graphics/eye.png">
+    <!--- <cfmenuitem display="View" image="/graphics/eye.png">
     	<cfmenuitem display=""/>
     </cfmenuitem>
     <cfmenuitem display="Tools" image="/graphics/wrench.png">
@@ -91,7 +95,7 @@
     </cfmenuitem>
     <cfmenuitem display="Help" image="/graphics/help.png">
     	<cfmenuitem display=""/>
-    </cfmenuitem>    
+    </cfmenuitem> --->    
 </cfmenu>
 
 

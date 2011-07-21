@@ -39,5 +39,5 @@
 </cfoutput>
 
 <cfoutput>
-#ntBusinessEventNotify("TC_TIMESHEET_EDITED", url.current_site_id, "A timesheet line item was added by #getLongname(url.CalledByUser)#.", "")#
+#ntBusinessEventNotify("TC_TIMESHEET_EDITED", url.current_site_id, "A timesheet line item was added by #getLongname(session.user.r_pk)#.", "")#
 </cfoutput>	

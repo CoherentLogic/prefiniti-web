@@ -15,7 +15,7 @@
 	
 	</style>
     <cfquery name="pp" datasource="webwarecl">
-        SELECT * FROM projects WHERE clientID=#url.calledByUser# ORDER BY dueDate ASC
+        SELECT * FROM projects WHERE clientID=#session.user.r_pk# ORDER BY dueDate ASC
     </cfquery>
     
     <table width="100%" cellspacing="0" class="mo">

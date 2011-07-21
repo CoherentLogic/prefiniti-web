@@ -350,7 +350,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfreturn #objList#>      
 </cffunction>
 
-<!---pfCreateItem(null, URL.ContainingFolder, URL.ObjectTypeID, URL.ObjectID, URL.RefType, URL.calledByUser)--->
+<!---pfCreateItem(null, URL.ContainingFolder, URL.ObjectTypeID, URL.ObjectID, URL.RefType, session.user.r_pk)--->
 <cffunction name="pfCreateItem" returntype="void">
 	<cfargument name="ItemName" required="yes" type="string">
     <cfargument name="ContainingFolder" required="yes" type="numeric">

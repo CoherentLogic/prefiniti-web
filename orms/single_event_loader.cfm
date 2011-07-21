@@ -1,0 +1,1 @@
+<cfmodule template="/OpenHorizon/Storage/EventViews/Feed.cfm" r_pk="#url.event_id#">

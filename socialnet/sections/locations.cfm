@@ -4,7 +4,7 @@
 
 <strong class="OH_HEADER">Locations</strong>
 
-<cfif usr.CanWrite(URL.CalledByUser)>
+<cfif usr.CanWrite(session.user.r_pk)>
 	<cfparam name="u" default="">
 	<cfset u=getUserLocations(#attributes.r_pk#)>
 	
@@ -66,7 +66,7 @@
 	<div style="border:1px solid #EFEFEF; display:none;" id="addLocDiv">
 		<form name="newLoc" id="newLoc">
 	   
-	<cfoutput>       <input type="hidden" name="user_id" id="user_id" value="#url.calledByUser#" /></cfoutput>
+	<cfoutput>       <input type="hidden" name="user_id" id="user_id" value="#session.user.r_pk#" /></cfoutput>
 			<div style="border:1px solid ##EFEFEF; margin-bottom:20px; padding:0px;">
 	    	<table width="550">
 	        	<tr>

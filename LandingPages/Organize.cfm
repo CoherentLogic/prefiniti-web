@@ -24,7 +24,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <cfparam name="UserColl" default="">
 <cfset UserColl=ArrayNew(1)>
-<cfset UserColl[1]=#url.calledByUser#>
+<cfset UserColl[1]=#session.user.r_pk#>
 
 <p style="margin-left:5px;">
 	<div id="schedArea" style="width:100%; height:350px; overflow:auto;">

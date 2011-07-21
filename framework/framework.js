@@ -133,7 +133,7 @@ function AjaxLoadPageToDiv(DivID, PageURL, onTransferCompleted, onTransferStart,
 		UnTip();
 	} catch (ex) {}
 	
-	document.body.style.cursor="wait";	
+
 
 	
 	if(DivID == "tcTarget") {
@@ -164,7 +164,7 @@ function AjaxLoadPageToDiv(DivID, PageURL, onTransferCompleted, onTransferStart,
 					//do nothing					
 				}
 				
-				document.body.style.cursor="default";				
+							
 				break;
 			case 1:
 				SetInnerHTML(DivID, '<img src="/graphics/progress.gif" align="absmiddle">');
@@ -175,6 +175,64 @@ function AjaxLoadPageToDiv(DivID, PageURL, onTransferCompleted, onTransferStart,
 	xmlHttp.send(null);
 	
 } /* AjaxLoadPageToDiv() */
+
+function AjaxPrependPageToDiv(DivID, PageURL)
+{
+	var xmlHttp;
+	xmlHttp = AjaxGetXMLHTTP();
+	
+	if(!xmlHttp) {
+		alert("Your browser does not support AJAX. Please install Mozilla Firefox 2 or greater.\n\nYou will now be redirected to the Firefox download site.");
+		location.replace("http://www.mozilla.com");
+	}
+	
+	xmlHttp.onreadystatechange = function()
+	{
+		switch(xmlHttp.readyState) {
+			case 4:					
+				PrependDiv(DivID, xmlHttp.responseText);			
+				break;			
+		}
+	}
+	xmlHttp.open("GET", PageURL, true);
+	xmlHttp.send(null);
+	
+} /* AjaxLoadPageToDiv() */
+
+function AjaxAppendPageToDiv(DivID, PageURL)
+{
+	var xmlHttp;
+	xmlHttp = AjaxGetXMLHTTP();
+	
+	if(!xmlHttp) {
+		alert("Your browser does not support AJAX. Please install Mozilla Firefox 2 or greater.\n\nYou will now be redirected to the Firefox download site.");
+		location.replace("http://www.mozilla.com");
+	}
+	
+	xmlHttp.onreadystatechange = function()
+	{
+		switch(xmlHttp.readyState) {
+			case 4:					
+				AppendDiv(DivID, xmlHttp.responseText);			
+				break;			
+		}
+	}
+	xmlHttp.open("GET", PageURL, true);
+	xmlHttp.send(null);
+	
+} /* AjaxLoadPageToDiv() */
+
+function PrependDiv(div_id, html) 
+{
+	var the_div = document.getElementById(div_id);
+	the_div.innerHTML = html + the_div.innerHTML;
+}
+
+function AppendDiv(div_id, html) 
+{
+	var the_div = document.getElementById(div_id);
+	the_div.innerHTML = the_div.innerHTML + html;
+}
 
 function opacity(id, opacStart, opacEnd, millisec) {
     return;

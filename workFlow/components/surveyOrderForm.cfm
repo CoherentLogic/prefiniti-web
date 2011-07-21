@@ -53,7 +53,7 @@
 	<input type="hidden" name="status" value="0" />
     
     <cfoutput><input name="current_association" value="#url.current_association#" type="hidden"/></cfoutput>
-	<cfoutput><input type="hidden" name="clientID" value="#url.calledByUser#" /></cfoutput>
+	<cfoutput><input type="hidden" name="clientID" value="#session.user.r_pk#" /></cfoutput>
 	<input type="hidden" name="new_sub" id="new_sub" value="1" />
     
 	

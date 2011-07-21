@@ -45,7 +45,7 @@
     	<cfformgroup type="fieldset" label="Invoicing Options">
             <cfformgroup type="vertical">
                 <cfinput type="hidden" name="clsJobNumber" value="#url.clsJobNumber#">
-				<cfinput type="hidden" name="calledByUser" value="#url.calledByUser#">    
+				<cfinput type="hidden" name="calledByUser" value="#session.user.r_pk#">    
                 <cfinput type="text" name="taxRate" label="Tax rate" required="yes" value="#orig_si.salestax_rate#">   
                 <cfinput type="text" name="markup" label="Markup %" required="yes" value="0">
                 <cfinput type="text" name="invoice_number" label="Invoice No.">

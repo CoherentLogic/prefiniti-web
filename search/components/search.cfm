@@ -33,8 +33,8 @@
 
 	<cfif #url.permissionLevel# EQ 0>
 	<cfoutput>
-		<img src="graphics/report_go.png" align="absmiddle" /> <a href="javascript:AjaxLoadPageToDiv('tcTarget', 'jobViews/priorityCustomer.cfm?clientid=#url.calledByUser#');">Priority Projects</a><br />
-		<img src="graphics/report_go.png" align="absmiddle" /> <a href="javascript:AjaxLoadPageToDiv('tcTarget', 'jobViews/allProjectsCustomer.cfm?userid=#url.calledByUser#');">All Projects</a><br />
+		<img src="graphics/report_go.png" align="absmiddle" /> <a href="javascript:AjaxLoadPageToDiv('tcTarget', 'jobViews/priorityCustomer.cfm?clientid=#session.user.r_pk#');">Priority Projects</a><br />
+		<img src="graphics/report_go.png" align="absmiddle" /> <a href="javascript:AjaxLoadPageToDiv('tcTarget', 'jobViews/allProjectsCustomer.cfm?userid=#session.user.r_pk#');">All Projects</a><br />
 			
 	</cfoutput>
 	</cfif>

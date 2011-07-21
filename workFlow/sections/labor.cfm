@@ -13,7 +13,7 @@
 	<cfset orec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 	<cfset orec.GetByTypeAndPK("Project", attributes.r_pk)>
 	
-	<cfif orec.CanWrite(URL.CalledByUser)>
+	<cfif orec.CanWrite(session.user.r_pk)>
 		<cfset canEdit = 1>
 	<cfelse>
 		<cfset canEdit = 0>

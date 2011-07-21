@@ -73,7 +73,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <cfparam name="s" default="">
 
-<cfset s=#getSiteStats(url.current_site_id, url.calledByUser)#>
+<cfset s=#getSiteStats(url.current_site_id, session.user.r_pk)#>
 
 <div id="notification_content">
 <cfoutput>
@@ -89,7 +89,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         </cfif>
     </cfif>
     <cfif s.tsNeedSign GT 0>        
-        	<img src="/graphics/AppIconResources/crystal_project/16x16/actions/player_time.png"  width="16" height="16"  align="absmiddle" /> <a href="javascript:loadTimesheetView('tcTarget', #url.calledByUser#, '1/1/1980', '1/1/2999', 'Open', '', '')"  >#s.tsNeedSign# timesheets need signing</a><br>
+        	<img src="/graphics/AppIconResources/crystal_project/16x16/actions/player_time.png"  width="16" height="16"  align="absmiddle" /> <a href="javascript:loadTimesheetView('tcTarget', #session.user.r_pk#, '1/1/1980', '1/1/2999', 'Open', '', '')"  >#s.tsNeedSign# timesheets need signing</a><br>
 			<cfset tn = tn + s.tsNeedSign>
 	</cfif>
     <cfif getPermissionByKey("WF_PROCESSORDER", url.current_association)>
@@ -108,7 +108,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	
 	<cfif getPermissionByKey("CT_PROCESSPAYMENTS", url.current_association)>
 		<cfif s.orders0 GT 0>
-			<img src="/graphics/AppIconResources/crystal_project/16x16/actions/project_open.png"  width="16" height="16"  align="absmiddle" /> <a href="https://www.prefiniti.com/framework/OrderProcess/Master.cfm?VendorID=#URL.Current_Site_ID#&UserID=#URL.CalledByUser#" target="_blank"  >#s.orders0# unacknowledged orders</a><br>
+			<img src="/graphics/AppIconResources/crystal_project/16x16/actions/project_open.png"  width="16" height="16"  align="absmiddle" /> <a href="https://www.prefiniti.com/framework/OrderProcess/Master.cfm?VendorID=#URL.Current_Site_ID#&UserID=#session.user.r_pk#" target="_blank"  >#s.orders0# unacknowledged orders</a><br>
 			<cfset tn = tn + s.orders0>
 		</cfif>
 	</cfif>
@@ -125,7 +125,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			<cfset tn = tn + s.newFriendRequests>
 	</cfif>
     <cfif s.newComments GT 0>
-        	<img src="/graphics/AppIconResources/crystal_project/16x16/apps/xchat.png" width="16" height="16"  align="absmiddle" /> <a href="javascript:viewProfile(#url.calledByUser#);"   >#s.newComments# new comments</a><br>
+        	<img src="/graphics/AppIconResources/crystal_project/16x16/apps/xchat.png" width="16" height="16"  align="absmiddle" /> <a href="javascript:viewProfile(#session.user.r_pk#);"   >#s.newComments# new comments</a><br>
 			<cfset tn = tn + s.newComments>
 	</cfif>
 

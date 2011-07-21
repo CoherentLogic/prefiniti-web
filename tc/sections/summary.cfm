@@ -8,7 +8,7 @@
 
 <cfset CanEdit = false>
 
-<cfif tco.CanWrite(URL.CalledByUser)>
+<cfif tco.CanWrite(session.user.r_pk)>
 	<cfset CanEdit = true>
 </cfif>
 

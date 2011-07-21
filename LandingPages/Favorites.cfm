@@ -23,7 +23,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 
 <cfquery name="gFavs" datasource="webwarecl">
-	SELECT id, url AS linkurl, title, docked FROM favorites WHERE user_id=#url.calledByUser#
+	SELECT id, url AS linkurl, title, docked FROM favorites WHERE user_id=#session.user.r_pk#
 </cfquery>    
 
 <h1 style="font-size:large;"><img src="/graphics/AppIconResources/crystal_project/32x32/filesystems/favorites.png" align="absmiddle" /> My Favorites</h1>

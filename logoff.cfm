@@ -21,18 +21,18 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
 
-	<cfparam name="suid" default="">
-	<cfparam name="sln" default="">
+<cfparam name="suid" default="">
+<cfparam name="sln" default="">
 	
 	
 
- 
-<cfset suid=session.userid>
-<cfset sln=session.longname>
-	<cfset session.loggedin="no">
-	<cfset session.username="">
-	<cfset session.longname="">
-	<cfset session.userid="">
-	<cfset session.loadcount="0">
-	<cflocation url="/homeres/default.cfm" addtoken="no">
+
+<cfset suid = session.userid>
+<cfset sln = session.longname>
+<cfset session.loggedin = false>
+<cfset session.username="">
+<cfset session.longname="">
+<cfset session.userid="">
+<cfset session.loadcount="0">
+<cflocation url="/homeres/default.cfm" addtoken="no">
 	

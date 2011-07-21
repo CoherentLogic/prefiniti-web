@@ -50,7 +50,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			
 			
 			
-			<cfif pfIsPrefinitiAdmin(url.calledByUser)>
+			<cfif pfIsPrefinitiAdmin(session.user.r_pk)>
 				<h3>Prefiniti Network Administration</h3>
 				
 				<p style="margin-left:5px;">

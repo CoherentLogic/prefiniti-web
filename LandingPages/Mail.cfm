@@ -34,7 +34,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			FROM 		messageInbox 
             INNER JOIN 	Users 
             ON 			Users.id=messageInbox.fromuser 
-            WHERE 		messageInbox.touser=#url.calledByUser# 
+            WHERE 		messageInbox.touser=#session.user.r_pk# 
             AND 		messageInbox.deleted_inbox=0 
             AND			messageInbox.tread='no'
             ORDER BY 	messageInbox.tdate 

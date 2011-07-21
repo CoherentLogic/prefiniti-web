@@ -3,7 +3,7 @@
 <strong class="OH_HEADER">Notifications</strong>
 
 
-<cfif usr.CanWrite(URL.CalledByUser)>
+<cfif usr.CanWrite(session.user.r_pk)>
 	<div style="padding-left:20px;">
 	
 		<cfmodule template="/notifications/components/notify_types.cfm" user_id="#attributes.r_pk#">
