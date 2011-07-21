@@ -15,12 +15,12 @@
 		<tr>
 			<td align="center">
 				<h2>Timesheet Signed.</h2>
-				<p class="VPLink"><a href="javascript:loadTimesheetView('tcTarget', #url.calledByUser#, '1/1/1980', '1/1/2999', 'Open', 'no', '')">My Open Timesheets</a></p>
+				<p class="VPLink"><a href="javascript:loadTimesheetView('tcTarget', #session.user.r_pk#, '1/1/1980', '1/1/2999', 'Open', 'no', '')">My Open Timesheets</a></p>
 			</td>
 		</tr>
 	</table>
 </cfoutput>
 
 <cfoutput>
-#ntBusinessEventNotify("TC_TIMESHEET_SIGNED", url.current_site_id, "A timesheet was signed by #getLongname(url.CalledByUser)#.", "")#
+#ntBusinessEventNotify("TC_TIMESHEET_SIGNED", url.current_site_id, "A timesheet was signed by #getLongname(session.user.r_pk)#.", "")#
 </cfoutput>	

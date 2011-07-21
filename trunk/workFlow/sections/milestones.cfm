@@ -131,7 +131,7 @@
 			<tr>
 			<td>&nbsp;</td>
 			<td>
-			<cfif o.CanWrite(URL.CalledByUser)>
+			<cfif o.CanWrite(session.user.r_pk)>
 				<a class="button" href="####" onclick="ProjUpdateMilestone('#id#');"><span>Update</span></a>
 			</cfif>
 			</td>

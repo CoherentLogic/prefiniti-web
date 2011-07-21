@@ -10,7 +10,7 @@
 	<form name="create_project" id="create_project">
 	<cfoutput>
 	<input type="hidden" name="om_uuid" id="om_uuid" value="#CreateUUID()#">
-	<input type="hidden" name="client_id" id="client_id" value="#URL.CalledByUser#">
+	<input type="hidden" name="client_id" id="client_id" value="#session.user.r_pk#">
 	</cfoutput>
 	<table width="100%" cellpadding="10" cellspacing="0" class="orms_dialog">
 	<tr>

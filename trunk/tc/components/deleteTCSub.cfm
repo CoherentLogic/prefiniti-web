@@ -15,5 +15,5 @@
 </table>
 
 <cfoutput>
-#ntBusinessEventNotify("TC_TIMESHEET_DELETED", url.current_site_id, "A timesheet was deleted by #getLongname(url.CalledByUser)#.", "")#
+#ntBusinessEventNotify("TC_TIMESHEET_DELETED", url.current_site_id, "A timesheet was deleted by #getLongname(session.user.r_pk)#.", "")#
 </cfoutput>	

@@ -94,5 +94,5 @@
 </div>
 
 <div id="wv_content">
-	<cfmodule template="/orms/recent_objects.cfm" user_id="#url.calledByUser#">
+	<cfmodule template="/orms/recent_objects.cfm" user_id="#session.user.r_pk#">
 </div>

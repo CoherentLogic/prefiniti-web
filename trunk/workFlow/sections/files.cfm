@@ -10,7 +10,7 @@
 	<cfset orec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 	<cfset orec.GetByTypeAndPK("Project", attributes.r_pk)>
 	
-	<cfif orec.CanWrite(URL.CalledByUser)>
+	<cfif orec.CanWrite(session.user.r_pk)>
 		<cfset canEdit = 1>
 	<cfelse>
 		<cfset canEdit = 0>
@@ -21,7 +21,7 @@
     <div style="height:40px; overflow:hidden;">
 	<div style="padding:8px;">
 	<cfoutput>
-	<a class="button" href="##" onclick="cmsBrowseFolder(#url.calledByUser#, 'project_files', '#projectInfo.clsJobNumber#', 'site', '');"><span>Staging Area</span></a>
+	<a class="button" href="##" onclick="cmsBrowseFolder(#session.user.r_pk#, 'project_files', '#projectInfo.clsJobNumber#', 'site', '');"><span>Staging Area</span></a>
 	</cfoutput>
 	</div>
 	</div>

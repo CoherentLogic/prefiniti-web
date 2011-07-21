@@ -15,5 +15,5 @@
 <strong>Timesheet Saved</strong>
 
 <cfoutput>
-#ntBusinessEventNotify("TC_TIMESHEET_EDITED", url.current_site_id, "Timesheet summary edited by #getLongname(url.CalledByUser)#.", "")#
+#ntBusinessEventNotify("TC_TIMESHEET_EDITED", url.current_site_id, "Timesheet summary edited by #getLongname(session.user.r_pk)#.", "")#
 </cfoutput>	

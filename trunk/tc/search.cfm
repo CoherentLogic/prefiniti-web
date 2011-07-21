@@ -53,9 +53,9 @@
                     <td colspan="2" align="right">
                         <input type="button" name="cancelFindTS" value="Cancel" onclick="hideDiv('landing_timesheet_search'); showDiv('landing_work_links');" />
                         <input type="button" name="printByUserEmp" value="View All Printable" 
-                        onclick="javascript:loadTimesheetPrint('tcTarget', #url.calledByUser#, GetValue('startDateEmp'), GetValue('endDateEmp'), 'None', 'no', '')"/>
+                        onclick="javascript:loadTimesheetPrint('tcTarget', #session.user.r_pk#, GetValue('startDateEmp'), GetValue('endDateEmp'), 'None', 'no', '')"/>
                         <input type="button" name="getByUser" value="View Editable" 
-                        onclick="javascript:loadTimesheetView('tcTarget', #url.calledByUser#, GetValue('startDateEmp'), GetValue('endDateEmp'), 'Open', 'no', '')"/>
+                        onclick="javascript:loadTimesheetView('tcTarget', #session.user.r_pk#, GetValue('startDateEmp'), GetValue('endDateEmp'), 'Open', 'no', '')"/>
                     </td>
                 </tr>
                 

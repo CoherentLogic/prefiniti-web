@@ -21,7 +21,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
 <cfquery name="getSites" datasource="sites">
-	SELECT * FROM site_associations WHERE user_id=#url.CalledByUser#
+	SELECT * FROM site_associations WHERE user_id=#session.user.r_pk#
 </cfquery>
 
 <cfoutput>

@@ -134,10 +134,10 @@
 </cfoutput>
 <cfmodule template="/authentication/Users/orms_do.cfm" id="#UID.id#">
 <cfoutput>
-<cfmail from="register@prefiniti.com" to="#url.email#" subject="#getLongname(URL.CalledByUser)# has invited you to join The Prefiniti Network" type="html">
+<cfmail from="register@prefiniti.com" to="#url.email#" subject="#getLongname(session.user.r_pk)# has invited you to join The Prefiniti Network" type="html">
 	<h1>Prefiniti Invitation</h1>
 	
-	<p>#getLongname(URL.CalledByUser)# has invited you to join The Prefiniti Network for Land Survey and Medical small business. Please visit the link below to confirm your new account. If you do not want a Prefiniti account, just ignore this email.</p>
+	<p>#getLongname(session.user.r_pk)# has invited you to join The Prefiniti Network for Land Survey and Medical small business. Please visit the link below to confirm your new account. If you do not want a Prefiniti account, just ignore this email.</p>
 	
 	<p>Your username is <strong>#sel_username#</strong></p>
 	

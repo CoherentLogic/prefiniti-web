@@ -21,6 +21,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
 
+
 <cfajaximport tags="cfmenu,cfwindow">
 
 <!-- Open the div element for the main client area -->    
@@ -36,7 +37,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <head>
 	<!--- jump back to login page with redirect clues if the session is not logged in --->
-	<cfif session.loggedin NEQ "yes">
+	<cfif session.loggedin NEQ true>
 		<cfif IsDefined("URL.View")>
 			<cfif IsDefined("URL.Section")>
 				<cfset sec = URL.Section>
@@ -45,8 +46,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			</cfif>
 			<cflocation url="/homeres/default.cfm?view=#URL.View#&section=#sec#" addtoken="no">
 		</cfif>
-        <cfif NOT session.active_membership.Examine('AS_LOGIN')>
-        	<cflocation url="/bad_site_permissions.cfm" addtoken="no">
+	<cfelse>        
+		<cfif NOT session.active_membership.Examine('AS_LOGIN')>
+        	<cfset session.framework.Err("SEC002")>
         </cfif>        	
 	</cfif>
     
@@ -66,12 +68,16 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfset CurrentSection = "">                       
     </cfif>
 
+	<cfset session.current_object = CurrentObject>
+
 	<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(CurrentObject)>
 	<cfoutput>
 		<title>#o.r_type# #o.r_name# - The Prefiniti Network</title>
 	</cfoutput>
-	
 
+<cfoutput>
+<body onLoad="ObjectInit('#CurrentObject#');">	
+</cfoutput>
 
 
 
@@ -83,10 +89,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     </div>
     <hr>
-    <a href="##" onclick="hideDiv('notify_wrapper');">Close</a> 
+    <a href="##" onClick="hideDiv('notify_wrapper');">Close</a> 
 </div>
 
-
+ 
 
 <div style="width:100%; background-color:#efefef; border-bottom:1px solid #c0c0c0; margin-bottom:0px;">
 <div id="tb" class="iPrefinitiToolbar" align="right">
@@ -133,15 +139,15 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfoutput>
 <script>
 	ORMSLoadHistory(1, #session.user.r_pk#);
+	var session_key = '#session.authentication_key#';
+
 	
-
-
 	
 	<cfif NOT IsDefined("URL.section")>
-		ORMSLoadFeed('#CurrentObject#');
+		ORMSPrepareFeed('#CurrentObject#', 0);
 	<cfelse>
 		<cfif URL.section EQ "">
-			ORMSLoadFeed('#CurrentObject#');
+			ORMSPrepareFeed('#CurrentObject#', 0);
 		</cfif>			
 	</cfif>
 </script>

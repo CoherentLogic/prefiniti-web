@@ -45,6 +45,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfparam name="session.authentication_key" default="">
   	<cfparam name="session.pd_enhanced" default="0">
     <cfparam name="session.pd_version" default="">
+    <cfparam name="session.current_object" default="">
     
     <!--- next-gen integration --->
     <cfparam name="session.user" default="">
@@ -56,6 +57,15 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfinclude template="/console.cfm">
           
+    
+    <cfif session.loggedin EQ "yes">
+    	<cftry>
+			<cfset session.framework.Ping()>
+        <cfcatch type="any">
+        	<!-- do nothing -->
+        </cfcatch>
+        </cftry>
+    </cfif>
      
     <!-- Include the WebWare API files -->
     <cfinclude template="scriptIncludes.cfm">
@@ -70,7 +80,6 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfinclude template="configRSS.cfm">
   
 </head>
-<body>
  	<!-- Load the SoundManager div -->
     <cfinclude template="soundManagerDiv.cfm">
 
@@ -86,7 +95,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <!-- Check for maintenance condition -->	
     <cfinclude template="maintCheck.cfm">
-    
+    <cfset session.framework = CreateObject("component", "OpenHorizon.Framework")>
+    <cferror type="exception" exception="any" template="/error.cfm">
+
 	
     <script src="/framework/UI/wz_tooltip.js" type="text/javascript"></script>
 

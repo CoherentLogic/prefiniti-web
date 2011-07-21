@@ -1,6 +1,6 @@
 <cfmodule template="/orms/view_header.cfm" r_type="Time Card" r_pk="#url.id#">
 	<cfset tco = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Time Card", url.id)>
-	<cfset tco.DoAccess("View", url.calledByUser)>
+	<cfset tco.DoAccess("View", session.user.r_pk)>
 
 <cfoutput>
 <!--

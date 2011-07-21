@@ -54,12 +54,23 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfreturn #pic#>    
     </cffunction>
     
+    <cffunction name="OpenByPK" access="public" returntype="OpenHorizon.Identity.Site">
+    	<cfargument name="id" type="numeric" required="yes">
+        
+        <cfset ret_val = this.Open(id)>
+        <cfreturn #ret_val#>
+    </cffunction>
+    
 	<cffunction name="Open" access="public" returntype="OpenHorizon.Identity.Site">
 		<cfargument name="id" type="numeric" required="yes">
 
 		<cfquery name="s" datasource="sites">
         	SELECT * FROM sites WHERE SiteID=#id#
         </cfquery>
+        
+        <cfif s.RecordCount EQ 0>
+        	<cfthrow message="OpenHorizon Framework Error" detail="Site ID #id# does not exist.">
+        </cfif>
         
         <cfset this.r_pk = s.SiteID>
         <cfset this.site_name = s.SiteName>

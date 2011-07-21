@@ -76,7 +76,7 @@ function ORMSPostComment(e)
 		
 		var url = '/orms/comment_post.cfm?comment=' + escape(comment) + "&orms_id=" + escape(orms_id);
 		
-		AjaxLoadPageToDiv('object_feed', url);
+		AjaxLoadPageToDiv('dev-null', url);
 		
 		ORMSCommentReset();
 	}
@@ -229,9 +229,9 @@ function ORMSSetThumbnail(orms_id, file_uuid)
 {
 	var url = '/cms/set_thumbnail.cfm?orms_id=' + escape(orms_id) + '&file_uuid=' + escape(file_uuid);
 	
-	var orc = new function () {
+	var orc = function () {
 		AjaxRefreshTarget();	
-		AjaxRefreshTarget();
+		
 	}
 	
 	AjaxLoadPageToDiv('dev-null', url, orc);
@@ -262,8 +262,8 @@ function ORMSLoadFeedFull(uuid)
 {
 	var url = '/orms/feed_loader.cfm?uuid=' + escape(uuid);
 	
-	var orc = new function () {
-		ORMSLoadFeed(uuid);
+	var orc = function () {
+		ORMSPrepareFeed(uuid, 0);
 	};
 	
 	AjaxLoadPageToDiv('orms_active_section', url, orc);
@@ -272,10 +272,9 @@ function ORMSLoadFeedFull(uuid)
 /*
  *  notification code
  */
-var sendReq = getXmlHttpRequestObject();
 var receiveReq = getXmlHttpRequestObject();
 var mTimer = setTimeout('getNotifyText();', 2000);
-var pTimer = "";
+
 
 function getXmlHttpRequestObject() 
 {
@@ -284,7 +283,7 @@ function getXmlHttpRequestObject()
 	} else if(window.ActiveXObject) {
 		return new ActiveXObject("Microsoft.XMLHTTP");
 	} else {
-		alert('Status: Cound not create XmlHttpRequest Object.' + 'Consider upgrading your browser.');
+		alert('Status: Cound not create XmlHttpRequest Object. Consider upgrading your browser.');
 	}
 }
 
@@ -336,7 +335,59 @@ function handleReceiveNotify()
 		}
 		
 		
-		mTimer = setTimeout('getNotifyText();',2000);
-		//pTimer = setTimeout("hideDiv('notify_wrapper');", 120000);
+		mTimer = setTimeout('getNotifyText();',2000);	
 	}
 }
+
+/*
+ * event feed code
+ */
+ 
+var receiveEventReq = getXmlHttpRequestObject();
+var evTimer = "";
+var g_object_id = "";
+var g_last_id = "";
+function ORMSPrepareFeed(object_id, last_id) 
+{
+	var call = 'getFeedText("' + object_id + '", ' + last_id + ');';
+	
+	evTimer = setTimeout(call, 2000);
+	g_object_id = object_id;
+	g_last_id = last_id;
+}
+
+function getFeedText(object_id, last_id) 
+{
+	var url = '/OpenHorizon/Storage/EventFeed/ObjectEventXML.cfm?target_uuid=' + escape(object_id) + '&last_id=' + escape(last_id);
+	
+	if (receiveEventReq.readyState == 4 || receiveEventReq.readyState == 0) {
+		receiveEventReq.open("GET", url, true);
+		receiveEventReq.onreadystatechange = handleFeedReceiveEvent; 
+		receiveEventReq.send(null);
+	}			
+}
+
+function handleFeedReceiveEvent() 
+{
+	if (receiveEventReq.readyState == 4) {		
+		var xmldoc = receiveEventReq.responseXML;
+		var message_nodes = xmldoc.getElementsByTagName("objectevent"); 
+		var n_messages = message_nodes.length;
+		
+		for (i = 0; i < n_messages; i++) {
+			var id_node = message_nodes[i].getElementsByTagName("id");												
+			n_id = id_node[0].firstChild.nodeValue;
+						
+			g_last_id = n_id;			
+						
+			var url = '/orms/single_event_loader.cfm?event_id=' + escape(n_id);
+			
+			AjaxPrependPageToDiv('object_feed', url);			
+		}		
+		
+		
+		ORMSPrepareFeed(g_object_id, g_last_id);
+	}
+}
+
+

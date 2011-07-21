@@ -46,4 +46,27 @@
         <cfreturn #ret_val#>
     </cffunction>
     
+    <cffunction name="Err" access="public" returntype="void" output="no">
+    	<cfargument name="error_code" type="string" required="yes">
+        <cfargument name="extended_info" type="string" required="no">
+        
+        <cfif IsDefined("extended_info")>
+        	<cfset c = extended_info>
+        <cfelse>
+        	<cfset c = "">
+        </cfif>
+        
+        <cfquery name="ge" datasource="#this.BaseDatasource#">
+        	SELECT * FROM error_codes WHERE error_code='#error_code#'
+        </cfquery>
+        
+        <cfthrow errorcode="#error_code#" message="#ge.error_summary#" detail="#ge.error_description#" extendedinfo="#c#">                    
+    </cffunction>
+    
+    <cffunction name="Ping" access="public" returntype="void" output="no">
+    
+    	<cfset Authenticator = CreateObject("webservice", "http://orms.prefiniti.com/Authentication.cfc?wsdl")>
+        <cfset Authenticator.Ping(session.authentication_key)>
+    
+    </cffunction>
 </cfcomponent>

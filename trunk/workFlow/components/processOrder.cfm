@@ -18,7 +18,7 @@
 	SELECT * FROM subdivisions WHERE approved=1 AND site_id=#URL.current_site_id# ORDER BY name
 </cfquery>    
 
-<cfif #gProj.maint_lock# EQ 1 AND #url.calledByUser# NEQ 1>
+<cfif #gProj.maint_lock# EQ 1 AND #session.user.r_pk# NEQ 1>
 	<h1>Access Denied</h1>
 	<p>This project has been locked for maintenance, and can only be modified by the webmaster.</p>
 	<cfabort>

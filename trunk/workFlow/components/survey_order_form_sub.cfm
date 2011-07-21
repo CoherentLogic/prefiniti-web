@@ -198,9 +198,9 @@
 <cfoutput>
 	#pfCreateItem(URL.description, 0, 1, getJobID.id, "SYSOBJ", getJobID.clientID)#
 	<cfif URL.rfp EQ true>
-    	#ntBusinessEventNotify("WF_RFP_PLACED", url.current_site_id, "#getLongname(URL.CalledByUser)# has placed a new RFP.", "")#
+    	#ntBusinessEventNotify("WF_RFP_PLACED", url.current_site_id, "#getLongname(session.user.r_pk)# has placed a new RFP.", "")#
     <cfelse>
-    	#ntBusinessEventNotify("WF_ORDER_PLACED", url.current_site_id, "#getLongname(URL.CalledByUser)# has placed a new order.", "loadProjectViewer(#getJobID.id#);")#
+    	#ntBusinessEventNotify("WF_ORDER_PLACED", url.current_site_id, "#getLongname(session.user.r_pk)# has placed a new order.", "loadProjectViewer(#getJobID.id#);")#
 		#ntNotify(URL.clientID, "WF_ORDER_PLACED", "You have placed a new order and will be notified as soon as the order is processed.", "loadProjectViewer(#getJobID.id#);")#
 	</cfif>        
 </cfoutput>                             

@@ -58,7 +58,7 @@
 	<input type="hidden" name="status" value="0" />
     
     <cfoutput><input name="current_association" id="current_association" value="#url.current_association#" type="hidden"/></cfoutput>
-	<cfoutput><input type="hidden" name="clientID" id="clientID" value="#url.calledByUser#" /></cfoutput>
+	<cfoutput><input type="hidden" name="clientID" id="clientID" value="#session.user.r_pk#" /></cfoutput>
 	
     
     <div style="padding:10px; border:1px solid #EFEFEF; width:50%; margin:10px;">Place order for: 
@@ -66,7 +66,7 @@
     	<cfoutput query="getCusts">
         	<option value="#user_id#">#getLongname(user_id)#</option>
         </cfoutput>
-        <cfoutput><option value="#url.CalledByUser#" selected>Myself</option></cfoutput>
+        <cfoutput><option value="#session.user.r_pk#" selected>Myself</option></cfoutput>
     </select>
     </div>
 

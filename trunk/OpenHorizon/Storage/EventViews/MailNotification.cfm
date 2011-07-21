@@ -72,6 +72,17 @@
 		padding:5px;
 		border:1px solid #999999;
 	}
+	
+	a {
+		text-decoration:none;
+		font-size:14px;
+		font-family:"Segoe UI", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+		color:#2957a2;
+	}
+	
+	a:hover {
+		text-decoration:underline;
+	}
 </style>
 </head>
 
@@ -98,6 +109,11 @@
                         <cfif event.body_copy NEQ "">
                             <p>#event.body_copy#</p>
                         </cfif>
+                        
+                        <div style="border:1px solid ##c0c0c0;background-color:##efefef; padding:8px;">
+                        	<a href="http://www.prefiniti.com/Prefiniti.cfm?View=#event.object_record.r_id#">View this #event.object_record.r_type#</a>
+                        </div>
+                        
                         <span style="font-size:9px; color:##999999;">Posted #DateFormat(event.event_date, "long")# #TimeFormat(event.event_date, "h:mm tt")#</span>
                     </td>
                 </tr>

@@ -27,7 +27,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <cfparam name="s" default="">
 
-<cfset s=#getSiteStats(url.current_site_id, url.calledByUser)#>
+<cfset s=#getSiteStats(url.current_site_id, session.user.r_pk)#>
 
 <!---
 <cfif URL.Steel EQ false>
@@ -56,7 +56,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </cfif>
     <cfif s.tsNeedSign GT 0>        
 	    <div style="padding-top:5px;">
-        	<img src="/graphics/time.png" align="absmiddle" /> <a href="javascript:loadTimesheetView('tcTarget', #url.calledByUser#, '1/1/1980', '1/1/2999', 'Open', '', '')" class="PNotifyText">#s.tsNeedSign# timesheets need signing</a>
+        	<img src="/graphics/time.png" align="absmiddle" /> <a href="javascript:loadTimesheetView('tcTarget', #session.user.r_pk#, '1/1/1980', '1/1/2999', 'Open', '', '')" class="PNotifyText">#s.tsNeedSign# timesheets need signing</a>
 		</div>            
 	</cfif>
     <cfif getPermissionByKey("WF_PROCESSORDER", url.current_association)>
@@ -82,7 +82,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	</cfif>
     <cfif s.newComments GT 0>
 	    <div style"padding-top:5px;">
-        	<img src="/graphics/comments.png" align="absmiddle" /> <a href="javascript:viewProfile(#url.calledByUser#);"  class="PNotifyText">#s.newComments# new comments</a>
+        	<img src="/graphics/comments.png" align="absmiddle" /> <a href="javascript:viewProfile(#session.user.r_pk#);"  class="PNotifyText">#s.newComments# new comments</a>
         </div>
 	</cfif>
 

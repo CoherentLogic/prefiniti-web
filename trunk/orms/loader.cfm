@@ -10,8 +10,8 @@
 </cfoutput>
 
 <cfset po = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK(ore.r_type, ore.r_pk)>
-<cfif po.CanRead(URL.CalledByUser)>
-	<cfset po.DoAccess("View", url.calledByUser)>
+<cfif po.CanRead(session.user.r_pk)>
+	<cfset po.DoAccess("View", session.user.r_pk)>
 	<cfmodule template="/orms/view_header.cfm" r_type="#ore.r_type#" r_pk="#ore.r_pk#" section="#url.section#">
 <cfelse>
 	<strong class="OH_HEADER">Permission Denied</strong>

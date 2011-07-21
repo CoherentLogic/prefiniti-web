@@ -28,6 +28,6 @@
 
 
 
-<div id="object_feed" >
+<div id="object_feed">
 
 </div>

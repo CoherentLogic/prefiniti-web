@@ -48,7 +48,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <div style="display:none;">
 
 <cfset po = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Time Card", gTSid.id)>
-<cfset po.DoAccess("View", url.calledByUser)>
+<cfset po.DoAccess("View", session.user.r_pk)>
 </div>
 <cfoutput>
 <a class="button" href="##" onclick="CloseORMSDialog(); openTS(#gTSid.id#, 'tcTarget');"><span><strong>Finish</strong></span></a>

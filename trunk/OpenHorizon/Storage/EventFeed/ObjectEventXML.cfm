@@ -33,7 +33,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfthrow message="Security violation.">
 </cfif>
 <cfquery name="get_events" datasource="#session.framework.BaseDatasource#">
-	SELECT * FROM orms_events WHERE target_uuid='#URL.target_uuid#' AND id>#url.last_id# ORDER BY event_date DESC
+	SELECT * FROM orms_events WHERE target_uuid='#URL.target_uuid#' AND id>#url.last_id# ORDER BY event_date 
 </cfquery>
 
 <cfxml variable="events">
@@ -41,13 +41,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <objecteventdata>
 <cfoutput query="get_events">
 	<objectevent>    	
-        <id>#id#</id>
-        <eventname>#event_name#</eventname>
-		<file>#file_uuid#</file>        
-        <body>#body_copy#</body>
-        <user>#user_id#</user>
-        <object>#target_uuid#</object>
-        <timestamp>#DateFormat(event_date, "m/dd/yyyy")# #TimeFormat(event_date, "h:mm tt")#</timestamp>
+        <id>#id#</id>       
 	</objectevent>
 </cfoutput>
 </objecteventdata>

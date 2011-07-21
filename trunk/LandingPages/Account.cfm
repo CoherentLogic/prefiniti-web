@@ -22,4 +22,4 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 --->
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 
-<cfmodule template="/socialnet/components/mini_profile.cfm" user_id="#url.CalledByUser#">
+<cfmodule template="/socialnet/components/mini_profile.cfm" user_id="#session.user.r_pk#">

@@ -23,7 +23,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfmodule template="/LandingPages/LandingHeader.cfm">
 
 <cfquery name="MyDepts" datasource="sites">
-	SELECT * FROM department_entries WHERE user_id=#url.calledByUser#
+	SELECT * FROM department_entries WHERE user_id=#session.user.r_pk#
 </cfquery>	
 
 

@@ -182,11 +182,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.active_membership_id = UOpen.last_site_id>			<!--- last_site_id --->       
         <cfset this.first_login = UOpen.first_login>
         
-        <cftry>
+        
         <cfset this.object_record = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", this.r_pk)>
-        <cfcatch type="any">
-        </cfcatch>
-        </cftry>
+        
         <cfset this.written = true>
         
         <cfreturn #this#>
@@ -499,6 +497,32 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cffunction name="ObjectRecord" access="public" returntype="OpenHorizon.Storage.ObjectRecord" output="no">
     	<cfreturn #this.object_record#>
+    </cffunction>
+    
+    <cffunction name="SubscriptionsWithinRadius" access="public" returntype="array" output="no">
+    	<cfargument name="latitude" type="numeric" required="yes">
+        <cfargument name="longitude" type="numeric" required="yes">
+        <cfargument name="radius" type="numeric" required="yes">
+        
+        <cfquery name="swr" datasource="#this.BaseDatasource#">
+        	SELECT ((ACOS(SIN(#latitude# * PI() / 180) * SIN(`orms.r_latitude` * PI() / 180) + COS(#latitude# * PI() / 180) * COS(`orms.r_latitude` * PI() / 180) * COS((#longitude# – `orms.r_longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance,
+            orms_subscriptions.target_uuid AS TargetObject
+            FROM 		orms
+            INNER JOIN	orms_subscriptions
+            ON			orms_subscriptions.user_id=#this.r_pk#
+            HAVING 		distance<=radius 
+            ORDER BY 	distance 
+            ASC
+        </cfquery>
+        
+        <cfset ret_val = ArrayNew(1)>
+        
+        <cfoutput query="swr">
+        	<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(TargetObject)>
+            <cfset ArrayAppend(ret_val, o)>
+        </cfoutput>
+        
+        <cfreturn ret_val>
     </cffunction>
         
 </cfcomponent>

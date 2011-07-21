@@ -5,7 +5,7 @@
 </cfquery>
 
 <cfquery name="source_age" datasource="webwarecl">
-	SELECT birthday FROM Users WHERE id=#url.calledByUser#
+	SELECT birthday FROM Users WHERE id=#session.user.r_pk#
 </cfquery>
 
 <cfquery name="visit_count" datasource="webwarecl">
@@ -41,8 +41,8 @@
 	<cfset adult_visits_minor=false>
 </cfif> 
 
-<cfif url.calledByUser NEQ 732>
-	<cfif #url.calledByUser# NEQ #url.userid#>
+<cfif session.user.r_pk NEQ 732>
+	<cfif #session.user.r_pk# NEQ #url.userid#>
         <cfquery name="ud_visits" datasource="webwarecl">
             INSERT INTO profile_visits
                 (source_id,
@@ -51,7 +51,7 @@
                 source_age,
                 target_age)
             VALUES 
-                (#url.calledByUser#,
+                (#session.user.r_pk#,
                 #url.userid#,
                 #CreateODBCDate(Now())#,
                 #source_age#,
@@ -69,7 +69,7 @@
 									
                                     <div style="width:150px; background-color:##EFEFEF; -moz-border-radius:5px; padding:5px; margin:5px;">
                                     	<cfparam name="thePic" default="">
-                                    	<cfif URL.CalledByUser EQ 724 AND URL.userid EQ 734>
+                                    	<cfif session.user.r_pk EQ 724 AND URL.userid EQ 734>
                                         	<cfparam name="rpb" default="">
                                             <cfset rpb = RandRange(1, 10)>
                                             
@@ -90,17 +90,17 @@
                                         </div>
                                         <br /><br />
                                         
-                                        <cfif isFriend(#url.calledByUser#, #id#) EQ false AND url.calledByUser NEQ id>
+                                        <cfif isFriend(#session.user.r_pk#, #id#) EQ false AND session.user.r_pk NEQ id>
                                         	<img src="/graphics/user_add.png" align="absmiddle"/> <span id="frBlock_#id#"><a href="javascript:requestFriend(#id#);">Add Friend</a></span>
                                         <br />
                                         </cfif>
-                                        <cfif isFriend(#url.calledByUser#, #id#) EQ true>
-                                        	<cfif #url.calledByUser# EQ #id#>
+                                        <cfif isFriend(#session.user.r_pk#, #id#) EQ true>
+                                        	<cfif #session.user.r_pk# EQ #id#>
                                             	<img src="/graphics/photos.png" align="absmiddle" /> <a href="javascript:viewPictures(#id#, true);"> View Photos</a><br />
                                             <cfelse>
                                             	<img src="/graphics/photos.png" align="absmiddle" /> <a href="javascript:viewPictures(#id#, false);"> View Photos</a><br />
                                             </cfif>
-                                        	<img src="/graphics/user_delete.png" align="absmiddle" /> <a href="javascript:confirmDeleteFriend(#url.calledByUser#, #id#);">Delete Friend</a><br />
+                                        	<img src="/graphics/user_delete.png" align="absmiddle" /> <a href="javascript:confirmDeleteFriend(#session.user.r_pk#, #id#);">Delete Friend</a><br />
                                             <img src="/graphics/email_add.png" align="absmiddle"/> <a href="javascript:mailTo(#id#, '#longName#');">Send Message</a><br />
                                             <img src="/graphics/phone_add.png" align="absmiddle" /> <a href="javascript:showDiv('sendText_#id#');">Send Text Message</a>
 										</cfif>                                            
@@ -186,7 +186,7 @@
 									</tr>                                                                                  
                                   </table>
                                 </div>
-                                <cfif isFriend(#url.calledByUser#, #id#) EQ true OR #url.calledByUser# EQ #id#>
+                                <cfif isFriend(#session.user.r_pk#, #id#) EQ true OR #session.user.r_pk# EQ #id#>
                                 <div class="homeHeader"><img src="/graphics/newspaper.png" align="absmiddle" /> User News</div>
                                 <div id="nf">
                                 <cfmodule template="/socialnet/components/view_user_events.cfm" user_id="#id#" start_row="1" records_per_page="5" load_to="nf"></div>
@@ -214,20 +214,20 @@
                                 	<cfmodule template="/socialnet/components/profile_visits.cfm" user_id="#id#">
 								</div>                         
                                 
-                                <cfmodule template="/socialnet/components/view_bloglist.cfm" user_id="#id#" calling_user="#url.calledByUser#">
+                                <cfmodule template="/socialnet/components/view_bloglist.cfm" user_id="#id#" calling_user="#session.user.r_pk#">
                                 
                                 <div class="homeHeader"><img src="/graphics/comments.png" align="absmiddle" /> Comments</div>
                                 
-                                <cfif url.calledByUser NEQ url.userid>
+                                <cfif session.user.r_pk NEQ url.userid>
                                 <div id="postCommentDiv">
-                                <cfmodule template="/socialnet/components/post_comment.cfm" from_id="#url.calledByUser#" to_id="#id#">
+                                <cfmodule template="/socialnet/components/post_comment.cfm" from_id="#session.user.r_pk#" to_id="#id#">
                                 </div>
                                 </cfif>
                                 <div id="cm">
-                                 <cfmodule template="/socialnet/components/read_comments.cfm" user_id="#id#" calledByUser="#url.calledByUser#" start_row="1" records_per_page="10" load_to="cm"></div>
+                                 <cfmodule template="/socialnet/components/read_comments.cfm" user_id="#id#" calledByUser="#session.user.r_pk#" start_row="1" records_per_page="10" load_to="cm"></div>
                                 <div class="homeHeader"><img src="/graphics/user.png" align="absmiddle" /> Friends</div>
                                 <div id="frl"> 
-            	<cfmodule template="/socialnet/components/friends_list.cfm"  user_id="#id#" calledByUser="#url.calledByUser#" start_row="1" records_per_page="30" load_to="frl" >
+            	<cfmodule template="/socialnet/components/friends_list.cfm"  user_id="#id#" calledByUser="#session.user.r_pk#" start_row="1" records_per_page="30" load_to="frl" >
                 </div>
                                 <cfelse>
                                 <div style="padding:30px;">

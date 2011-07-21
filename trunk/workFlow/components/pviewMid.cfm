@@ -17,7 +17,7 @@
 	SELECT user_id FROM site_associations WHERE assoc_type=1 AND site_id=#URL.current_site_id#
 </cfquery>
 		
-<cfif #projectInfo.maint_lock# EQ 1 AND #url.calledByUser# NEQ 1>
+<cfif #projectInfo.maint_lock# EQ 1 AND #session.user.r_pk# NEQ 1>
 	<h1>Access Denied</h1>
 	<p>This project has been locked for maintenance, and can only be modified by the webmaster.</p>
 	<cfabort>
@@ -82,7 +82,7 @@
                                 
         <cfif getPermissionByKey("TS_VIEW", #url.current_association#) EQ true>
 				<cfoutput>
-                    <img src="/graphics/time_go.png" align="absmiddle"/> <a href="javascript:loadTimesheetView('tcTarget', #url.calledByUser#, '1/1/1980', '12/31/2999', 'none', 'no', '#projectInfo.clsJobNumber#')">My Timesheets (This Project)</a>
+                    <img src="/graphics/time_go.png" align="absmiddle"/> <a href="javascript:loadTimesheetView('tcTarget', #session.user.r_pk#, '1/1/1980', '12/31/2999', 'none', 'no', '#projectInfo.clsJobNumber#')">My Timesheets (This Project)</a>
                 </cfoutput> |&nbsp;
             <cfif getPermissionByKey("TS_VIEWALL", #url.current_association#) EQ true>
                 <cfoutput>
@@ -192,7 +192,7 @@
                 
                     <div class="homeHeader"><img src="/graphics/folder_explore.png" align="absmiddle"/> Project Files</div>
                     <cfmodule template="/workflow/components/project_files.cfm" project_id="#url.id#"><br />
-                    <img style="margin-left:30px;" src="/graphics/folder_go.png" align="absmiddle"/> <a href="javascript:cmsBrowseFolder(#url.calledByUser#, 'project_files', '#projectInfo.clsJobNumber#', 'site', '');">View staging area for this project</a>
+                    <img style="margin-left:30px;" src="/graphics/folder_go.png" align="absmiddle"/> <a href="javascript:cmsBrowseFolder(#session.user.r_pk#, 'project_files', '#projectInfo.clsJobNumber#', 'site', '');">View staging area for this project</a>
                 
                 </cfoutput>                
 			</cflayoutarea>

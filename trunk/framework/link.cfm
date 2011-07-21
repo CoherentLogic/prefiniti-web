@@ -40,7 +40,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             	<a class="LandingLink" href="javascript:hideDiv('landing_work_links'); showDivBlock('landing_project_search');">#attributes.linkname#</a>
             </cfcase>
             <cfcase value="NewProject">
-	            <cfset createProjectLink = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", url.calledByUser).GetCreator("Project")>
+	            <cfset createProjectLink = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", session.user.r_pk).GetCreator("Project")>
                 <a class="LandingLink" href="##" onclick="dispatch(); ORMSDialog('#createProjectLink#')">#attributes.linkname#</a>
 			</cfcase>                
             <cfcase value="FindTimesheet">
@@ -50,7 +50,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 <a class="LandingLink" href="javascript:loadTimesheetView('tcTarget', glob_userid, '1/1/1980', '1/1/2999', 'Open', glob_isTCAdmin, ''); dispatch();">My open timesheets</a>
             </cfcase>
             <cfcase value="NewTimesheet">
-                <cfset createTimesheetLink = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", url.calledByUser).GetCreator("Time Card")>
+                <cfset createTimesheetLink = CreateObject("component","OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("User Account", session.user.r_pk).GetCreator("Time Card")>
                 <a class="LandingLink" href="##" onclick="dispatch(); ORMSDialog('#createTimesheetLink#')">#attributes.linkname#</a>
             </cfcase>
             <cfcase value="ViewProfile">
