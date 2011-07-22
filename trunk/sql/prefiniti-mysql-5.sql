@@ -897,6 +897,11 @@ CREATE TABLE `webresource_hits` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+--
+-- Create user account for web access
+--
+CREATE USER 'prefiniti'@'localhost' IDENTIFIED BY 'gat4$rePR29ub+a';
+GRANT SELECT,INSERT,DELETE,EXECUTE ON prefiniti.* TO 'prefiniti'@'localhost';
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
