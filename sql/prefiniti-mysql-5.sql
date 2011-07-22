@@ -605,7 +605,7 @@ CREATE TABLE `orms_files` (
   `keywords` text NOT NULL,
   `file_extension` varchar(45) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -620,7 +620,7 @@ CREATE TABLE `orms_keywords` (
   `k_value` text NOT NULL,
   `r_id` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --
@@ -636,7 +636,7 @@ CREATE TABLE `orms_relations` (
   `rel_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `rel_expires` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --
@@ -654,7 +654,7 @@ CREATE TABLE `orms_site_notifications` (
   `event_id` bigint(20) unsigned NOT NULL,
   `event_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --
@@ -667,7 +667,7 @@ CREATE TABLE `orms_subscriptions` (
   `target_uuid` varchar(255) NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -688,7 +688,7 @@ CREATE TABLE `site_errors` (
   `current_object` varchar(255) NOT NULL,
   `extended_info` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Definition of table `time_lookup`
@@ -700,7 +700,7 @@ CREATE TABLE `time_lookup` (
   `time_12hour` varchar(45) NOT NULL,
   `time_24hour` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`block_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `time_lookup`
@@ -864,7 +864,7 @@ CREATE TABLE `web_resource_ratings` (
   `rating` tinyint(3) unsigned NOT NULL,
   `category` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -879,7 +879,7 @@ CREATE TABLE `web_resources` (
   `registrar` varchar(255) DEFAULT NULL,
   `pd_enhanced` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -894,7 +894,9 @@ CREATE TABLE `webresource_hits` (
   `user_id` bigint(20) unsigned NOT NULL,
   `hit_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
 
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
