@@ -55,7 +55,7 @@ CREATE TABLE `industries` (
   `industry_name` varchar(255) NOT NULL,
   `om_uuid` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `industries`
@@ -101,7 +101,7 @@ CREATE TABLE `permission_entries` (
   `assoc_id` bigint(20) unsigned NOT NULL,
   `perm_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Definition of table `permission_sets`
@@ -112,7 +112,7 @@ CREATE TABLE `permission_sets` (
   `id` varchar(45) NOT NULL,
   `permission_list` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `permission_sets`
@@ -138,7 +138,7 @@ CREATE TABLE `permissions` (
   `name` varchar(255) NOT NULL,
   `perm_key` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `permissions`
@@ -220,7 +220,7 @@ CREATE TABLE `site_associations` (
   `billing_phone` varchar(255) DEFAULT NULL,
   `billing_fax` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Definition of table `sites`
@@ -245,7 +245,7 @@ CREATE TABLE `sites` (
   `salestax_rate` float NOT NULL DEFAULT '0',
   `logo_invoice` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`SiteID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --
@@ -264,7 +264,7 @@ CREATE TABLE `auth_tokens` (
   `ip_address` varchar(255) DEFAULT '',
   `last_event` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -280,7 +280,7 @@ CREATE TABLE `configuration` (
   `conf_key` varchar(255) NOT NULL,
   `conf_value` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --
@@ -295,7 +295,7 @@ CREATE TABLE `error_codes` (
   `subsystem` varchar(45) NOT NULL,
   `flag_revalidate` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`error_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `error_codes`
@@ -323,7 +323,7 @@ CREATE TABLE `friends` (
   `request_date` datetime NOT NULL,
   `om_uuid` varchar(45) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -342,7 +342,7 @@ CREATE TABLE `images` (
   `Height` bigint(20) unsigned NOT NULL,
   `LastAccess` datetime NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -378,7 +378,7 @@ CREATE TABLE `mobile_providers` (
   `gateway` varchar(255) NOT NULL,
   `mms` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `mobile_providers`
@@ -451,7 +451,7 @@ CREATE TABLE `orms` (
   `r_ask_location` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `r_has_location` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Definition of table `orms_access_log`
@@ -465,7 +465,7 @@ CREATE TABLE `orms_access_log` (
   `a_date` datetime NOT NULL,
   `a_user_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --
@@ -484,7 +484,7 @@ CREATE TABLE `orms_app_sections` (
   `r_type_version` int(10) unsigned NOT NULL DEFAULT '1',
   `section_icon` varchar(255) NOT NULL DEFAULT '/graphics/AppIconResources/crystal_project/256x256/apps/kwikdisk.png',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `orms_app_sections`
@@ -516,7 +516,7 @@ CREATE TABLE `orms_ratings` (
   `comment_body` text NOT NULL,
   `rating` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -537,7 +537,7 @@ CREATE TABLE `orms_creators` (
   `db_dsn` varchar(255) NOT NULL DEFAULT 'webwarecl',
   `updater` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `orms_creators`
@@ -563,7 +563,7 @@ CREATE TABLE `orms_event_comments` (
   `body_copy` text NOT NULL,
   `om_uuid` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
@@ -582,7 +582,7 @@ CREATE TABLE `orms_events` (
   `body_copy` text,
   `file_uuid` varchar(255) NOT NULL DEFAULT 'NO FILE',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
