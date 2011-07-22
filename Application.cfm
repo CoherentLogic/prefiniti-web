@@ -91,10 +91,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <!-- 	This script must be loaded seperately from 
     		scriptIncludes.cfm because it depends on 
-            configuration being complete in webwareConfigLoad.cfm		-->
+            configuration being complete in webwareConfigLoad.cfm		-->       
     
-    <!-- Check for maintenance condition -->	
-    <cfinclude template="maintCheck.cfm">
     <cfset session.framework = CreateObject("component", "OpenHorizon.Framework")>
     <cferror type="exception" exception="any" template="/error.cfm">
 
