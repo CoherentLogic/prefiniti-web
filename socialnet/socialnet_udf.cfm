@@ -35,7 +35,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="snUserZIP" returntype="string">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="snuz" datasource="webwarecl">
+    <cfquery name="snuz" datasource="#session.framework.BaseDatasource#">
     	SELECT zip_code FROM Users WHERE id=#user_id#
     </cfquery>
     
@@ -83,12 +83,12 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="source_id" type="numeric" required="yes">
     <cfargument name="target_id" type="numeric" required="yes">
     
-    <cfquery name="chkReq" datasource="webwarecl">
+    <cfquery name="chkReq" datasource="#session.framework.BaseDatasource#">
     	SELECT id FROM friends WHERE source_id=#source_id# AND target_id=#target_id#
 	</cfquery>
             
     <cfif chkReq.RecordCount EQ 0>
-	<cfquery name="postRequest" datasource="webwarecl">
+	<cfquery name="postRequest" datasource="#session.framework.BaseDatasource#">
     	INSERT INTO friends
         	(source_id,
             target_id,
@@ -107,11 +107,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="acceptFriendRequest" returntype="void">
 	<cfargument name="request_id" type="numeric" required="yes">
     
-    <cfquery name="confOrig" datasource="webwarecl">
+    <cfquery name="confOrig" datasource="#session.framework.BaseDatasource#">
     	UPDATE friends SET confirmed=1 WHERE id=#request_id#
 	</cfquery>
     
-    <cfquery name="getOrig" datasource="webwarecl">
+    <cfquery name="getOrig" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM friends WHERE id=#request_id#
 	</cfquery>
     
@@ -138,7 +138,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
 
     
-    <cfquery name="postNew" datasource="webwarecl">
+    <cfquery name="postNew" datasource="#session.framework.BaseDatasource#">
     	INSERT INTO friends
         	(source_id,
             target_id,
@@ -156,7 +156,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="rejectFriendRequest" returntype="void">
 	<cfargument name="request_id" type="numeric" required="yes">
     
-    <cfquery name="rej" datasource="webwarecl">
+    <cfquery name="rej" datasource="#session.framework.BaseDatasource#">
 	    DELETE FROM friends WHERE id=#request_id#
 	</cfquery>        
 </cffunction>
@@ -177,11 +177,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </cfif>
 	</cfoutput>
     
-    <cfquery name="delSource" datasource="webwarecl">
+    <cfquery name="delSource" datasource="#session.framework.BaseDatasource#">
     	DELETE FROM friends WHERE source_id=#sourceid# AND target_id=#targetid#
 	</cfquery>
     
-    <cfquery name="delTarget" datasource="webwarecl">
+    <cfquery name="delTarget" datasource="#session.framework.BaseDatasource#">
     	DELETE FROM friends WHERE source_id=#targetid# AND target_id=#sourceid#
 	</cfquery>
 </cffunction> 
@@ -194,7 +194,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getFriends" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gf" datasource="webwarecl">
+    <cfquery name="gf" datasource="#session.framework.BaseDatasource#">
     	SELECT friends.source_id, friends.target_id, friends.confirmed, friends.request_date, users.lastName, users.firstName FROM friends, users WHERE users.id=friends.target_id AND friends.source_id=#user_id# AND friends.confirmed=1 ORDER BY users.lastName, users.firstName
     </cfquery>
     
@@ -207,7 +207,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="search_field" type="string" required="yes">
     <cfargument name="search_value" type="string" required="yes">
     
-    <cfquery name="s" datasource="webwarecl">
+    <cfquery name="s" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM Users WHERE allowSearch=1 AND (#search_field# LIKE '%#search_value#%' OR #search_field# LIKE '%#search_value#' OR #search_field# LIKE '#search_value#%')  ORDER BY lastName, firstName
 	</cfquery>
     
@@ -217,7 +217,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getRequests" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gr" datasource="webwarecl">
+    <cfquery name="gr" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM friends WHERE target_id=#user_id# AND confirmed=0
     </cfquery>
     
@@ -227,7 +227,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getUsername" returntype="string">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gu" datasource="webwarecl">
+    <cfquery name="gu" datasource="#session.framework.BaseDatasource#">
     	SELECT LTRIM(username) AS UN FROM Users WHERE id=#user_id#
     </cfquery>
     
@@ -237,7 +237,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getHisHer" returntype="string">
 	<cfargument name="user_id" type="numeric" required="yes">
 
-	<cfquery name="ghh" datasource="webwarecl">
+	<cfquery name="ghh" datasource="#session.framework.BaseDatasource#">
     	SELECT gender FROM Users WHERE id=#user_id#
     </cfquery>
     
@@ -250,7 +250,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getPicture" returntype="string">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gp" datasource="webwarecl">
+    <cfquery name="gp" datasource="#session.framework.BaseDatasource#">
     	SELECT picture, username, gender FROM Users WHERE id=#user_id#
     </cfquery>        
     
@@ -284,7 +284,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getLongname" returntype="string">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gl" datasource="webwarecl">
+    <cfquery name="gl" datasource="#session.framework.BaseDatasource#">
     	SELECT longName FROM Users WHERE id=#user_id#
 	</cfquery>
     
@@ -294,7 +294,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getFirstname" returntype="string">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gf" datasource="webwarecl">
+    <cfquery name="gf" datasource="#session.framework.BaseDatasource#">
     	SELECT firstName FROM Users WHERE id=#user_id#
 	</cfquery>
     
@@ -304,7 +304,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getEmail" returntype="string">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="ge" datasource="webwarecl">
+    <cfquery name="ge" datasource="#session.framework.BaseDatasource#">
     	SELECT email FROM Users WHERE id=#user_id#
 	</cfquery>
     
@@ -314,7 +314,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getBirthday" returntype="date">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gl" datasource="webwarecl">
+    <cfquery name="gl" datasource="#session.framework.BaseDatasource#">
     	SELECT birthday FROM Users WHERE id=#user_id#
 	</cfquery>
     
@@ -334,7 +334,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getComments" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gc" datasource="webwarecl">
+    <cfquery name="gc" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM comments WHERE to_id=#user_id# ORDER BY sent_date DESC
 	</cfquery>
     
@@ -347,7 +347,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 <cffunction name="setCommentsRead" returntype="void">
 	<cfargument name="user_id" type="numeric" required="yes">
-	<cfquery name="setRead" datasource="webwarecl">
+	<cfquery name="setRead" datasource="#session.framework.BaseDatasource#">
     	UPDATE comments SET c_read=1 WHERE to_id=#user_id#
 	</cfquery>
 </cffunction>    
@@ -369,7 +369,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfoutput>#ntNotify(toid, "SN_COMMENT_POSTED", "#getLongname(fromid)# has left you a comment.", "viewProfile(#toid#);")#</cfoutput>
     
-    <cfquery name="pc" datasource="webwarecl">
+    <cfquery name="pc" datasource="#session.framework.BaseDatasource#">
     	INSERT INTO comments
         	(from_id,
             to_id,
@@ -389,7 +389,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="snGetBlogs" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="sngb" datasource="webwarecl">
+    <cfquery name="sngb" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM blogs WHERE user_id=#user_id# ORDER BY post_date DESC
 	</cfquery>
     
@@ -399,7 +399,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="snGetBlog" returntype="query">
 	<cfargument name="blog_id" type="numeric" required="yes">
     
-    <cfquery name="sngb1" datasource="webwarecl">
+    <cfquery name="sngb1" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM blogs WHERE id=#blog_id#
 	</cfquery>
     
@@ -412,7 +412,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfargument name="body_copy" type="string" required="yes">
     <cfargument name="public" type="numeric" required="yes">
     
-    <cfquery name="snpb" datasource="webwarecl">
+    <cfquery name="snpb" datasource="#session.framework.BaseDatasource#">
     	INSERT INTO blogs
         	(user_id,
             subject,
@@ -443,7 +443,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="sourceid" type="numeric" required="yes">
     <cfargument name="targetid" type="numeric" required="yes">	
 	
-    <cfquery name="if" datasource="webwarecl">
+    <cfquery name="if" datasource="#session.framework.BaseDatasource#">
     	SELECT id FROM friends WHERE source_id=#sourceid# AND target_id=#targetid# AND confirmed=1
     </cfquery>
     
@@ -459,7 +459,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfargument name="event_icon" type="string" required="yes">
     <cfargument name="event_text" type="string" required="yes">
     
-    <cfquery name="wue" datasource="webwarecl">
+    <cfquery name="wue" datasource="#session.framework.BaseDatasource#">
     	INSERT INTO user_events
         	(user_id,
             event_date,
@@ -476,7 +476,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getUserEvents" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gue" datasource="webwarecl">
+    <cfquery name="gue" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM user_events WHERE user_id=#user_id# ORDER BY event_date DESC
 	</cfquery>
     
@@ -486,7 +486,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getFriendEvents" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gfe" datasource="webwarecl">
+    <cfquery name="gfe" datasource="#session.framework.BaseDatasource#">
     	SELECT DISTINCT 
         	user_events.event_text, 
         	user_events.event_date,
@@ -505,7 +505,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     <cfargument name="file_name" type="string" required="yes">
     
-    <cfquery name="gpp" datasource="webwarecl">
+    <cfquery name="gpp" datasource="#session.framework.BaseDatasource#">
     	SELECT picture FROM Users WHERE id=#user_id#
     </cfquery>
     
@@ -520,7 +520,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     <cfargument name="file_name" type="string" required="yes">
    
-   	<cfquery name="spp" datasource="webwarecl">
+   	<cfquery name="spp" datasource="#session.framework.BaseDatasource#">
    		UPDATE Users SET picture='#file_name#' WHERE id=#user_id#
 	</cfquery>
 </cffunction>   
@@ -529,7 +529,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="src" type="numeric" required="yes">
 	<cfargument name="tgt" type="numeric" required="yes">
 	
-	<cfquery name="isso_src" datasource="webwarecl">
+	<cfquery name="isso_src" datasource="#session.framework.BaseDatasource#">
 		SELECT so_id, relationship_status FROM Users WHERE id=#src# 
 	</cfquery>
 	
@@ -543,7 +543,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="relationshipStatus" returntype="string">
 	<cfargument name="tgt" type="numeric" required="yes">
 	
-	<cfquery name="rs" datasource="webwarecl">
+	<cfquery name="rs" datasource="#session.framework.BaseDatasource#">
 		SELECT relationship_status FROM Users WHERE id=#tgt#
 	</cfquery>
 	

@@ -15,7 +15,7 @@
     <div id="home_container">
     	<div id="home_sidebar">
 			
-
+		<cfdump var="#session.framework#">
         </div>
         <div id="home_content">        	            
             <cfset username_error = false>
@@ -46,7 +46,7 @@
                     <cfset ec = ec + 1>
                 </cfif>
                 
-                <cfquery name="chkDupUsers" datasource="webwarecl">
+                <cfquery name="chkDupUsers" datasource="#session.framework.BaseDatasource#">
                 	SELECT id FROM users WHERE username='#form.username#'
                 </cfquery>
                 

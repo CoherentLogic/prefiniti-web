@@ -35,5 +35,6 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <script type="text/javascript" src="/framework/components/paf_debug.js"></script>  
 <script type="text/javascript" src="/orms/orms.js"></script> 
 <script type="text/javascript" src="/OpenHorizon/Storage/ObjectRecord.js"></script> 
-
+<!--
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAbZXtkF5MmyctnwgpDM8naBS2TEid0ne7siz3Yzm2JoTSm0tYshS_N72PF4iQjeSk22sD5czHcc4LAg" type="text/javascript"></script>
+-->

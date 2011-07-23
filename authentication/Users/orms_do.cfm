@@ -1,14 +1,14 @@
 <cfinclude template="/socialnet/socialnet_udf.cfm">
 
-<cfquery name="gusr" datasource="webwarecl">
+<cfquery name="gusr" datasource="#session.framework.BaseDatasource#">
 	SELECT * FROM users WHERE id=#attributes.id#
 </cfquery>
 
-<cfquery name="gfr" datasource="webwarecl">
+<cfquery name="gfr" datasource="#session.framework.BaseDatasource#">
 	SELECT * FROM friends WHERE source_id=#attributes.id#
 </cfquery>    
 
-<cfquery name="gmemb" datasource="sites">
+<cfquery name="gmemb" datasource="#session.framework.SitesDatasource#">
 	SELECT * FROM site_associations WHERE user_id=#attributes.id#
 </cfquery>
 
