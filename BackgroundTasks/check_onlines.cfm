@@ -1,4 +1,4 @@
-<cfquery name="co" datasource="webwarecl">
+<cfquery name="co" datasource="#session.framework.BaseDatasource#">
 	SELECT user_id, last_event FROM auth_tokens
 </cfquery>
 
@@ -10,7 +10,7 @@
     #st#<br>
     <cfif st GE 2>
     	setting offline
-    	<!--- <cfmodule template="/framework/components/set_offline.cfm" id="#id#"> --->
+    	<cfmodule template="set_offline.cfm" id="#id#">
     </cfif>
     <cfcatch type="any">
     </cfcatch>
