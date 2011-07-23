@@ -33,5 +33,16 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfset myResult = GetProfileString(IniFile, section, key)>
 		<cfreturn myResult>
 	</cffunction>
+	
+	<cffunction name="SetConfig" access="public" returntype="void">
+		<cfargument name="section" type="string" required="yes">
+        <cfargument name="key" type="string" required="yes">
+        <cfargument name="value" type="string" required="yes">
+        
+        <cfset IniFile = ExpandPath("/prefiniti.ini")>
+        
+        
+		<cfset SetProfileString(IniFile, section, key, value)>		
+	</cffunction>	
     
 </cfcomponent>

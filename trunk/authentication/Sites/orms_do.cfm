@@ -1,7 +1,7 @@
 <cfinclude template="/socialnet/socialnet_udf.cfm">
 <cfinclude template="/authentication/authentication_udf.cfm">
 
-<cfquery name="get_sites" datasource="sites">
+<cfquery name="get_sites" datasource="#session.framework.SitesDatasource#">
 	SELECT * FROM sites WHERE SiteID=#attributes.id#
 </cfquery>
 

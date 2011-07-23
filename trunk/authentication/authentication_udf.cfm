@@ -27,13 +27,13 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
    
    	<cfparam name="tperm_id" default="">
     
-    <cfquery name="get_perm_id" datasource="sites">
+    <cfquery name="get_perm_id" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM permissions WHERE perm_key='#sz_key#'
    	</cfquery>
     
     <cfset tperm_id=#get_perm_id.id#>
     
-    <cfquery name="get_entry" datasource="sites">
+    <cfquery name="get_entry" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM permission_entries WHERE perm_id=#tperm_id# AND assoc_id=#n_assoc_id#
 	</cfquery>
     
@@ -50,13 +50,13 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     
     <cfparam name="tperm_id" default="">
     
-    <cfquery name="get_perm_id" datasource="sites">
+    <cfquery name="get_perm_id" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM permissions WHERE perm_key='#sz_key#'
    	</cfquery>
     
     <cfset tperm_id=#get_perm_id.id#>
 
-	<cfquery name="set_perm" datasource="sites">
+	<cfquery name="set_perm" datasource="#session.framework.SitesDatasource#">
     	INSERT INTO permission_entries
         	(assoc_id,
             perm_id)
@@ -69,7 +69,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getAssociationsByUser" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gabu" datasource="sites">
+    <cfquery name="gabu" datasource="#session.framework.SitesDatasource#">
 		SELECT * FROM site_associations WHERE user_id=#user_id#
 	</cfquery>
 
@@ -79,7 +79,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getPermissionNameByKey" returntype="string">
 	<cfargument name="sz_key" type="string" required="yes">
     
-    <cfquery name="gPermName" datasource="sites">
+    <cfquery name="gPermName" datasource="#session.framework.SitesDatasource#">
     	SELECT name FROM permissions WHERE perm_key='#sz_key#'
 	</cfquery>
     
@@ -89,7 +89,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getSiteNameByID" returntype="string">
 	<cfargument name="site_id" required="yes">
     
-    <cfquery name="gSiteName" datasource="sites">
+    <cfquery name="gSiteName" datasource="#session.framework.SitesDatasource#">
     	SELECT SiteName FROM sites WHERE SiteID=#site_id#
     </cfquery>
     
@@ -103,7 +103,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getUserInformation" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-	<cfquery name="gbi" datasource="webwarecl">
+	<cfquery name="gbi" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM Users WHERE id=#user_id#
     </cfquery>    
     
@@ -113,7 +113,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getUserLocations" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gul" datasource="webwarecl">
+    <cfquery name="gul" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM locations WHERE user_id=#user_id#
     </cfquery>
     
@@ -123,7 +123,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getPublicUserLocations" returntype="query">
 	<cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="gul" datasource="webwarecl">
+    <cfquery name="gul" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM locations WHERE user_id=#user_id# AND public_location=1
     </cfquery>
     
@@ -135,7 +135,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getSiteInformation" returntype="query">
 	<cfargument name="site_id" type="numeric" required="yes">
 
-	<cfquery name="gsi" datasource="sites">
+	<cfquery name="gsi" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM sites WHERE SiteID=#site_id#
 	</cfquery>
     
@@ -145,7 +145,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="getIndustryByID" returntype="string">
 	<cfargument name="industry_id" type="numeric" required="yes">
     
-    <cfquery name="gibi" datasource="sites">
+    <cfquery name="gibi" datasource="#session.framework.SitesDatasource#">
     	SELECT industry_name FROM industries WHERE id=#industry_id#
 	</cfquery>
     
@@ -155,7 +155,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="wwGetDepartments" returntype="query">
 	<cfargument name="site_id" type="numeric" required="yes">
     
-    <cfquery name="wwgd" datasource="sites">
+    <cfquery name="wwgd" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM departments WHERE site_id=#site_id#
 	</cfquery>
     
@@ -165,15 +165,15 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="wwDeleteDepartment" returntype="void">
 	<cfargument name="department_id" type="numeric" required="yes">
     
-    <cfquery name="delete_event_entries" datasource="sites">
+    <cfquery name="delete_event_entries" datasource="#session.framework.SitesDatasource#">
     	DELETE FROM event_entries WHERE department_id=#department_id#
     </cfquery>
     
-    <cfquery name="delete_department_entries" datasource="sites">
+    <cfquery name="delete_department_entries" datasource="#session.framework.SitesDatasource#">
     	DELETE FROM department_entries WHERE department_id=#department_id#
     </cfquery>
     
-    <cfquery name="delete_department" datasource="sites">
+    <cfquery name="delete_department" datasource="#session.framework.SitesDatasource#">
     	DELETE FROM departments WHERE id=#department_id#
     </cfquery>
 
@@ -182,7 +182,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="wwGetDepartmentMembers" returntype="query">
 	<cfargument name="department_id" type="numeric" required="yes">
     
-    <cfquery name="wwgdm" datasource="sites">
+    <cfquery name="wwgdm" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM department_entries WHERE department_id=#department_id#
 	</cfquery>
     
@@ -193,7 +193,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="site_id" type="numeric" required="yes">
     <cfargument name="department_name" type="string" required="yes">
     
-    <cfquery name="wwcd" datasource="sites">
+    <cfquery name="wwcd" datasource="#session.framework.SitesDatasource#">
     	INSERT INTO departments
         	(site_id,
             department_name)
@@ -207,7 +207,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="department_id" type="numeric" required="yes">
     <cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="checkDMExists" datasource="sites">
+    <cfquery name="checkDMExists" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM department_entries WHERE department_id=#department_id# AND user_id=#user_id#
 	</cfquery>
     
@@ -215,7 +215,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfreturn>
 	</cfif>                
     
-    <cfquery name="wwcdm" datasource="sites">
+    <cfquery name="wwcdm" datasource="#session.framework.SitesDatasource#">
     	INSERT INTO department_entries
         	(department_id,
             user_id)
@@ -229,7 +229,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="department_id" type="numeric" required="yes">
     <cfargument name="user_id" type="numeric" required="yes">
     
-    <cfquery name="wwsdm" datasource="sites">
+    <cfquery name="wwsdm" datasource="#session.framework.SitesDatasource#">
     	UPDATE departments
         SET		manager_id=#user_id#
         WHERE	id=#department_id#
@@ -239,7 +239,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="wwDeleteDepartmentMember" returntype="void">
 	<cfargument name="id" type="numeric" required="yes">
     
-    <cfquery name="wwddm" datasource="sites">
+    <cfquery name="wwddm" datasource="#session.framework.SitesDatasource#">
     	DELETE FROM department_entries WHERE id=#id#
 	</cfquery>
 </cffunction>            
@@ -247,7 +247,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="wwGetEmployeesBySite" returntype="query">
 	<cfargument name="site_id" type="numeric" required="yes">
     
-    <cfquery name="wwgebs" datasource="sites">
+    <cfquery name="wwgebs" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM site_associations WHERE site_id=#site_id# AND assoc_type=1
 	</cfquery>
     
@@ -259,7 +259,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     <cfargument name="department_id" type="numeric" required="yes">
     
-    <cfquery name="wwiuid" datasource="sites">
+    <cfquery name="wwiuid" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM department_entries WHERE department_id=#department_id# and user_id=#user_id#
 	</cfquery>
     
@@ -275,7 +275,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     <cfargument name="department_id" type="numeric" required="yes">
     
-    <cfquery name="wwiudm" datasource="sites">
+    <cfquery name="wwiudm" datasource="#session.framework.SitesDatasource#">
     	SELECT * FROM departments WHERE id=#department_id# AND manager_id=#user_id#
 	</cfquery>
     
@@ -290,7 +290,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="wwDepartmentName" returntype="string">
 	<cfargument name="department_id" type="numeric" required="yes">
     
-    <cfquery name="wwdn" datasource="sites">
+    <cfquery name="wwdn" datasource="#session.framework.SitesDatasource#">
     	SELECT department_name FROM departments WHERE id=#department_id#
     </cfquery>
     
@@ -300,7 +300,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="wwDepartmentManager" returntype="numeric">
 	<cfargument name="department_id" type="numeric" required="yes">
     
-    <cfquery name="wwdm1" datasource="sites">
+    <cfquery name="wwdm1" datasource="#session.framework.SitesDatasource#">
     	SELECT manager_id FROM departments WHERE id=#department_id#
 	</cfquery>
 
@@ -315,7 +315,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfparam name="cid" type="string" default="">
     <cfset cid=CreateUUID()>
     
-    <cfquery name="wwca" datasource="sites">
+    <cfquery name="wwca" datasource="#session.framework.SitesDatasource#">
     	INSERT INTO site_associations
         	(user_id,
             site_id,
@@ -335,7 +335,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     <cfargument name="conf_key" type="string" required="yes">
     
-    <cfquery name="wwrc" datasource="webwarecl">
+    <cfquery name="wwrc" datasource="#session.framework.BaseDatasource#">
     	SELECT * FROM configuration WHERE user_id=#user_id# AND conf_key='#conf_key#'
 	</cfquery>
     
@@ -352,7 +352,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfargument name="conf_value" type="string" required="yes">
     
     <cfif wwReadConfig(user_id, conf_key) EQ "WW_NOT_CONFIGURED">
-    	<cfquery name="wwwc_new" datasource="webwarecl">
+    	<cfquery name="wwwc_new" datasource="#session.framework.BaseDatasource#">
         	INSERT INTO configuration
             	(user_id,
                 conf_key,
@@ -363,7 +363,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                 '#conf_value#')
 		</cfquery>                                
     <cfelse>
-		<cfquery name="wwwc_old" datasource="webwarecl">
+		<cfquery name="wwwc_old" datasource="#session.framework.BaseDatasource#">
         	UPDATE configuration
             SET		conf_value='#conf_value#'
             WHERE	conf_key='#conf_key#'
@@ -416,12 +416,12 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="clientByClsJobNumber" returntype="string">
 	<cfargument name="clsJobNumber" type="string" required="yes">
     
-    <cfquery name="gProj" datasource="webwarecl">
+    <cfquery name="gProj" datasource="#session.framework.BaseDatasource#">
     	SELECT clientID FROM projects WHERE clsJobNumber='#clsJobNumber#'
 	</cfquery>
     
     <cfif gProj.RecordCount GT 0>
-        <cfquery name="gCli" datasource="webwarecl">
+        <cfquery name="gCli" datasource="#session.framework.BaseDatasource#">
             SELECT longName FROM Users WHERE id=#gProj.clientID#
         </cfquery>
         
@@ -434,7 +434,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cffunction name="pfIsPrefinitiAdmin" returntype="boolean">
 	<cfargument name="user_id" type="numeric" required="yes">
 	
-	<cfquery name="pfipa" datasource="webwarecl">
+	<cfquery name="pfipa" datasource="#session.framework.BaseDatasource#">
 		SELECT webware_admin FROM Users WHERE id=#user_id#
 	</cfquery>
 	
@@ -453,7 +453,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="HP_PrefinitiHostKey" type="string" required="yes">
 	<cfargument name="HP_OS" type="string" required="yes">
 
-	<cfquery name="GetExistingSessions" datasource="webwarecl">
+	<cfquery name="GetExistingSessions" datasource="#session.framework.BaseDatasource#">
 		SELECT * FROM auth_tokens WHERE user_id=#user_id# AND active=1
 	</cfquery>
 	
@@ -461,14 +461,14 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		<cfparam name="SessionKey" default="">
 		<cfset SessionKey = CreateUUID()>
 		
-		<cfquery name="UpdateOldSessions" datasource="webwarecl">
+		<cfquery name="UpdateOldSessions" datasource="#session.framework.BaseDatasource#">
 			UPDATE auth_tokens
 			SET		active=0,
 					logout_date=#CreateODBCDateTime(Now())#
 			WHERE	user_id=#user_id# AND active=1
 		</cfquery>	
 		
-		<cfquery name="cns" datasource="webwarecl">
+		<cfquery name="cns" datasource="#session.framework.BaseDatasource#">
 			INSERT INTO auth_tokens
 				(username,
 				token, 
