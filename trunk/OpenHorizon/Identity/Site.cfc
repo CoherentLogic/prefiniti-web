@@ -64,7 +64,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cffunction name="Open" access="public" returntype="OpenHorizon.Identity.Site">
 		<cfargument name="id" type="numeric" required="yes">
 
-		<cfquery name="s" datasource="sites">
+		<cfquery name="s" datasource="#session.framework.SitesDatasource#">
         	SELECT * FROM sites WHERE SiteID=#id#
         </cfquery>
         
@@ -91,7 +91,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.salestax_rate = s.salestax_rate>
         <cfset this.logo_invoice = s.logo_invoice>
         
-        <cfquery name="g_ind" datasource="sites">
+        <cfquery name="g_ind" datasource="#session.framework.SitesDatasource#">
         	SELECT industry_name FROM industries WHERE id=#this.industry#
         </cfquery>
         
@@ -106,7 +106,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="OpenByMembershipID" access="public" returntype="OpenHorizon.Identity.Site" output="no">
     	<cfargument name="membership_id" type="numeric" required="yes">
         
-        <cfquery name="g_site" datasource="sites">
+        <cfquery name="g_site" datasource="#session.framework.SitesDatasource#">
         	SELECT site_id FROM site_associations WHERE id=#membership_id#
         </cfquery>
         
@@ -127,7 +127,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
   	</cffunction>
     
     <cffunction name="UpdateExistingRecord" access="public" output="no" returntype="void">
-    	<cfquery name="uer" datasource="sites">
+    	<cfquery name="uer" datasource="#session.framework.SitesDatasource#">
 			UPDATE	sites
             SET		SiteName='#this.site_name#',
             		<cfif this.enabled EQ true>
@@ -152,7 +152,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="WriteAsNewRecord" access="public" output="no" returntype="void">
     	<cfset this.om_uuid = CreateUUID()>
     
-    	<cfquery name="wanr" datasource="sites">
+    	<cfquery name="wanr" datasource="#session.framework.SitesDatasource#">
         	INSERT INTO	sites
             			(SiteName,
                         enabled,
@@ -186,7 +186,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                         '#this.om_uuid#')                        
         </cfquery>    
         
-        <cfquery name="gwanr" datasource="sites">
+        <cfquery name="gwanr" datasource="#session.framework.SitesDatasource#">
         	SELECT SiteID FROM sites WHERE conf_id='#this.om_uuid#'
         </cfquery>
         
@@ -198,7 +198,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfargument name="industry" type="string" required="yes">
         <cfargument name="salestax_rate" type="numeric" required="yes">
         
-        <cfquery name="get_industry" datasource="sites">
+        <cfquery name="get_industry" datasource="#session.framework.SitesDatasource#">
         	SELECT id FROM industries WHERE industry_name='#industry#'
         </cfquery>
         
@@ -220,7 +220,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="Employees" access="public" returntype="array" output="no">
     	<cfset ret = ArrayNew(1)>
         
-        <cfquery name="qryEmployees" datasource="sites">
+        <cfquery name="qryEmployees" datasource="#session.framework.SitesDatasource#">
         	SELECT user_id FROM site_associations WHERE site_id=#this.r_pk# and assoc_type=1    
 		</cfquery>            
         
@@ -235,7 +235,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="Customers" access="public" returntype="array" output="no">
     	<cfset ret = ArrayNew(1)>
         
-        <cfquery name="qryCustomers" datasource="sites">
+        <cfquery name="qryCustomers" datasource="#session.framework.SitesDatasource#">
         	SELECT user_id FROM site_associations WHERE site_id=#this.r_pk# and assoc_type=0    
 		</cfquery>            
         
@@ -250,7 +250,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="Friends" access="public" returntype="array" output="no">
     	<cfset ret = ArrayNew(1)>
         
-        <cfquery name="qryFriends" datasource="sites">
+        <cfquery name="qryFriends" datasource="#session.framework.SitesDatasource#">
         	SELECT user_id FROM site_associations WHERE site_id=#this.r_pk# and assoc_type=2   
 		</cfquery>            
         
