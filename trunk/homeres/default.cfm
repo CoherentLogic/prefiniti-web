@@ -17,7 +17,8 @@
 			
 		<cfdump var="#session.framework#">
         </div>
-        <div id="home_content">        	            
+        <div id="home_content">     
+			  	            
             <cfset username_error = false>
             <cfset password_error = false>
             <cfset email_error = false>
@@ -94,7 +95,11 @@
             </cfif>  
             
             <cfif (NOT IsDefined("form.marker")) OR (ec GT 0)>
-            	<h1 style="font-size:24px;">Sign Up</h1>
+				<cfif session.Framework.FirstUser NEQ "NOT CONFIGURED">
+	            	<h1 style="font-size:24px;">Sign Up</h1>
+				<cfelse>
+					<h1 style="font-size:24px;">Create First User</h1>
+				</cfif>
                 <form name="SignUp" id="SignUp" method="post" action="/homeres/default.cfm">
                 <input type="hidden" name="marker" id="marker" value="marker" />
                 
@@ -222,14 +227,23 @@
 								true,
 								form.zip_code)>
 				<cfset u.Save()>
-                <cfset u.SendConfirmationEmail()>
-                                                               
-            	<h1 style="font-size:24px;">Signup complete!</h1>
+				<cfif session.Framework.FirstUser NEQ "NOT CONFIGURED">					
+	                <cfset u.SendConfirmationEmail()>
+	                <h1 style="font-size:24px;">Signup complete!</h1>
                 
-                <cfoutput>
-                	<p>A confirmation e-mail has been sent to #form.email#. You must click the link contained in this message in order to complete your Prefiniti Network registration.</p>
-                    <p>Thank you for registering on The Prefiniti Network!</p>
-				</cfoutput>                    
+	                <cfoutput>
+	                	<p>A confirmation e-mail has been sent to #form.email#. You must click the link contained in this message in order to complete your Prefiniti Network registration.</p>
+	                    <p>Thank you for registering on The Prefiniti Network!</p>
+					</cfoutput>
+    			<cfelse>
+					<cfset u.ConfirmAccount()>
+					<h1 style="font-size:24px;">First User Created</h1>
+                
+	                <cfoutput>
+	                	<p>The first user account, #u.username#, has been registered. This account has complete administrative control.</p>	                    
+					</cfoutput>
+				</cfif>                                                           
+            	                    
             </cfif>
 
     	</div>
