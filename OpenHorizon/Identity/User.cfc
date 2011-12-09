@@ -206,15 +206,22 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfif this.written>
       		<cfset this.UpdateExistingRecord()>
     	<cfelse>      	
-            <cfset this.WriteAsNewRecord()>
+            <cfset PAF = CreateObject("component", "Prefiniti")>
+			<cfset this.WriteAsNewRecord()>
 			<cfset first_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").Create(this.MainSite(), this, 'Friend')>
             <cfset first_membership.Save()>
             <cfset second_membership = CreateObject("component", "OpenHorizon.Identity.SiteMembership").Create(this.MainSite(), this, 'Customer')>
             <cfset second_membership.Save()>
-            <cfset this.active_membership_id = first_membership.r_pk>
+            <cfset this.active_membership_id = first_membership.r_pk>			
             <cfset first_membership.GrantSet(this.PermissionSet('Basic User'))>
-            <cfset second_membership.GrantSet(this.PermissionSet('Customer'))>
-            
+			
+			<!--- grant administrator perms if this is the first user in the system --->
+			<cfif this.FirstUser NEQ "NOT CONFIGURED">
+	            <cfset second_membership.GrantSet(this.PermissionSet('Customer'))>
+    		<cfelse>
+				<cfset second_membership.GrantSet(this.PermissionSet('Administrator'))>
+				<cfset PAF.SetConfig("Instance", "first_user", this.r_pk)>
+			</cfif>
             <cfset this.UpdateExistingRecord()>
 			
             
@@ -505,7 +512,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfargument name="radius" type="numeric" required="yes">
         
         <cfquery name="swr" datasource="#this.BaseDatasource#">
-        	SELECT ((ACOS(SIN(#latitude# * PI() / 180) * SIN(`orms.r_latitude` * PI() / 180) + COS(#latitude# * PI() / 180) * COS(`orms.r_latitude` * PI() / 180) * COS((#longitude# – `orms.r_longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance,
+        	SELECT ((ACOS(SIN(#latitude# * PI() / 180) * SIN(`orms.r_latitude` * PI() / 180) + COS(#latitude# * PI() / 180) * COS(`orms.r_latitude` * PI() / 180) * COS((#longitude# ï¿½ `orms.r_longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance,
             orms_subscriptions.target_uuid AS TargetObject
             FROM 		orms
             INNER JOIN	orms_subscriptions
