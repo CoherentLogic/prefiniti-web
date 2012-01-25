@@ -17,7 +17,7 @@
 			
         </div>
         <div id="home_content">        	            
-            <cfquery name="GetQuestion" datasource="webwarecl">
+            <cfquery name="GetQuestion" datasource="#session.framework.BaseDatasource#">
                 SELECT password_question FROM users WHERE email='#form.email#'
             </cfquery>    
             
@@ -45,7 +45,7 @@
                 
                 
                 <div style="background-color:#EFEFEF; -moz-border-radius:5px; padding:5px; color:black; width:440px;">
-                    <cfquery name="GetQuestion" datasource="webwarecl">
+                    <cfquery name="GetQuestion" datasource="#session.framework.BaseDatasource#">
                         SELECT password_question, id FROM users WHERE email='#form.email#'
                     </cfquery>
                     

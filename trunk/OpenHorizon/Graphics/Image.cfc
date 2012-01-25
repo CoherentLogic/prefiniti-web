@@ -34,7 +34,7 @@
 		
 		
 		<cfquery name="qryCheckImageCache" datasource="#this.BaseDatasource#">
-			SELECT * FROM Images WHERE InputURL='#InputURL#' AND Width=#Width# AND Height=#Height#
+			SELECT * FROM images WHERE InputURL='#InputURL#' AND Width=#Width# AND Height=#Height#
 		</cfquery>
 		
 		<cfset this.Extension = Right(InputURL, 3)>

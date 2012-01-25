@@ -5,7 +5,7 @@
 
 -- Prefiniti Database Script
 -- Copyright (C) 2011 Prefiniti Inc.
--- $Id$
+-- $Id: prefiniti-mysql-5.sql 66 2011-07-22 21:49:01Z chocolatejollis38@gmail.com $
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -901,12 +901,9 @@ CREATE TABLE `webresource_hits` (
 --
 -- Create user account for web access
 --
--- CREATE USER 'prefiniti'@'localhost' IDENTIFIED BY 'gat4$rePR29ub+a';
-GRANT SELECT,INSERT,UPDATE,DELETE,EXECUTE ON prefiniti.* 
-TO 'prefiniti'@'localhost' IDENTIFIED BY 'gat4$rePR29ub+a'
-WITH GRANT OPTION;
+CREATE USER 'prefiniti'@'localhost' IDENTIFIED BY 'gat4$rePR29ub+a';
+GRANT SELECT,INSERT,DELETE,EXECUTE ON prefiniti.* TO 'prefiniti'@'localhost';
 
-FLUSH PRIVILEGES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

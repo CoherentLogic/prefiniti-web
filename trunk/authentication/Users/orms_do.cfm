@@ -12,7 +12,7 @@
 	SELECT * FROM site_associations WHERE user_id=#attributes.id#
 </cfquery>
 
-<cfset usr = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(attributes.id)>
+<!--- <cfset usr = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(attributes.id)> --->
 
 
 <cfset rt = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
@@ -20,7 +20,7 @@
 		Update user account #id# ORMS record...<br />
 		<cfset rtype = "User Account">
 		<cfset rowner = id>
-		<cfset rsite = 5>
+		<cfset rsite = session.framework.main_site_id>
 		<cfset rname = longName>
 		<cfset redit = 'javascript:editUser(#id#,"basic_information.cfm")'>
 		<cfset rview = 'javascript:viewProfile(#id#)'>

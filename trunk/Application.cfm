@@ -94,8 +94,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             configuration being complete in webwareConfigLoad.cfm		-->       
     
     <cfset session.framework = CreateObject("component", "OpenHorizon.Framework")>
-   <!---  <cferror type="exception" exception="any" template="/error.cfm"> --->
-
+    <!--- <cferror type="exception" exception="any" template="/error.cfm"> --->
+	<cfoutput>
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=#session.framework.MapsAPIKey#" type="text/javascript"></script>
+	</cfoutput>
 	
     <script src="/framework/UI/wz_tooltip.js" type="text/javascript"></script>
 

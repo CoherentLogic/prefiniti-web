@@ -1,5 +1,5 @@
 
-<cfquery name="ore" datasource="webwarecl">
+<cfquery name="ore" datasource="#session.Framework.BaseDatasource#">
 	SELECT * FROM orms WHERE id='#attributes.orms_id#'
 </cfquery>
 

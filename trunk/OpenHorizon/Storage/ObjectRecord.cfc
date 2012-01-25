@@ -428,6 +428,15 @@
 			<cfreturn true>
 		</cfif>
 		
+		<cfif this.r_type EQ "User Account">
+			<cfquery name="CheckSearch" datasource="#this.BaseDatasource#">
+				SELECT allowSearch FROM users WHERE id=#this.r_pk#
+			</cfquery>
+			<cfif CheckSearch.RecordCount NEQ 0>
+				<cfreturn true>
+			</cfif>
+		</cfif>
+		
 		<cfreturn false>
 
 	</cffunction>	
@@ -546,10 +555,10 @@
 	</cffunction>
 	
 	<cffunction name="GetRating" returntype="numeric" access="public">
-	
+			
 		<cfquery name="get_rcount" datasource="#this.BaseDatasource#">
 			SELECT 	rating 
-			FROM 	orms_comments 
+			FROM 	orms_ratings
 			WHERE 	r_id='#this.r_id#'
 			AND		rating>0
 		</cfquery>
@@ -557,7 +566,7 @@
 		<cfif get_rcount.RecordCount GT 0>
 			<cfquery name="get_rating" datasource="#this.BaseDatasource#">
 				SELECT 	AVG(rating) as arate
-				FROM 	orms_comments 
+				FROM 	orms_ratings 
 				WHERE 	r_id='#this.r_id#'
 				AND		rating>0
 			</cfquery>

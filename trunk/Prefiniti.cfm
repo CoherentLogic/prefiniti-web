@@ -64,11 +64,17 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfquery name="GetFirst" datasource="#session.framework.BaseDatasource#" maxrows="1">
             SELECT r_id FROM orms_access_log WHERE a_user_id=#session.user.r_pk# ORDER BY a_date DESC
         </cfquery>
-        <cfset CurrentObject = GetFirst.r_id>
+		<cfif GetFirst.RecordCount GT 0>
+        	<cfset CurrentObject = GetFirst.r_id>
+		<cfelse>	
+			<cfset CurrentObject = session.user.ObjectRecord().r_id>
+		</cfif>
 		<cfset CurrentSection = "">                       
     </cfif>
 
 	<cfset session.current_object = CurrentObject>
+	
+	
 
 	<cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(CurrentObject)>
 	<cfoutput>
