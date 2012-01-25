@@ -1,7 +1,7 @@
 <cfset o = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(attributes.orms_id)>
 <cfset u = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(o.r_pk)>
 
-<cfif u.relationship_status NEQ "Single">
+<cfif u.relationship_status NEQ "Single" AND u.relationship_status NEQ "Unlisted">
 	<cfset so = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(u.so_id)>
 </cfif>
 
@@ -12,6 +12,8 @@
     
     <cfif u.relationship_status EQ "Single">
     	<strong>Relationship Status:</strong> Single<br>
+	<cfelseif u.relationship_status EQ "Unlisted">
+		<strong>Relationship Status:</strong> Unlisted<br>
    	<cfelse>
     	<strong>#u.relationship_status#</strong>: <a href="##" onclick="ORMSLoad('#so.ObjectRecord().r_id#', '')">#so.display_name#</a>
     </cfif>

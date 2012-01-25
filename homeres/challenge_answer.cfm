@@ -17,8 +17,8 @@
 			
         </div>
         <div id="home_content">        	            
-            <cfquery name="UserInfo" datasource="webwarecl">
-                SELECT id, password_question, password_answer FROM Users WHERE id=#form.my_id#
+            <cfquery name="UserInfo" datasource="#session.framework.BaseDatasource#">
+                SELECT id, password_question, password_answer FROM users WHERE id=#form.my_id#
             </cfquery>
                         
 			<cfif LCase(UserInfo.password_answer) EQ LCase(form.my_answer)>

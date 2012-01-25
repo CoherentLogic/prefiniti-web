@@ -18,7 +18,7 @@
         </div>
         <div id="home_content">        	            
 			<cfif form.new_password EQ form.new_password_confirm>
-                <cfquery name="rsp" datasource="webwarecl">
+                <cfquery name="rsp" datasource="#session.framework.BaseDatasource#">
                     UPDATE users SET password='#Hash(form.new_password)#' WHERE id=#url.my_id#
                 </cfquery>            
                 <h1>Password Reset Successful</h1>

@@ -26,7 +26,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfset oid = event.object_record.r_id>
 
 
-<cfquery name="subs" datasource="webwarecl">
+<cfquery name="subs" datasource="#session.framework.basedatasource#">
 	SELECT * FROM orms_subscriptions WHERE target_uuid='#oid#'
 </cfquery>
 

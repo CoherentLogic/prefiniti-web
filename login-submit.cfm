@@ -27,14 +27,14 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfabort>
 </cfif> --->
 
-<cfset Authenticator = CreateObject("webservice", "http://orms.prefiniti.com/Authentication.cfc?wsdl")>
+<cfset Authenticator = CreateObject("webservice", "http://hephaestus-orms.clogic-int.com/Authentication.cfc?wsdl")>
 <cfset key = Authenticator.GetKey(form.login_username, form.login_password)>
 
 <cfif key NEQ 0>
 	<!--- username and password are good --->
 	<cfset uid = Authenticator.UserIDFromKey(key)>
 
-	<cfquery name="qryGetLogin" datasource="#session.datasource#">
+	<cfquery name="qryGetLogin" datasource="#session.framework.basedatasource#">
 		SELECT * FROM users WHERE id=#uid#
 	</cfquery>		
 

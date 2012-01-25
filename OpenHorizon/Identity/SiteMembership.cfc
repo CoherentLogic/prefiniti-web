@@ -45,11 +45,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfargument name="user" type="OpenHorizon.Identity.User" required="yes">
         <cfargument name="membership_type" type="string" required="yes">
         
-        <cfquery name="oid" datasource="sites">
+        <cfquery name="oid" datasource="#this.SitesDatasource#">
         	SELECT association_type FROM association_types WHERE association_type_name='#membership_type#'
         </cfquery>
         
-        <cfquery name="open" datasource="sites">
+        <cfquery name="open" datasource="#this.SitesDatasource#">
         	SELECT 	* 
             FROM 	site_associations 
             WHERE 	site_id=#site.r_pk# 
@@ -70,7 +70,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="OpenByPK" access="public" returntype="OpenHorizon.Identity.SiteMembership" output="no">
     	<cfargument name="r_pk" type="numeric" required="yes">
         
-        <cfquery name="opk" datasource="sites">
+        <cfquery name="opk" datasource="#this.SitesDatasource#">
         	SELECT  *
             FROM	site_associations
             WHERE	id=#r_pk#
@@ -79,7 +79,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.site = CreateObject("component", "OpenHorizon.Identity.Site").OpenByMembershipID(opk.id)>
         <cfset this.user = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(opk.user_id)>    
         
-		<cfquery name="gmt" datasource="sites">
+		<cfquery name="gmt" datasource="#this.SitesDatasource#">
         	SELECT association_type_name FROM association_types WHERE association_type=#opk.assoc_type#
         </cfquery>
         
@@ -98,7 +98,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfargument name="membership_type" type="string" required="yes">
         
      
-        <cfquery name="delete_member" datasource="sites">
+        <cfquery name="delete_member" datasource="#this.SitesDatasource#">
         	DELETE FROM site_associations
             WHERE		id=#this.r_pk#
         </cfquery>        
@@ -115,11 +115,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cffunction name="WriteAsNewRecord" access="public" output="no" returntype="void">
     	<cfset this.om_uuid = CreateUUID()>       
         
-        <cfquery name="mt" datasource="sites">
+        <cfquery name="mt" datasource="#this.SitesDatasource#">
         	SELECT association_type FROM association_types WHERE association_type_name='#this.membership_type#'
         </cfquery>
         
-        <cfquery name="wanr" datasource="sites">
+        <cfquery name="wanr" datasource="#this.SitesDatasource#">
         	INSERT INTO site_associations
             			(user_id,
                         site_id,
@@ -131,7 +131,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                         '#this.om_uuid#')                                                
         </cfquery>
         
-        <cfquery name="wanr_id" datasource="sites">
+        <cfquery name="wanr_id" datasource="#this.SitesDatasource#">
         	SELECT id FROM site_associations WHERE conf_id='#this.om_uuid#'
         </cfquery>
         
@@ -143,14 +143,14 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
                   
         <cfparam name="tperm_id" default="">
         
-        <cfquery name="get_perm_id" datasource="sites">
+        <cfquery name="get_perm_id" datasource="#this.SitesDatasource#">
             SELECT * FROM permissions WHERE perm_key='#permission_key#'
         </cfquery>
         
         <cfset tperm_id = get_perm_id.id>
  		
         <cfif NOT this.Examine(permission_key)>   
-            <cfquery name="set_perm" datasource="sites">
+            <cfquery name="set_perm" datasource="#this.SitesDatasource#">
                 INSERT INTO permission_entries
                     (assoc_id,
                     perm_id)
@@ -166,7 +166,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         
         <cfparam name="tperm_id" default="">
         
-        <cfquery name="get_perm_id" datasource="sites">
+        <cfquery name="get_perm_id" datasource="#this.SitesDatasource#">
             SELECT id FROM permissions WHERE perm_key='#permission_key#'
         </cfquery>
         
@@ -185,7 +185,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 		
         <cfparam name="tperm_id" default="">
     
-        <cfquery name="get_perm_id" datasource="sites">
+        <cfquery name="get_perm_id" datasource="#this.SitesDatasource#">
             SELECT * FROM permissions WHERE perm_key='#permission_key#'
         </cfquery>
         
@@ -195,7 +195,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         	<cfreturn false>
         </cfif>
         
-        <cfquery name="get_entry" datasource="sites">
+        <cfquery name="get_entry" datasource="#this.SitesDatasource#">
             SELECT * FROM permission_entries WHERE perm_id=#tperm_id# AND assoc_id=#this.r_pk#
         </cfquery>
         

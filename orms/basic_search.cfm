@@ -28,7 +28,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfset search_key = la[1]>
 	<cfset search_value = la[2]>
 
-	<cfquery name="doSearch" datasource="webwarecl">
+		<cfquery name="doSearch" datasource="#session.framework.basedatasource#">
 		SELECT 	* 
 		FROM 	orms_keywords 
 		WHERE 	k_word LIKE '%#search_key#%'
@@ -37,7 +37,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfelse>
 	<cfset search_mode = "value_only">
 	<cfset search_value = url.search_value>
-	<cfquery name="doSearch" datasource="webwarecl">
+	<cfquery name="doSearch" datasource="#session.framework.basedatasource#">
 		SELECT * FROM orms_keywords WHERE k_value LIKE '%#search_value#%'
 	</cfquery>
 </cfif>	

@@ -1,4 +1,4 @@
-<cfquery name="gro" datasource="webwarecl">
+<cfquery name="gro" datasource="#session.framework.BaseDatasource#">
 	SELECT r_id FROM orms_access_log WHERE a_user_id=#url.user_id# ORDER BY a_date DESC
 </cfquery>
 

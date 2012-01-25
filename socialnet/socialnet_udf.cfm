@@ -36,7 +36,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     
     <cfquery name="snuz" datasource="#session.framework.BaseDatasource#">
-    	SELECT zip_code FROM Users WHERE id=#user_id#
+    	SELECT zip_code FROM users WHERE id=#user_id#
     </cfquery>
     
     <cfreturn #snuz.zip_code#>
@@ -208,7 +208,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfargument name="search_value" type="string" required="yes">
     
     <cfquery name="s" datasource="#session.framework.BaseDatasource#">
-    	SELECT * FROM Users WHERE allowSearch=1 AND (#search_field# LIKE '%#search_value#%' OR #search_field# LIKE '%#search_value#' OR #search_field# LIKE '#search_value#%')  ORDER BY lastName, firstName
+    	SELECT * FROM users WHERE allowSearch=1 AND (#search_field# LIKE '%#search_value#%' OR #search_field# LIKE '%#search_value#' OR #search_field# LIKE '#search_value#%')  ORDER BY lastName, firstName
 	</cfquery>
     
     <cfreturn #s#>        
@@ -228,7 +228,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     
     <cfquery name="gu" datasource="#session.framework.BaseDatasource#">
-    	SELECT LTRIM(username) AS UN FROM Users WHERE id=#user_id#
+    	SELECT LTRIM(username) AS UN FROM users WHERE id=#user_id#
     </cfquery>
     
     <cfreturn #gu.UN#>
@@ -238,7 +238,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
 
 	<cfquery name="ghh" datasource="#session.framework.BaseDatasource#">
-    	SELECT gender FROM Users WHERE id=#user_id#
+    	SELECT gender FROM users WHERE id=#user_id#
     </cfquery>
     
     <cfif ghh.gender EQ "M">
@@ -251,7 +251,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     
     <cfquery name="gp" datasource="#session.framework.BaseDatasource#">
-    	SELECT picture, username, gender FROM Users WHERE id=#user_id#
+    	SELECT picture, username, gender FROM users WHERE id=#user_id#
     </cfquery>        
     
     <cfif #gp.picture# EQ "">
@@ -285,7 +285,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     
     <cfquery name="gl" datasource="#session.framework.BaseDatasource#">
-    	SELECT longName FROM Users WHERE id=#user_id#
+    	SELECT longName FROM users WHERE id=#user_id#
 	</cfquery>
     
     <cfreturn #gl.longName#>
@@ -295,7 +295,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     
     <cfquery name="gf" datasource="#session.framework.BaseDatasource#">
-    	SELECT firstName FROM Users WHERE id=#user_id#
+    	SELECT firstName FROM users WHERE id=#user_id#
 	</cfquery>
     
     <cfreturn #gf.firstName#>
@@ -305,7 +305,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     
     <cfquery name="ge" datasource="#session.framework.BaseDatasource#">
-    	SELECT email FROM Users WHERE id=#user_id#
+    	SELECT email FROM users WHERE id=#user_id#
 	</cfquery>
     
     <cfreturn #ge.email#>
@@ -315,7 +315,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="user_id" type="numeric" required="yes">
     
     <cfquery name="gl" datasource="#session.framework.BaseDatasource#">
-    	SELECT birthday FROM Users WHERE id=#user_id#
+    	SELECT birthday FROM users WHERE id=#user_id#
 	</cfquery>
     
     <cfreturn #gl.birthday#>
@@ -506,7 +506,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfargument name="file_name" type="string" required="yes">
     
     <cfquery name="gpp" datasource="#session.framework.BaseDatasource#">
-    	SELECT picture FROM Users WHERE id=#user_id#
+    	SELECT picture FROM users WHERE id=#user_id#
     </cfquery>
     
     <cfif #gpp.picture# EQ #file_name#>
@@ -521,7 +521,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfargument name="file_name" type="string" required="yes">
    
    	<cfquery name="spp" datasource="#session.framework.BaseDatasource#">
-   		UPDATE Users SET picture='#file_name#' WHERE id=#user_id#
+   		UPDATE users SET picture='#file_name#' WHERE id=#user_id#
 	</cfquery>
 </cffunction>   
 
@@ -530,7 +530,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="tgt" type="numeric" required="yes">
 	
 	<cfquery name="isso_src" datasource="#session.framework.BaseDatasource#">
-		SELECT so_id, relationship_status FROM Users WHERE id=#src# 
+		SELECT so_id, relationship_status FROM users WHERE id=#src# 
 	</cfquery>
 	
 	<cfif isso_src.so_id EQ tgt>
@@ -544,7 +544,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 	<cfargument name="tgt" type="numeric" required="yes">
 	
 	<cfquery name="rs" datasource="#session.framework.BaseDatasource#">
-		SELECT relationship_status FROM Users WHERE id=#tgt#
+		SELECT relationship_status FROM users WHERE id=#tgt#
 	</cfquery>
 	
 	<cfreturn #rs.relationship_status#>

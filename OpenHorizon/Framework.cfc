@@ -20,6 +20,7 @@
     <cfset this.InstanceMode = PAF.Config("Instance", "mode")>
     <cfset this.LockToIP = PAF.Config("Security", "lock_ip")>
     <cfset this.FirstUser = PAF.Config("Instance", "first_user")>
+	<cfset this.MapsAPIKey = PAF.Config("Instance", "maps_api_key")>
     <cffunction name="PermissionSet" access="public" returntype="string" output="no">
     	<cfargument name="set_key" type="string" required="yes">
         

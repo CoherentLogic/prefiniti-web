@@ -17,7 +17,7 @@
 			
         </div>
         <div id="home_content">        	            
-  			<cfquery name="get_account" datasource="webwarecl">
+  			<cfquery name="get_account" datasource="#session.framework.BaseDatasource#">
             	SELECT id FROM users WHERE confirm_id='#url.om_uuid#'
             </cfquery>
             

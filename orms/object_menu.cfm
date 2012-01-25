@@ -15,7 +15,7 @@
 	SELECT r_type FROM orms_creators ORDER BY r_type
 </cfquery>
 
-<cfquery name="getSites" datasource="sites">
+<cfquery name="getSites" datasource="#session.framework.basedatasource#">
 	SELECT * FROM site_associations WHERE user_id=#session.user.r_pk#
 </cfquery>
 
