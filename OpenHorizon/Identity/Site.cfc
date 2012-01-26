@@ -24,7 +24,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfcomponent displayname="site" hint="Represents a Prefiniti site" output="no" extends="OpenHorizon.Framework">
 	<cfset this.r_pk = 0>    
     <cfset this.site_name = "">
-    <cfset this.admin_id = 724>
+    <cfset this.admin_id = 1>
     <cfset this.enabled = true>
     <cfset this.summary = "">
     <cfset this.about = "">
@@ -39,6 +39,8 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.logo_invoice = "">
     <cfset this.object_record = "">
     
+	<cfset this.owner = "">
+	
     <cfset this.written = false>
 
 
@@ -122,7 +124,10 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfelse>
       		<cfset this.WriteAsNewRecord()>
     	</cfif>
+	
     	<cfmodule template="/authentication/Sites/orms_do.cfm" id="#this.r_pk#">
+		<cfset this.object_record = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Site", this.r_pk)>
+		
         <cfset this.written = true>
   	</cffunction>
     
@@ -190,7 +195,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         	SELECT SiteID FROM sites WHERE conf_id='#this.om_uuid#'
         </cfquery>
         
-        <cfset this.r_pk = gwanr.SiteID>               
+        <cfset this.r_pk = gwanr.SiteID>     
+		
+		
 	</cffunction>
     
     <cffunction name="Create" access="public" output="no" returntype="OpenHorizon.Identity.Site">
@@ -202,6 +209,13 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         	SELECT id FROM industries WHERE industry_name='#industry#'
         </cfquery>
         
+		<cfif IsDefined("session.userid")>
+			<cfset this.admin_id = session.userid>
+			<cfset this.owner = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.admin_id)>
+		<cfelse>
+			<cfset this.admin_id = 1>
+		</cfif>
+		
         <cfset this.site_name = site_name>
         <cfset this.industry = get_industry.id>
         <cfset this.salestax_rate = salestax_rate>

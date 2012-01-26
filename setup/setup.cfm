@@ -58,7 +58,7 @@
 </cfif>
 <cfset staging = root_path & path_delim & "orms_staging">
 <cfset storage_path = root_path & path_delim & "prefiniti_cms">
-<cfset storage_url = base_url & "prefiniti_cms">
+<cfset storage_url = base_url & "prefiniti_cms/">
 <body>
 
 	<div class="setup_box">

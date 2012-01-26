@@ -48,6 +48,8 @@
         </td>
         </tr>
         </table>
+		
+		
        
         <cfif o.sidebar_path NEQ "">
         	<cfmodule template="#o.sidebar_path#" orms_id="#o.r_id#">

@@ -108,7 +108,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfif NOT this.written>      	
       		<cfset this.WriteAsNewRecord()>
     	</cfif>
-    	<cfmodule template="/authentication/Sites/orms_do.cfm" id="#this.r_pk#">
+    	<cfmodule template="/authentication/Sites/orms_do.cfm" id="#this.site.r_pk#">
+		<cfset ObjRec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").GetByTypeAndPK("Site", this.site.r_pk)>
+		<cfset ObjRec.Subscribe(this.user)>
         <cfset this.written = true>
   	</cffunction>
     

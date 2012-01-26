@@ -108,7 +108,30 @@
                     #this.r_longitude#,
                     #this.r_ask_location#,
                     #this.r_has_location#)
-			</cfquery>					
+			</cfquery>			
+			      
+			<cftry>
+				<cfset SEObject = this>
+				<cfset SEUser = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.r_owner)>
+				<cfset this.Subscribe(SEUser)>			      			
+				<cfset SEName = "Created this #this.r_type#">
+				<cfset SECopy = 'Visit <a href="#this.URLBase#Prefiniti.cfm?View=#SEUser.ObjectRecord().r_id#">#SEUser.ObjectRecord().r_name#''''s profile</a>'>
+				
+				<cfset ObjEvent = CreateObject("component", "OpenHorizon.Storage.ObjectEvent").Create(SEObject, SEUser, SEName, SECopy)>
+				<cfset ObjEvent.Save()>
+				
+				<cfset UObject = SEUser.ObjectRecord()>
+				<cfset UUser = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.r_owner)>
+				<cfset UName = "Created a new #this.r_type#">
+				<cfset UCopy = 'Open the <a href="#this.URLBase#Prefiniti.cfm?View=#this.r_id#">#this.r_name#</a> #this.r_type#'>
+				
+				<cfset UserEvent = CreateObject("component", "OpenHorizon.Storage.ObjectEvent").Create(UObject, UUser, UName, UCopy)>
+				<cfset UserEvent.Save()>	
+				
+				<cfcatch type="any">	
+				
+				</cfcatch>
+			</cftry>
 		<cfelse>
 			<cfset this.r_id = existsp.id>
 			<cfquery name="UpdateORMSRecord" datasource="#this.BaseDatasource#">
@@ -428,6 +451,10 @@
 			<cfreturn true>
 		</cfif>
 		
+		<cfif this.IsPeer(user_id, "Friend")>
+			<cfreturn true>
+		</cfif>
+		
 		<cfif this.r_type EQ "User Account">
 			<cfquery name="CheckSearch" datasource="#this.BaseDatasource#">
 				SELECT allowSearch FROM users WHERE id=#this.r_pk#
@@ -457,6 +484,10 @@
 		</cfif>
 		
 		<cfif this.IsPeer(user_id, "Employee")>
+			<cfreturn true>
+		</cfif>
+		
+		<cfif this.IsPeer(user_id, "Friend")>
 			<cfreturn true>
 		</cfif>
 		
@@ -653,5 +684,29 @@
         
         <cfreturn #ret_val#>
     </cffunction>	
+	
+	<cffunction name="Subscribe" access="public" returntype="void" output="no">
+		<cfargument name="SubUser" type="OpenHorizon.Identity.User" required="yes">
+		
+		<cfquery name="qrySubscribe" datasource="#this.BaseDatasource#">
+			INSERT INTO	orms_subscriptions
+						(target_uuid,
+						user_id)
+			VALUES
+						('#this.r_id#',
+						#SubUser.r_pk#)
+		</cfquery>								
+	</cffunction>
+	
+	<cffunction name="Unsubscribe" access="public" returntype="void" output="no">
+		<cfargument name="UnSubUser" type="OpenHorizon.Identity.User" required="yes">
+		
+		<cfquery name="qryUnsubscribe" datasource="#this.BaseDatasource#">
+			DELETE FROM orms_subscriptions
+			WHERE		target_uuid='#this.r_id#'
+			AND			user_id=#UnSubUser.r_pk#
+		</cfquery>
+	</cffunction>
+	
 
 </cfcomponent>

@@ -26,9 +26,9 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfset evnt.Create(obj, session.user, "Posted a comment", url.comment)>
 <cfset evnt.Save()>
 
-<cfset events = obj.Events(1, 20)>
+<!--- <cfset events = obj.Events(1, 20)>
 
 <cfloop array="#events#" index="e">
 	<cfmodule template="/OpenHorizon/Storage/EventViews/Feed.cfm" r_pk="#e.r_pk#">
 	<hr style="width:100%; border:0; height:1px; background-color:#c0c0c0; color:#c0c0c0;" />
-</cfloop>
+</cfloop> --->

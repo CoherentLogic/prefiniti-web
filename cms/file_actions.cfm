@@ -29,7 +29,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfif o.IsOwner(session.user.r_pk)>
 	<a class="button" onclick="ORMSDeleteFile('#url.orms_id#', '#url.file_uuid#');" href="####"><span>Delete</span></a>
 </cfif>
-<cfif f.mime_type EQ "image" AND o.IsOwner(session.user.r_pk)>
+<cfif f.mime_type EQ "image" AND o.CanWrite(session.user.r_pk)>
 	<a class="button" href="####" onclick="ORMSSetThumbnail('#url.orms_id#', '#url.file_uuid#')"><span>Set as Default</span></a>
 </cfif>
 </cfoutput>
