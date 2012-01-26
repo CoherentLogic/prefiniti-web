@@ -314,7 +314,12 @@ function AjaxSubmitForm(formRef, postTarget, targetDiv, onLoadEventHandler)
 function AjaxRefreshTarget()
 {
 	//alert(lastLoadedURL);
-	AjaxLoadPageToDiv('tcTarget', lastLoadedURL);
+	if (lastLoadedURL == undefined) {
+		window.location.reload();
+	}
+	else {
+		AjaxLoadPageToDiv('tcTarget', lastLoadedURL);
+	}
 }
 
 

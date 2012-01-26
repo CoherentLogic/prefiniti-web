@@ -390,4 +390,29 @@ function handleFeedReceiveEvent()
 	}
 }
 
+function ORMSSubscribe(OID, UserID)
+{
+	var url = '/orms/subscription.cfm?action=subscribe&om_uuid=' + escape(OID) + '&user_id=' + escape(UserID);
+	
+	var orc = function () {
+		AjaxRefreshTarget();	
+		
+	}
+	
+	AjaxLoadPageToDiv('dev-null', url, orc);
+}
+
+function ORMSUnSubscribe(OID, UserID)
+{
+	var url = '/orms/subscription.cfm?action=unsubscribe&om_uuid=' + escape(OID) + '&user_id=' + escape(UserID);
+	
+	var orc = function () {
+		AjaxRefreshTarget();	
+		
+	}
+	
+	AjaxLoadPageToDiv('dev-null', url, orc);
+}
+
+
 

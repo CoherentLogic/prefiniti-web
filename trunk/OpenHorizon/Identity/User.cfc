@@ -396,11 +396,11 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
             
             <p>Your Prefiniti account has been created. Please visit the link below to confirm your new account.</p>            
             
-            <a href="http://prefiniti15.prefiniti.com/homeres/confirm_account.cfm?om_uuid=#this.om_uuid#">Confirm My Account</a>
+            <a href="#this.URLBase#homeres/confirm_account.cfm?om_uuid=#this.om_uuid#">Confirm My Account</a>
             
             <p>Otherwise, copy the following text to your browser's URL bar:</p>
             
-            <pre>http://prefiniti15.prefiniti.com/homeres/confirm_account.cfm?om_uuid=#this.om_uuid#</pre>
+            <pre>#this.URLBase#homeres/confirm_account.cfm?om_uuid=#this.om_uuid#</pre>
             
             <p>You will need <a href="http://www.mozilla.com/en-US/firefox/">Mozilla Firefox<a/>, <a href="http://www.google.com/chrome">Google Chrome</a>, or <a href="http://www.apple.com/safari/">Apple Safari</a> to use Prefiniti. We do not support Microsoft Internet Explorer at this time.</p>
         </cfmail>
@@ -506,6 +506,20 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     	<cfreturn #this.object_record#>
     </cffunction>
     
+	<cffunction name="IsSubscribed" access="public" returntype="boolean" output="no">
+		<cfargument name="OID" type="OpenHorizon.Storage.ObjectRecord" required="yes">
+		
+		<cfquery name="qryIsSubscribed" datasource="#this.BaseDatasource#">
+			SELECT user_id FROM orms_subscriptions WHERE target_uuid='#OID.r_id#' AND user_id=#this.r_pk#
+		</cfquery>
+		
+		<cfif qryIsSubscribed.RecordCount GT 0>
+			<cfreturn true>
+		<cfelse>
+			<cfreturn false>
+		</cfif>
+	</cffunction>
+	
     <cffunction name="SubscriptionsWithinRadius" access="public" returntype="array" output="no">
     	<cfargument name="latitude" type="numeric" required="yes">
         <cfargument name="longitude" type="numeric" required="yes">

@@ -20,11 +20,11 @@ You should have received a copy of the GNU General Public License
 along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 --->
-<cfquery name="getSites" datasource="sites">
+<cfquery name="getSites" datasource="#session.Framework.BaseDatasource#">
 	SELECT * FROM site_associations WHERE id=#form.siteAssociation2#
 </cfquery>
 
-<cfquery name="updateLastSite" datasource="webwarecl">
+<cfquery name="updateLastSite" datasource="#session.Framework.BaseDatasource#">
 	UPDATE users SET last_site_id=#form.siteAssociation2# WHERE id=#session.userid# 
 </cfquery>    
 
@@ -51,7 +51,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 
 
 <cfif session.site.enabled>
-	<cflocation url="/Prefiniti.cfm" addtoken="no">
+	<cflocation url="/Prefiniti.cfm?View=#session.Site.ObjectRecord().r_id#" addtoken="no">
 <cfelse>
 	<center>
     <div align="center" style="margin:30px; padding:30px; width:300px; border:1px solid #EFEFEF;">

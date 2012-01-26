@@ -15,7 +15,7 @@
     <div id="home_container">
     	<div id="home_sidebar">
 			
-		<cfdump var="#session.framework#">
+		<!--- <cfdump var="#session.framework#"> --->
         </div>
         <div id="home_content">     
 			  	            

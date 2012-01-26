@@ -5,7 +5,7 @@
     <cfargument name="user_id" type="numeric" required="yes">
     <cfargument name="method" type="numeric" required="yes">
     
-    <cfquery name="nts_exists" datasource="webwarecl">
+    <cfquery name="nts_exists" datasource="#session.framework.basedatasource#">
     	SELECT * FROM notification_entries 
         WHERE 	notification_id=#notification_id#
         AND 	user_id=#user_id#
@@ -13,7 +13,7 @@
 	</cfquery>
     
     <cfif nts_exists.RecordCount EQ 0>
-    	<cfquery name="nts_write" datasource="webwarecl">
+    	<cfquery name="nts_write" datasource="#session.framework.basedatasource#">
         	INSERT INTO notification_entries
             	(notification_id,
                 user_id,
@@ -30,7 +30,7 @@
 
 <cffunction name="ntAllTypes" returntype="query">
 	
-    <cfquery name="ntat" datasource="webwarecl">
+    <cfquery name="ntat" datasource="#session.framework.basedatasource#">
     	SELECT * FROM notifications ORDER BY n_key
     </cfquery>
     
@@ -41,7 +41,7 @@
 <cffunction name="ntIDByKey" returntype="numeric">
     <cfargument name="notify_key" type="string" required="yes">
         
-    <cfquery name="ntibk" datasource="webwarecl">
+    <cfquery name="ntibk" datasource="#session.framework.basedatasource#">
     	SELECT id FROM notifications WHERE n_key='#notify_key#'
 	</cfquery>
     
@@ -52,7 +52,7 @@
 	<cfargument name="user_id" type="numeric" required="yes">
     <cfargument name="event_id" type="numeric" required="yes">
     
-    <cfquery name="ntum" datasource="webwarecl">
+    <cfquery name="ntum" datasource="#session.framework.basedatasource#">
     	SELECT * FROM notification_entries 
         WHERE 	user_id=#user_id#
         AND		notification_id=#event_id#
@@ -96,11 +96,11 @@
 	</cfif>
 	
     
-    <cfquery name="ntn_contact" datasource="webwarecl">
+    <cfquery name="ntn_contact" datasource="#session.framework.basedatasource#">
     	SELECT email, smsNumber FROM users WHERE id=#user_id#
 	</cfquery>        
     
-    <cfquery name="ntn_writenotifylog" datasource="webwarecl">
+    <cfquery name="ntn_writenotifylog" datasource="#session.framework.basedatasource#">
 		INSERT INTO notification_log
 			(user_id,
 			event_key,
@@ -134,7 +134,7 @@
 	<cfset event_id=ntIDByKey(event_key)>
     <cfset methods=ntUserMethods(user_id, event_id)>
     
-    <cfquery name="ntn_eventname" datasource="webwarecl">
+    <cfquery name="ntn_eventname" datasource="#session.framework.basedatasource#">
     	SELECT description FROM notifications WHERE id=#event_id#
 	</cfquery>
     <cfset event_name="#ntn_eventname.description#">        
@@ -144,7 +144,7 @@
     	<cfswitch expression="#method#">
         	<cfcase value="0">		<!--Prefiniti Mail-->
             
-            	<cfquery name="ntn_write_message" datasource="webwarecl">
+            	<cfquery name="ntn_write_message" datasource="#session.framework.basedatasource#">
                     INSERT INTO messageInbox 
                         (fromuser,
                         touser,
@@ -230,7 +230,7 @@
     
     
     <cfoutput query="gbe">
-    	<cfquery name="ioe" datasource="webwarecl">
+    	<cfquery name="ioe" datasource="#session.framework.basedatasource#">
         	INSERT INTO notifications
             	(n_key,
                 description)
@@ -251,7 +251,7 @@
 	<cfparam name="event_guid" default="">
     <cfset event_guid = CreateUUID()>
     
-    <cfquery name="createScheduledNotification" datasource="webwarecl">
+    <cfquery name="createScheduledNotification" datasource="#session.framework.basedatasource#">
     	INSERT INTO scheduled_notifications
         	(user_id,
             sender_id,
@@ -270,7 +270,7 @@
             '#event_guid#')
 	</cfquery>                        
     
-    <cfquery name="getSchNot" datasource="webwarecl">
+    <cfquery name="getSchNot" datasource="#session.framework.basedatasource#">
     	SELECT * FROM scheduled_notifications WHERE scheduler_task='#event_guid#'
 	</cfquery>
             
@@ -296,7 +296,7 @@
 	<cfparam name="event_guid" default="">
     <cfset event_guid = CreateUUID()>
     
-    <cfquery name="createScheduledBizNotification" datasource="webwarecl">
+    <cfquery name="createScheduledBizNotification" datasource="#session.framework.basedatasource#">
     	INSERT INTO scheduled_business_notifications
         	(site_id,
             event_key,
@@ -315,7 +315,7 @@
             #concerning_user#)
 	</cfquery>                        
     
-    <cfquery name="getBSchNot" datasource="webwarecl">
+    <cfquery name="getBSchNot" datasource="#session.framework.basedatasource#">
     	SELECT * FROM scheduled_business_notifications WHERE scheduler_task='#event_guid#'
 	</cfquery>
             

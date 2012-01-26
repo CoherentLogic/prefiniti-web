@@ -89,7 +89,7 @@
 <body>
 	<div id="Container">
     	<div id="Header">
-    	<img src="http://www.prefiniti.com/graphics/prenew-small.png" />
+    	<img src="#session.framework.URLBase#graphics/prenew-small.png" />
         </div>
         <div id="Content">
         	<cfset event = CreateObject("component", "OpenHorizon.Storage.ObjectEvent").OpenByPK(attributes.r_pk)>
@@ -111,7 +111,7 @@
                         </cfif>
                         
                         <div style="border:1px solid ##c0c0c0;background-color:##efefef; padding:8px;">
-                        	<a href="http://www.prefiniti.com/Prefiniti.cfm?View=#event.object_record.r_id#">View this #event.object_record.r_type#</a>
+                        	<a href="#session.framework.URLBase#Prefiniti.cfm?View=#event.object_record.r_id#">View this #event.object_record.r_type#</a>
                         </div>
                         
                         <span style="font-size:9px; color:##999999;">Posted #DateFormat(event.event_date, "long")# #TimeFormat(event.event_date, "h:mm tt")#</span>

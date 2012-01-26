@@ -23,6 +23,7 @@
 <cfset new_site.Create(Form.name, "Other/Not Selected", 0)>
 <cfset new_site.Save()>
 
+
 <cfset PAF.SetConfig("Instance", "mainsite", "#new_site.r_pk#")>
 
 

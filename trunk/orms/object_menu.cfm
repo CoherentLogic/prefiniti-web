@@ -5,6 +5,7 @@
 <cfset sections = orms_rec.GetSections()>
 <cfset createObjectLink = orms_rec.GetCreator(orms_rec.r_type)>
 <cfset g_friends = session.user.Friends()>
+<cfset subscriptionLink = "/orms/subscription.cfm?target_uuid=" & orms_rec.r_id>
 
 <cfif session.active_membership.membership_type EQ 'Employee'>
 	<cfset g_employees = session.active_membership.site.Employees()>
@@ -63,13 +64,11 @@
 		<cfmenuitem display="Sign Out..." image="#img.Silk('door out', 16)#" href="/logoff.cfm" />        
     </cfmenuitem>
     <cfmenuitem display="#session.site.site_name#" image="/graphics/world.png">
-    	<cfset home_url = session.framework.URLBase & "?View=" & session.site.ObjectRecord().r_id>
+    	<cfset home_url = session.framework.URLBase & "Prefiniti.cfm?View=" & session.site.ObjectRecord().r_id>
     	<cfmenuitem display="#session.site.site_name# Home" image="/graphics/house.png" href="#home_url#" />
     </cfmenuitem>
     <cfmenuitem display="#orms_rec.r_type#" image="/graphics/bricks.png">
-    	<cfmenuitem display="Create Another..." image="#img.Silk('page white', 16)#" href="javascript:ORMSDialog('#createObjectLink#');"/>
-        <cfmenuitem display="Subscription..." image="#img.Silk('rss', 16)#" href="javascript:ORMSDialog();" />
-		
+    	<cfmenuitem display="Create Another..." image="#img.Silk('page white', 16)#" href="javascript:ORMSDialog('#createObjectLink#');"/>        
         <cfmenuitem display="Location..." image="#img.Silk('map', 16)#" href="javascript:current_object.ShowLocation();" />
     	
         <cfmenuitem divider />
@@ -80,13 +79,29 @@
         </cfoutput>
     	
     </cfmenuitem>
+	
+	<cfif session.user.IsSubscribed(orms_rec) EQ true>
+		<cfmenuitem display="Subscribed" image="/graphics/newspaper.png">
+			<cfmenuitem display="Unsubscribe" href="javascript:ORMSUnSubscribe('#orms_rec.r_id#', #session.user.r_pk#);"/>
+		</cfmenuitem>
+	<cfelse>
+		<cfmenuitem display="Not Subscribed" image="/graphics/newspaper.png">
+			<cfmenuitem display="Subscribe" href="javascript:ORMSSubscribe('#orms_rec.r_id#', #session.user.r_pk#);"/>
+		</cfmenuitem>
+	</cfif>
     <cfif orms_rec.CanRead(session.user.r_pk)>
         <cfmenuitem display="Files" image="/graphics/disk_multiple.png">
-            <cfmenuitem display="Upload File..." image="#img.Silk('page white get', 16)#" href="javascript:ORMSDialog('/cms/create_file.cfm?target_uuid=#orms_rec.r_id#');"/>
-            <cfmenuitem display="Browse Files..." image="#img.Silk('folder magnify', 16)#" href="javascript:ORMSDialog('/cms/browse.cfm?target_uuid=#orms_rec.r_id#');"/>        
+            <cfif orms_rec.CanWrite(session.user.r_pk)>
+				<cfmenuitem display="Upload File..." image="#img.Silk('page white get', 16)#" href="javascript:ORMSDialog('/cms/create_file.cfm?target_uuid=#orms_rec.r_id#');"/>
+    		</cfif>
+	        <cfmenuitem display="Browse Files..." image="#img.Silk('folder magnify', 16)#" href="javascript:ORMSDialog('/cms/browse.cfm?target_uuid=#orms_rec.r_id#');"/>        
         </cfmenuitem>  
     </cfif>
-    
+	<cfif session.framework.InstanceMode EQ "Development">
+		<cfmenuitem display="Debugging Tools" image="/graphics/bug.png">
+			<cfmenuitem display="Session Dump" href="javascript:AjaxLoadPageToDiv('tcTarget', '/DebuggingTools/SessionDump.cfm');"/>
+		</cfmenuitem>
+    </cfif>
     <!--- <cfmenuitem display="View" image="/graphics/eye.png">
     	<cfmenuitem display=""/>
     </cfmenuitem>
