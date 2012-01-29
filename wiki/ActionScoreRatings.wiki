@@ -1,0 +1,9 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Allows an object's action scores to be weighted based on the object event category to which it is assigned. Used to determine the content value rating of viral posts, within categories.
+
+= Details =
+
+This will allow frivolous memes to be filtered from informative posts.
