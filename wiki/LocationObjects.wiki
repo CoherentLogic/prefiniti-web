@@ -1,0 +1,5 @@
+#summary The location objects for geolocation
+
+= Introduction =
+
+To be promoted from ORMS metadata into actual ORMS objects, so that location data can be related to ORMS objects using the standard ORMS relationship mechanism. This will allow multiple network and physical locations to be attached to any ORMS object based on the location's context.
