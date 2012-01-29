@@ -1,0 +1,5 @@
+#summary Facilitates sharing to multiple ORMS objects
+
+= Introduction =
+
+Contains any number of any type of ORMS objects. Sharing an item with a sharing group will place the shared item on the events page of every object in the group. For instance, sharing a User Account with a sharing group containing an invoice, a project, and a user account will post a link to the shared user account to the events page for the invoice, the project, and the user account.
