@@ -1,0 +1,5 @@
+#summary Part of the content rating system
+
+= Introduction =
+
+Such as entertainment, news, commentary.
