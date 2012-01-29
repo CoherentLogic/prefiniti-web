@@ -1,0 +1,5 @@
+#summary Code called when an action occurs on an ORMS object.
+
+= Introduction =
+
+Functions within an ORMS object called when any action occurs within that object. For instance, an object could run additional code when it is shared, or when another object is shared to it.
