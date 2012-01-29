@@ -1,0 +1,5 @@
+#summary Anything affecting an ORMS object.
+
+= Introduction =
+
+Such as "share" and "copy"; anything affecting an ORMS object.
