@@ -1,0 +1,5 @@
+#summary Part of the content rating system
+
+= Introduction =
+
+Maintains a count of how many times an action has been performed on an ORMS object, such as sharing.
