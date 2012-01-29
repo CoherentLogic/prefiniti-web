@@ -1,0 +1,9 @@
+#summary Used for managing workflow.
+
+= Introduction =
+
+A signed action poses a question from one ORMS object to another, the response to which indicates whether or not the action occurs. Allows for generic request/approval cycles. For instance, a user's timesheet object could request a signed action from a manager's user account object, indicating that the timesheet has been approved.
+
+= Details =
+
+Signed actions are to be implemented as an object event (the question) to be posted to the recipient object's event feed. A positive response to the question in the object event generates a "signature" relationship with a timestamp between the two objects.
