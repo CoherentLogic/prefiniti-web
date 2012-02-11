@@ -1,6 +1,6 @@
 <div style="height:100%;position:relative;">
 	<cfset orms_rec = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(URL.orms_id)>
-    <cfmodule template="/orms/dialog_header.cfm" icon="/graphics/navicons/locations.png" caption="Locate #orms_rec.r_type#">
+    <cfmodule template="/orms/dialog_header.cfm" icon="/graphics/navicons/locations.png" caption="Set Static Location">
     
     
     <div style="padding-left:30px; margin-top:20px; font-size:14px;">

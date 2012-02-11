@@ -538,7 +538,7 @@ CREATE TABLE `orms_creators` (
   `db_dsn` varchar(255) NOT NULL DEFAULT 'webwarecl',
   `updater` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `orms_creators`
@@ -546,8 +546,11 @@ CREATE TABLE `orms_creators` (
 
 /*!40000 ALTER TABLE `orms_creators` DISABLE KEYS */;
 INSERT INTO `orms_creators` (`id`,`r_type`,`file_path`,`icon`,`r_creatable`,`sidebar`,`db_table`,`db_pkfield`,`db_dsn`,`updater`) VALUES 
- (1,'Site','/authentication/Sites/creator/create_site.cfm','',1,'','sites','SiteID','sites','/authentication/Sites/orms_do.cfm'),
- (2,'User Account','/authentication/Users/creator/create_user.cfm','',1,'/socialnet/sections/sidebar.cfm','users','id','webwarecl','/authentication/Users/orms_do.cfm');
+ (1,'Instance','','',0,'','','','',''),
+ (2,'Site','/authentication/Sites/creator/create_site.cfm','',1,'','sites','SiteID','prefiniti','/authentication/Sites/orms_do.cfm'),
+ (3,'User Account','/authentication/Users/creator/create_user.cfm','',1,'/socialnet/sections/sidebar.cfm','users','id','prefiniti','/authentication/Users/orms_do.cfm'),
+ (4,'Sharing Group','/OpenHorizon/Objects/SharingGroup/create.cfm','',1,'/OpenHorizon/Objects/SharingGroup/sidebar.cfm','','','',''),
+ (5,'Mobile Device','/OpenHorizon/Objects/MobileDevice/create.cfm','',1,'/OpenHorizon/Objects/MobileDevice/sidebar.cfm','','','','');
 /*!40000 ALTER TABLE `orms_creators` ENABLE KEYS */;
 
 
@@ -868,7 +871,6 @@ CREATE TABLE `web_resource_ratings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-
 --
 -- Definition of table `web_resources`
 --
@@ -882,6 +884,40 @@ CREATE TABLE `web_resources` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+
+--
+-- Definition of table `mobile_devices`;
+--
+
+DROP TABLE IF EXISTS `mobile_devices`;
+CREATE TABLE `mobile_devices` (
+	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	`om_uuid` varchar(255) NOT NULL,
+	`phone_number` varchar(255) NOT NULL,
+	`provider` bigint(20) NOT NULL,
+	`owner` bigint(20) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+--
+-- Definition of table `gis_locations`
+--
+DROP TABLE IF EXISTS `gis_locations`;
+CREATE TABLE `gis_locations` (
+	`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	`device_uuid` varchar(255) NOT NULL,
+	`provider` varchar(255),
+	`latitude` double,
+	`longitude` double,
+	`elevation` double,
+	`bearing` double,
+	`speed` double,
+	`accuracy` double,
+	`comment` varchar(255),
+	`fixtime` datetime,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 --

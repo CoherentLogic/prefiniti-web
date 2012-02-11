@@ -136,6 +136,23 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     </div>	
 </div>
 
+<cfif session.basket NEQ "">
+	<cfset BasketObj = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(session.basket)>
+	<cfset BrowseObj = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(CurrentObject)>
+	<div style="font-size:12px;padding:5px;color:white;-moz-border-radius:5px;-webkit-border-radius:5px;position:absolute;bottom:8px;right:8px;width:500px;border:1px solid #c0c0c0;background-color:#333333;opacity:0.6;">
+		<span style="font-size:14px;font-weight:bold;"><img src="/graphics/basket.png" align="absmiddle"> Basket</span><br>
+		<hr>
+		<p>You are carrying the <cfoutput><strong>#BasketObj.r_name# #BasketObj.r_type#</strong></cfoutput>. You can now browse to any other item to share or copy this <cfoutput>#LCase(BasketObj.r_type)#</cfoutput>.</p>
+		<blockquote>
+		<label><input type="checkbox">Remove from basket</label><br>
+		<label><input type="checkbox">Add this <cfoutput>#LCase(BasketObj.r_type)#</cfoutput> to sharing group <select size="1"><option value="">Friends</option></select></label><br>
+		</blockquote>
+		<cfoutput>
+		<input type="button" value="Copy to #BrowseObj.r_name#"><input type="button" value="Share with #BrowseObj.r_name#">
+		</cfoutput>
+	</div>
+</cfif>
+
 <div style="display:none;">
 <form name="site_selection" action="/siteSelectSubmit2.cfm" method="post">
     <input type="hidden" name="siteAssociation2" id="assoc" >
@@ -156,7 +173,14 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 			ORMSPrepareFeed('#CurrentObject#', 0);
 		</cfif>			
 	</cfif>
+	
+	try {
+		ObjectInit('#CurrentObject#');
+	} catch (e) {
+		//alert('Could not initialize ORMS object #CurrentObject# ' + e);	
+	}
 </script>
 </cfoutput>
+
 
 

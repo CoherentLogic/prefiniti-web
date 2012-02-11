@@ -209,6 +209,19 @@ function ORMSDeleteFile(orms_id, file_uuid)
 	
 }
 
+function ORMSPickUp(OID) 
+{
+	var url = '/orms/pickup_object.cfm?om_uuid=' + escape(OID);
+	
+	var OnRequestCompleted = new function () {
+		
+		AjaxRefreshTarget();		
+	}
+	
+	AjaxLoadPageToDiv('dev-null', url, OnRequestCompleted);
+
+}
+
 function ORMSPlaySound(URL, id)
 {
 	var sound_id = 'orms_sound_' + id;
@@ -414,5 +427,34 @@ function ORMSUnSubscribe(OID, UserID)
 	AjaxLoadPageToDiv('dev-null', url, orc);
 }
 
+function ORMSShare(source_uuid, target_uuid)
+{
+	var url = '/orms/share.cfm?source_uuid=' + escape(source_uuid) + '&target_uuid=' + escape(target_uuid);
+	
+	var orc = function () {
+		AjaxRefreshTarget();
+	}
+	
+	AjaxLoadPageToDiv('dev-null', url, orc);
+}
 
 
+
+
+function CreateMobileDevice()
+{
+	var onLoadEventHandler = function () {		
+		AjaxLoadPageToDiv('create_mobile_device_buttons', '/orms/finish_button.cfm');		
+	}
+	
+	AjaxSubmitForm(AjaxGetElementReference('create_mobile_device'), '/OpenHorizon/Objects/MobileDevice/create_submit.cfm', 'mobile_device_form', onLoadEventHandler);	
+}
+
+function LinkMobileDevice()
+{
+	var onLoadEventHandler = function () {		
+		AjaxLoadPageToDiv('link_mobile_buttons', '/orms/finish_button.cfm');		
+	}
+	
+	AjaxSubmitForm(AjaxGetElementReference('link_mobile_device'), '/orms/link_to_mobile_submit.cfm', 'link_mobile_form', onLoadEventHandler);	
+}

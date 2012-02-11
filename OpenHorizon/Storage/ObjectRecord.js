@@ -54,7 +54,10 @@ function ObjectRecord(id, on_ready)
 	this.asklocation = false;		
 	this.haslocation = false;
 	
+	
+	
 	this.url = '/OpenHorizon/Storage/ObjectRecord.cfm?sk=' + escape(session_key) + '&orms_id=' + escape(this.r_id);	
+	//alert(this.url);
 	this.ajax.open("GET", this.url, false);
 	this.ajax.send(null);
 		

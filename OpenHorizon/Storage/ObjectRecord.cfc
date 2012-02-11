@@ -113,6 +113,12 @@
 			<cftry>
 				<cfset SEObject = this>
 				<cfset SEUser = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.r_owner)>
+ 				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/View")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Edit")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Delete")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Share")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Copy")>
+				
 				<cfset this.Subscribe(SEUser)>			      			
 				<cfset SEName = "Created this #this.r_type#">
 				<cfset SECopy = 'Visit <a href="#this.URLBase#Prefiniti.cfm?View=#SEUser.ObjectRecord().r_id#">#SEUser.ObjectRecord().r_name#''''s profile</a>'>
@@ -155,8 +161,7 @@
 			</cfquery>
 		</cfif>		
 		
-		<cfset sync_url="http://picasso.coherent-logic.com:8500/sync/resource.cfm?om_uuid=#this.r_id#">				
-		<cfhttp url="#sync_url#">						
+							
 		
 		<cfreturn #this#>
 	</cffunction>
@@ -209,7 +214,35 @@
                     #this.r_longitude#,
                     #this.r_ask_location#,
                     #this.r_has_location#)
-			</cfquery>					
+			</cfquery>			
+			<cftry>
+				<cfset SEObject = this>
+				<cfset SEUser = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.r_owner)>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/View")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Edit")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Delete")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Share")>
+				<cfset SEUser.ObjectRecord().Relate(this.r_id, "Permission/Copy")>
+				<cfset this.Subscribe(SEUser)>			      			
+
+				<cfset SEName = "Created this #this.r_type#">
+				<cfset SECopy = 'Visit <a href="#this.URLBase#Prefiniti.cfm?View=#SEUser.ObjectRecord().r_id#">#SEUser.ObjectRecord().r_name#''''s profile</a>'>
+				
+				<cfset ObjEvent = CreateObject("component", "OpenHorizon.Storage.ObjectEvent").Create(SEObject, SEUser, SEName, SECopy)>
+				<cfset ObjEvent.Save()>
+				
+				<cfset UObject = SEUser.ObjectRecord()>
+				<cfset UUser = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.r_owner)>
+				<cfset UName = "Created a new #this.r_type#">
+				<cfset UCopy = 'Open the <a href="#this.URLBase#Prefiniti.cfm?View=#this.r_id#">#this.r_name#</a> #this.r_type#'>
+				
+				<cfset UserEvent = CreateObject("component", "OpenHorizon.Storage.ObjectEvent").Create(UObject, UUser, UName, UCopy)>
+				<cfset UserEvent.Save()>	
+				
+				<cfcatch type="any">	
+				
+				</cfcatch>
+			</cftry>		
 		<cfelse>
 			
 			<cfquery name="UpdateORMSRecord" datasource="#this.BaseDatasource#">
