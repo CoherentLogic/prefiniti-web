@@ -46,7 +46,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
   	<cfparam name="session.pd_enhanced" default="0">
     <cfparam name="session.pd_version" default="">
     <cfparam name="session.current_object" default="">
-    
+    <cfparam name="session.basket" default="">
     <!--- next-gen integration --->
     <cfparam name="session.user" default="">
     <cfparam name="session.site" default="">

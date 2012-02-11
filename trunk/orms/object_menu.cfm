@@ -6,6 +6,9 @@
 <cfset createObjectLink = orms_rec.GetCreator(orms_rec.r_type)>
 <cfset g_friends = session.user.Friends()>
 <cfset subscriptionLink = "/orms/subscription.cfm?target_uuid=" & orms_rec.r_id>
+<cfset liveLocLink = "/orms/live_location.cfm?target_uuid=" & orms_rec.r_id>
+<cfset linkToMobile = "/orms/link_to_mobile.cfm?target_uuid=" & orms_rec.r_id>
+<cfset staticLocLink = "/orms/locate_object.cfm?orms_id=" & orms_rec.r_id>
 
 <cfif session.active_membership.membership_type EQ 'Employee'>
 	<cfset g_employees = session.active_membership.site.Employees()>
@@ -13,7 +16,7 @@
 </cfif>    
 
 <cfquery name="ObjectTypes" datasource="#session.framework.BaseDatasource#">
-	SELECT r_type FROM orms_creators ORDER BY r_type
+	SELECT r_type FROM orms_creators WHERE r_creatable=1 ORDER BY r_type
 </cfquery>
 
 <cfquery name="getSites" datasource="#session.framework.basedatasource#">
@@ -63,16 +66,22 @@
         <cfmenuitem divider />
 		<cfmenuitem display="Sign Out..." image="#img.Silk('door out', 16)#" href="/logoff.cfm" />        
     </cfmenuitem>
-    <cfmenuitem display="#session.site.site_name#" image="/graphics/world.png">
+    <cfmenuitem display="#session.site.site_name#" image="#img.Silk('world', 15)#">
     	<cfset home_url = session.framework.URLBase & "Prefiniti.cfm?View=" & session.site.ObjectRecord().r_id>
     	<cfmenuitem display="#session.site.site_name# Home" image="/graphics/house.png" href="#home_url#" />
     </cfmenuitem>
-    <cfmenuitem display="#orms_rec.r_type#" image="/graphics/bricks.png">
-    	<cfmenuitem display="Create Another..." image="#img.Silk('page white', 16)#" href="javascript:ORMSDialog('#createObjectLink#');"/>        
-        <cfmenuitem display="Location..." image="#img.Silk('map', 16)#" href="javascript:current_object.ShowLocation();" />
-    	
+    <cfmenuitem display="#orms_rec.r_type#" image="#img.Silk('bricks', 15)#">
+    	<cfmenuitem display="Pick Up..." href="javascript:ORMSPickUp('#orms_rec.r_id#')" image="#img.Silk('basket add', 15)#" />
+		<cfmenuitem display="Create Another..." image="#img.Silk('page white', 15)#" href="javascript:ORMSDialog('#createObjectLink#');"/>        
+		<cfmenuitem divider />
+        <cfmenuitem display="Display or Set Static Location..." image="#img.Silk('map', 15)#" href="javascript:ORMSDialog('#staticLocLink#');" />
+		<cfmenuitem display="Display Live Location..."  href="javascript:ORMSDialog('#liveLocLink#');"/>
+		<cfmenuitem display="Link to Mobile Device..." image="#img.Silk('phone', 15)#" href="javascript:ORMSDialog('#linkToMobile#');"/>
+		<cfmenuitem divider />
+    	<cfmenuitem display="Permissions..."/>
+		<cfmenuitem display="Relationships..."/>
         <cfmenuitem divider />
-    	<cfmenuitem display="#orms_rec.r_type# Events" image="#img.Silk('newspaper', 16)#" href="javascript:ORMSLoadFeedFull('#attributes.orms_id#');" />
+    	<cfmenuitem display="#orms_rec.r_type# Events" image="#img.Silk('newspaper', 15)#" href="javascript:ORMSLoadFeedFull('#attributes.orms_id#');" />
     	
 		<cfoutput query="sections">
         	<cfmenuitem display="#section_name#" href="javascript:ORMSLoadSection(#orms_rec.r_pk#, '#section_loader#');" />
@@ -92,9 +101,9 @@
     <cfif orms_rec.CanRead(session.user.r_pk)>
         <cfmenuitem display="Files" image="/graphics/disk_multiple.png">
             <cfif orms_rec.CanWrite(session.user.r_pk)>
-				<cfmenuitem display="Upload File..." image="#img.Silk('page white get', 16)#" href="javascript:ORMSDialog('/cms/create_file.cfm?target_uuid=#orms_rec.r_id#');"/>
+				<cfmenuitem display="Upload File..." image="#img.Silk('page white get', 15)#" href="javascript:ORMSDialog('/cms/create_file.cfm?target_uuid=#orms_rec.r_id#');"/>
     		</cfif>
-	        <cfmenuitem display="Browse Files..." image="#img.Silk('folder magnify', 16)#" href="javascript:ORMSDialog('/cms/browse.cfm?target_uuid=#orms_rec.r_id#');"/>        
+	        <cfmenuitem display="Browse Files..." image="#img.Silk('folder magnify', 15)#" href="javascript:ORMSDialog('/cms/browse.cfm?target_uuid=#orms_rec.r_id#');"/>        
         </cfmenuitem>  
     </cfif>
 	<cfif session.framework.InstanceMode EQ "Development">

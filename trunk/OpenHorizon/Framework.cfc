@@ -62,8 +62,10 @@
     
     <cffunction name="Ping" access="public" returntype="void" output="no">
     
-    	<cfset Authenticator = CreateObject("webservice", "http://orms.prefiniti.com/Authentication.cfc?wsdl")>
+    	<!---
+		<cfset Authenticator = CreateObject("webservice", "http://hephaestus-orms.clogic-int.com/Authentication.cfc?wsdl")>
         <cfset Authenticator.Ping(session.authentication_key)>
-    
+    	--->
+	
     </cffunction>
 </cfcomponent>

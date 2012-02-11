@@ -161,6 +161,15 @@
 				</td>
 			</tr>
 			<tr>
+				<td align="right"><strong>Google Maps API Key</strong></td>
+				<td align="left">
+					<cfoutput>					
+					<input type="text" name="maps_api_key"/><br/><br />
+					<a href="http://code.google.com/apis/maps/signup.html" target="_blank">Get your API Key</a>
+					</cfoutput>
+				</td>
+			</tr>
+			<tr>
 				<td>&nbsp;</td>
 				<td align="right" style="padding:5px;">
 					<a href="##" onclick="document.Setup.submit();" class="button"><span>Save Configuration</span></a>

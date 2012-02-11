@@ -31,7 +31,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
     <cfset this.body_copy = "">					<!--- body_copy --->
     <cfset this.file_uuid = "NO FILE">			<!--- file_uuid --->
     <cfset this.orms_file = "">
-    
+    <cfset this.gis_location = "">
     
 	<cfset this.written = false>
 	    

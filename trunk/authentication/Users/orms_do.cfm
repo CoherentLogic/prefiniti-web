@@ -12,7 +12,15 @@
 	SELECT * FROM site_associations WHERE user_id=#attributes.id#
 </cfquery>
 
-<!--- <cfset usr = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(attributes.id)> --->
+<!--- 
+
+	BAD JUJU HERE! DO NOT UNCOMMENT! ORMS RECORD DOES NOT EXIST
+	WHEN THIS SCRIPT IS FIRST CALLED, SO IT WILL FAIL IF THE FOLLOWING 
+	CREATEOBJECT FUNCTION IS LEFT IN!!!!!!!!
+
+<cfset usr = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(attributes.id)> 
+
+--->
 
 
 <cfset rt = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>

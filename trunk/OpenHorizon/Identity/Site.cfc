@@ -24,7 +24,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
 <cfcomponent displayname="site" hint="Represents a Prefiniti site" output="no" extends="OpenHorizon.Framework">
 	<cfset this.r_pk = 0>    
     <cfset this.site_name = "">
-    <cfset this.admin_id = 1>
+    <cfset this.admin_id = 0>
     <cfset this.enabled = true>
     <cfset this.summary = "">
     <cfset this.about = "">
@@ -209,10 +209,19 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         	SELECT id FROM industries WHERE industry_name='#industry#'
         </cfquery>
         
-		<cfif IsDefined("session.userid")>
-			<cfset this.admin_id = session.userid>
-			<cfset this.owner = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.admin_id)>
-		<cfelse>
+		<cftry>
+			<cfif IsDefined("session.userid")>
+				<cfset this.admin_id = session.userid>
+				<cfset this.owner = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(this.admin_id)>
+			<cfelse>
+				<cfset this.admin_id = 1>
+			</cfif>
+			<cfcatch type="any">
+			
+			</cfcatch>
+		</cftry>
+		
+		<cfif this.admin_id EQ "">
 			<cfset this.admin_id = 1>
 		</cfif>
 		

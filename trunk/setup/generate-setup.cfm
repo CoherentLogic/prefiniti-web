@@ -18,7 +18,7 @@
 <cfset PAF.SetConfig("Instance", "notification_sender", "NOT CONFIGURED")>
 <cfset PAF.SetConfig("Instance", "mainsite", "NOT CONFIGURED")>
 <cfset PAF.SetConfig("Instance", "first_user", "NOT CONFIGURED")>
-
+<cfset PAF.SetConfig("Instance", "maps_api_key", Form.maps_api_key)>
 <cfset new_site = CreateObject("component", "OpenHorizon.Identity.Site")>
 <cfset new_site.Create(Form.name, "Other/Not Selected", 0)>
 <cfset new_site.Save()>
