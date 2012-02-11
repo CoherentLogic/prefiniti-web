@@ -699,6 +699,23 @@
         
 
 	</cffunction>	
+	
+	<cffunction name="LinkedDevices" returntype="array" access="public" output="no">
+		
+		<cfset retVal = ArrayNew(1)>
+		
+		<cfquery name="ld" datasource="#this.BaseDatasource#">
+			SELECT * FROM orms_relations WHERE rel_source='#this.r_id#' AND rel_type='LocationProvider'
+		</cfquery>				
+		
+		<cfoutput query="ld">
+			<cfset t = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(rel_target)>
+			<cfset ArrayAppend(retVal, t)>
+		</cfoutput>
+		
+		<cfreturn retVal>
+		
+	</cffunction>
     
     <cffunction name="Events" access="public" returntype="array" output="no">
     	<cfargument name="starting_with" type="numeric" required="yes">

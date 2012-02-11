@@ -458,3 +458,11 @@ function LinkMobileDevice()
 	
 	AjaxSubmitForm(AjaxGetElementReference('link_mobile_device'), '/orms/link_to_mobile_submit.cfm', 'link_mobile_form', onLoadEventHandler);	
 }
+
+function LoadLiveLocation(orms_id) 
+{
+	var url = '/orms/live_location_iframe.cfm?orms_id=' + escape(orms_id) + '&device_id=' + escape(GetSelectedValue('loc_prov'));
+	
+	var iframe = document.getElementById('live_location');
+	iframe.src = url;	
+}

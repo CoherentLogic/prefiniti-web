@@ -7,12 +7,15 @@
 	<cfset this.object_record = "">
 	<cfset this.owner = 0>
 	<cfset this.written = false>
+	<cfset this.device_name = "">
 	
 	<cffunction name="Create" access="public" returntype="OpenHorizon.Objects.MobileDevice" output="no">
+		<cfargument name="device_name" type="string" required="yes">
 		<cfargument name="phone_number" type="string" required="yes">
 		<cfargument name="provider" type="numeric" required="yes">
 		<cfargument name="owner" type="numeric" required="yes">
 		
+		<cfset this.device_name = device_name>
 		<cfset this.provider = provider>
 		<cfset this.phone_number = phone_number>
 		<cfset this.owner = owner>
@@ -100,7 +103,7 @@
 		<cfset rtype = "Mobile Device">
 		<cfset rowner = this.owner>
 		<cfset rsite = session.site.r_pk>
-		<cfset rname = this.phone_number>		
+		<cfset rname = this.device_name>		
 		<cfset rthumb = "/graphics/navicons/mobile_device.png">
 		<cfset redit = "">
 		<cfset rview = "">
@@ -174,7 +177,30 @@
 	</cffunction>
 	
 	<cffunction name="GetLocation" access="public" returntype="OpenHorizon.Objects.GISLocation" output="no">
-	
+		<cfquery name="gl" datasource="#this.BaseDatasource#" maxrows="1">
+			SELECT * FROM gis_locations WHERE device_uuid='#this.r_id#' ORDER BY fixtime DESC
+		</cfquery>
+		
+		<cfset gLoc = CreateObject("component", "OpenHorizon.Objects.GISLocation")>
+		
+		<!---
+		<cffunction name="Create" access="public" returntype="OpenHorizon.Objects.GISLocation" output="no">
+		<cfargument name="provider" type="string" required="yes">
+		<cfargument name="device_uuid" typ2e="string" required="yes">
+		<cfargument name="comment" type="string" required="yes">
+		<cfargument name="latitude" type="numeric" required="yes">
+		<cfargument name="longitude" type="numeric" required="yes">
+		<cfargument name="elevation" type="numeric" required="yes">
+		<cfargument name="bearing" type="numeric" required="yes">
+		<cfargument name="speed" type="numeric" required="yes">
+		<cfargument name="accuracy" type="numeric" required="yes">
+		--->
+		<cfoutput query="gl">
+			<cfset gLoc.Create(provider, device_uuid, comment, latitude, longitude, elevation, bearing, speed, accuracy)>
+			<cfset gLoc.fixtime = fixtime>
+		</cfoutput>
+		
+		<cfreturn gLoc>
 	</cffunction>
 	
 	<cffunction name="LocationHistory" access="public" returntype="array" output="no">

@@ -6,7 +6,7 @@
 <cfset createObjectLink = orms_rec.GetCreator(orms_rec.r_type)>
 <cfset g_friends = session.user.Friends()>
 <cfset subscriptionLink = "/orms/subscription.cfm?target_uuid=" & orms_rec.r_id>
-<cfset liveLocLink = "/orms/live_location.cfm?target_uuid=" & orms_rec.r_id>
+<cfset liveLocLink = "/orms/live_location.cfm?orms_id=" & orms_rec.r_id>
 <cfset linkToMobile = "/orms/link_to_mobile.cfm?target_uuid=" & orms_rec.r_id>
 <cfset staticLocLink = "/orms/locate_object.cfm?orms_id=" & orms_rec.r_id>
 

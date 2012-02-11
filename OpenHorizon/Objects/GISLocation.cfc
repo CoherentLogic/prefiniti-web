@@ -9,7 +9,7 @@
 	<cfset this.speed = 0>
 	<cfset this.accuracy = 0>
 	<cfset this.comment = "">
-	
+	<cfset this.fixtime = "">
 	
 	<cffunction name="Create" access="public" returntype="OpenHorizon.Objects.GISLocation" output="no">
 		<cfargument name="provider" type="string" required="yes">
@@ -21,7 +21,7 @@
 		<cfargument name="bearing" type="numeric" required="yes">
 		<cfargument name="speed" type="numeric" required="yes">
 		<cfargument name="accuracy" type="numeric" required="yes">
-		
+
 		<cfset this.provider = provider>
 		<cfset this.device_uuid = device_uuid>
 		<cfset this.comment = comment>
