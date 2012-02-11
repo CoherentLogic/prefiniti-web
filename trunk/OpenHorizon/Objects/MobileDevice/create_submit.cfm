@@ -1,6 +1,6 @@
 
 <cfset dev = CreateObject("component", "OpenHorizon.Objects.MobileDevice")>
-<cfset dev.Create(url.phone_number, url.carrier, session.user.r_pk)>
+<cfset dev.Create(url.device_name, url.phone_number, url.carrier, session.user.r_pk)>
 <cfset dev.Save()>		
 
 <table width="100%" cellpadding="10" cellspacing="0" class="orms_dialog">

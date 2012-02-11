@@ -11,6 +11,10 @@
 	
 	<table width="100%" cellpadding="10" cellspacing="0" class="orms_dialog">
 	<tr>
+		<td align="right" width="30%"><strong>Device Name</strong></td>
+		<td align="left" width="70%"><input type="text" name="device_name" id="device_name" /></td>	
+	</tr>
+	<tr>
 		<td align="right" width="30%"><strong>Phone Number</strong></td>
 		<td align="left" width="70%"><input type="text" name="phone_number" id="phone_number" /></td>
 	</tr>
