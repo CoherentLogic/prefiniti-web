@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Live Location</title>
+<link rel="stylesheet" type="text/css" href="/css/gecko.css" />
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<cfset location = CreateObject("component", "OpenHorizon.Objects.GISLocation")>
+<cfset location.Open(URL.location_id)>
+	
+<cfoutput>
+	<script type="text/javascript">
+        var map = null;        
+        function locationLoaded()
+        {
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(#location.latitude#, #location.longitude#);
+            var myOptions = {
+              zoom: 17,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"),
+                myOptions);
+                
+            var marker = new google.maps.Marker({
+			  map: map,
+			  position: new google.maps.LatLng(#location.latitude#, #location.longitude#),
+			  title: ''
+			});
+			
+			
+			var circle = new google.maps.Circle({
+			  map: map,
+			  radius: #location.accuracy#,    
+			  fillColor: '##2957A2',
+			  strokeColor: 'red'
+			});
+			circle.bindTo('center', marker, 'position');
+			
+			
+			google.maps.event.addListener(marker, 'click', function() {
+			    var contentString = "Accuracy: #location.accuracy#m<br>";
+			    contentString += "Bearing: #location.bearing#<br>";
+			    contentString += "Speed: #location.speed#<br>";
+			    contentString += "Fix Time: #DateFormat(location.fixtime, 'mm/dd/yyyy')# #TimeFormat(location.fixtime, 'h:mm tt')#";
+  
+			    			 
+			    
+			    var infowindow = new google.maps.InfoWindow();
+			    infowindow.setContent(contentString);
+			    infowindow.setPosition(latlng);
+			    infowindow.open(map);
+			});
+        }
+                     
+    </script>
+</cfoutput>	
+</head>
+
+
+<body onload="locationLoaded();">
+	   			
+	<div id="map_canvas" style="height:230px;width:580px;">
+	        
+    </div>        
+</body>
+</html>
