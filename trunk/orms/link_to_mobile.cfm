@@ -23,7 +23,8 @@
 		<td align="left" width="70%">
         	<select name="mobile_device" id="mobile_device" size="1">
             	<cfoutput query="get_mobiles">
-                	<option value="#om_uuid#">#phone_number#</option>                    
+					<cfset mob_obj = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(om_uuid)>
+                	<option value="#om_uuid#">#mob_obj.r_name#</option>                    
                 </cfoutput>
 			</select>                
         </td>

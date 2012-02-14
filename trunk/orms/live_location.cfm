@@ -4,8 +4,10 @@
     
 	<cfset devices = orms_rec.LinkedDevices()>
 	
+	<cfset initial_url="/orms/live_location_iframe.cfm?orms_id=" & orms_rec.r_id & "&device_id=" & devices[1].r_id>
+	
     
-    <div style="padding-left:30px; margin-top:20px; font-size:14px;">
+    <div style="padding-left:30px; margin-top:5px; font-size:14px;">
     
 		<label>Location Provider:
 			<select name="loc_prov" id="loc_prov" <cfoutput>onchange="LoadLiveLocation('#orms_rec.r_id#')"</cfoutput>>
@@ -17,8 +19,8 @@
 			</select>
 		</label>	
     	<cfoutput>
-    	<iframe frameborder="0" width="580" height="230" name="live_location" id="live_location">
-        	<h1>Please select a location provider from the above list.</h1>
+    	<iframe frameborder="0" src="#initial_url#" width="580" height="230" name="live_location" id="live_location">
+        	
         </iframe>
         </cfoutput>
     

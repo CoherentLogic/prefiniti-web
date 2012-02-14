@@ -148,6 +148,7 @@
 	<cffunction name="SetLocation" access="public" returntype="void" output="no">
 		<cfargument name="location" type="OpenHorizon.Objects.GISLocation" required="yes">
 		
+		<cfset LocationOID = CreateUUID()>
 		
 		<cfquery name="sl" datasource="#this.BaseDatasource#">
 			INSERT INTO gis_locations
@@ -160,7 +161,8 @@
 				speed,
 				accuracy,
 				comment,
-				fixtime)
+				fixtime,
+				om_uuid)
 			VALUES
 				('#location.device_uuid#',
 				'#location.provider#',
@@ -171,8 +173,25 @@
 				#location.speed#,
 				#location.accuracy#,
 				'#location.comment#',
-				#CreateODBCDateTime(Now())#)
-		</cfquery>
+				#CreateODBCDateTime(Now())#,
+				'#LocationOID#')
+		</cfquery>		
+		
+		<cfset objects = this.GetLinkedObjects()>
+		
+		<cfloop array="#objects#" index="current_object">
+			
+			<cfset body_copy = location.comment & '<br/><br/><a class="button" href="javascript:ORMSViewLocation(' & "'" & #LocationOID# & "'" & ');"><span>Show Location</span></a><br/><br/>'>
+			
+			<cfset user = CreateObject("component", "OpenHorizon.Identity.User").OpenByPK(current_object.r_owner)>
+			<cfset event = CreateObject("component", "OpenHorizon.Storage.ObjectEvent")>
+			<cfset event.Create(current_object,
+								user,
+								"checked in",
+								body_copy)>
+			<cfset event.Save()>
+			
+		</cfloop>
 		
 	</cffunction>
 	
@@ -183,18 +202,6 @@
 		
 		<cfset gLoc = CreateObject("component", "OpenHorizon.Objects.GISLocation")>
 		
-		<!---
-		<cffunction name="Create" access="public" returntype="OpenHorizon.Objects.GISLocation" output="no">
-		<cfargument name="provider" type="string" required="yes">
-		<cfargument name="device_uuid" typ2e="string" required="yes">
-		<cfargument name="comment" type="string" required="yes">
-		<cfargument name="latitude" type="numeric" required="yes">
-		<cfargument name="longitude" type="numeric" required="yes">
-		<cfargument name="elevation" type="numeric" required="yes">
-		<cfargument name="bearing" type="numeric" required="yes">
-		<cfargument name="speed" type="numeric" required="yes">
-		<cfargument name="accuracy" type="numeric" required="yes">
-		--->
 		<cfoutput query="gl">
 			<cfset gLoc.Create(provider, device_uuid, comment, latitude, longitude, elevation, bearing, speed, accuracy)>
 			<cfset gLoc.fixtime = fixtime>
@@ -204,6 +211,35 @@
 	</cffunction>
 	
 	<cffunction name="LocationHistory" access="public" returntype="array" output="no">
-
+		
+		<cfquery name="lh" datasource="#this.BaseDatasource#">
+			SELECT * FROM gis_locations WHERE device_uuid='#this.r_id#' ORDER BY fixtime DESC
+		</cfquery>
+		
+		<cfset tmpHistory = ArrayNew(1)>
+		<cfset gLoc = CreateObject("component", "OpenHorizon.Objects.GISLocation")>
+		
+		<cfoutput query="lh">
+			<cfset gLoc.Create(provider, device_uuid, comment, latitude, longitude, elevation, bearing, speed, accuracy)>
+			<cfset gLoc.fixtime = fixtime>
+			<cfset ArrayAppend(tmpHistory, gLoc)>
+		</cfoutput>
+		
+		<cfreturn tmpHistory>
+	</cffunction>
+	
+	<cffunction name="GetLinkedObjects" access="public" returntype="array" output="no">
+		<cfset retVal = ArrayNew(1)>
+		
+		<cfquery name="qryGetLinkedObjects" datasource="#this.BaseDatasource#">
+			SELECT * FROM orms_relations WHERE rel_target='#this.r_id#' AND rel_type='LocationProvider'
+		</cfquery>
+		
+		<cfoutput query="qryGetLinkedObjects">
+			<cfset tmpObj = CreateObject("component", "OpenHorizon.Storage.ObjectRecord").Get(rel_source)>
+			<cfset ArrayAppend(retVal, tmpObj)>
+		</cfoutput>
+		
+		<cfreturn retVal>
 	</cffunction>
 </cfcomponent>

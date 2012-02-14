@@ -94,7 +94,7 @@ along with Prefiniti.  If not, see <http://www.gnu.org/licenses/>.
         <cfset this.keywords = o.keywords>
             
         <cfset this.written = true>    
-        
+       
         <cfreturn #this#>     
     </cffunction>
     

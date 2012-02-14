@@ -1,4 +1,5 @@
 
+
 <cfset orms = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
 <cfset orms_rec = orms.Get(attributes.orms_id)>
 <cfset img = createObject("component", "OpenHorizon.Graphics.Image")>
@@ -9,6 +10,17 @@
 <cfset liveLocLink = "/orms/live_location.cfm?orms_id=" & orms_rec.r_id>
 <cfset linkToMobile = "/orms/link_to_mobile.cfm?target_uuid=" & orms_rec.r_id>
 <cfset staticLocLink = "/orms/locate_object.cfm?orms_id=" & orms_rec.r_id>
+<cfset acctSettingsLink = "/OpenHorizon/Objects/Users/AccountSettings.cfm?user_id=" & session.user.r_pk>
+<cfset siteSettingsLink = "/OpenHorizon/Objects/Sites/SiteSettings.cfm?user_id=" & session.user.r_pk>
+
+<cfquery name="Notifications" maxrows="20" datasource="#session.framework.BaseDatasource#">
+	SELECT * FROM orms_site_notifications WHERE user_id=#session.user.r_pk# ORDER BY event_date DESC
+</cfquery>
+
+<cfquery name="AccessLog" datasource="#session.framework.BaseDatasource#" maxrows="5">
+	SELECT DISTINCT r_id FROM orms_access_log WHERE a_user_id=#session.user.r_pk#
+</cfquery>
+
 
 <cfif session.active_membership.membership_type EQ 'Employee'>
 	<cfset g_employees = session.active_membership.site.Employees()>
@@ -25,21 +37,53 @@
 
 
 <cfmenu type="horizontal" name="overall" menustyle="background-color:##efefef;">
-    <cfmenuitem display="#session.user.display_name#" image="/graphics/webware-16x16.png" name="menutest">
+	
+    <cfmenuitem display="#session.user.display_name#" image="/OpenHorizon/Resources/Graphics/Silk/openhorizon_stamp.png" name="menutest">
     	<cfmenuitem display="My Profile" href="/Prefiniti.cfm?View=#session.user.ObjectRecord().r_id#" />		
-        <cfmenuitem display="Memberships">
+        <cfmenuitem display="Account Settings" href="javascript:ORMSDialog('#acctSettingsLink#');"/>
+		<cfmenuitem display="Memberships">
 			<cfoutput query="getSites">
         		<cfset sm = CreateObject("component", "OpenHorizon.Identity.SiteMembership").OpenByPK(id)>
             
             	<cfmenuitem display="#sm.site.site_name# - #sm.membership_type#" href="javascript:ORMSSwitchSites(#id#);" />
 	        </cfoutput>
     	</cfmenuitem>
-        <cfmenuitem divider />    	
-       	<cfoutput query="ObjectTypes">
-           	<cfset link = orms_rec.GetCreator(r_type)>
-            <cfmenuitem display="New #r_type#" href="javascript:ORMSDialog('#link#');" />                
-        </cfoutput>
-        <cfmenuitem divider />
+		<cfmenuitem display="Notifications" image="#img.Silk('bell', 15)#">
+			<cfmenuitem display="Show All" />
+			<cfmenuitem divider />
+			<cfoutput query="Notifications">
+				<cfmenuitem href="/Prefiniti.cfm?View=#orms_id#" display="#notify_text#" />
+			</cfoutput>
+		</cfmenuitem>
+		<cfmenuitem divider />
+		<cfmenuitem display="New">    	
+	       	<cfoutput query="ObjectTypes">
+	           	<cfset link = orms_rec.GetCreator(r_type)>
+	            <cfmenuitem display="#r_type#" href="javascript:ORMSDialog('#link#');" />                
+	        </cfoutput>
+		</cfmenuitem>
+		<cfmenuitem display="Browse My Items" image="#img.Silk('folder', 15)#" href="javascript:ORMSDialog('/orms/browse_items.cfm');" />
+        
+		<cfmenuitem divider />
+		<cfif AccessLog.RecordCount EQ 0>
+			<cfmenuitem display="No recent items to display." />
+		<cfelse>
+			<cfoutput query="AccessLog">
+				<cftry>
+					<cfset ob = CreateObject("component", "OpenHorizon.Storage.ObjectRecord")>
+					<cfset ob.Get(r_id)>
+					<cfmenuitem display="#ob.r_name# (#ob.r_type#)" href="/Prefiniti.cfm?View=#ob.r_id#"/>
+				<cfcatch type="any">
+				
+				</cfcatch>
+				</cftry>
+			</cfoutput>
+		</cfif>
+		
+		
+		<cfmenuitem divider />
+		<cfmenuitem display="Print" image="#img.Silk('printer', 15)#" />
+		<cfmenuitem divider />
         <cfmenuitem display="Friends">
         	<cfloop array="#g_friends#" index="friend">
             	<cfif friend.Online()>
@@ -69,6 +113,8 @@
     <cfmenuitem display="#session.site.site_name#" image="#img.Silk('world', 15)#">
     	<cfset home_url = session.framework.URLBase & "Prefiniti.cfm?View=" & session.site.ObjectRecord().r_id>
     	<cfmenuitem display="#session.site.site_name# Home" image="/graphics/house.png" href="#home_url#" />
+		<cfmenuitem display="Site Settings" href="javascript:ORMSDialog('#siteSettingsLink#');" />
+		<cfmenuitem display="Invite" href="" />
     </cfmenuitem>
     <cfmenuitem display="#orms_rec.r_type#" image="#img.Silk('bricks', 15)#">
     	<cfmenuitem display="Pick Up..." href="javascript:ORMSPickUp('#orms_rec.r_id#')" image="#img.Silk('basket add', 15)#" />
@@ -111,15 +157,10 @@
 			<cfmenuitem display="Session Dump" href="javascript:AjaxLoadPageToDiv('tcTarget', '/DebuggingTools/SessionDump.cfm');"/>
 		</cfmenuitem>
     </cfif>
-    <!--- <cfmenuitem display="View" image="/graphics/eye.png">
-    	<cfmenuitem display=""/>
-    </cfmenuitem>
-    <cfmenuitem display="Tools" image="/graphics/wrench.png">
-    	<cfmenuitem display=""/>
-    </cfmenuitem>
+   
     <cfmenuitem display="Help" image="/graphics/help.png">
     	<cfmenuitem display=""/>
-    </cfmenuitem> --->    
+    </cfmenuitem>
 </cfmenu>
 
 
