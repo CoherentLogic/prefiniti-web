@@ -48,13 +48,12 @@
 			    contentString += "Accuracy: #location.accuracy#m<br>";
 			    contentString += "Bearing: #location.bearing#<br>";
 			    contentString += "Speed: #location.speed#<br>";
-			    contentString += "Fix Time: #DateFormat(location.fixtime, 'mm/dd/yyyy')# #TimeFormat(location.fixtime, 'h:mm tt')#<br>";
-			    contentString += "Comment: #location.comment#";
+			    contentString += "Fix Time: #DateFormat(location.fixtime, 'mm/dd/yyyy')# #TimeFormat(location.fixtime, 'h:mm tt')#";
   
 			    			 
 			    
 			    var infowindow = new google.maps.InfoWindow();
-			    infowindow.setContent(contentString); // contentString can be html as far as i  know whose style you can override
+			    infowindow.setContent(contentString);
 			    infowindow.setPosition(latlng);
 			    infowindow.open(map);
 			});
