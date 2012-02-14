@@ -338,7 +338,7 @@ function handleReceiveNotify()
 			n_object = object_node[0].firstChild.nodeValue;
 			n_event = event_node[0].firstChild.nodeValue;								
 			
-			var message_html = '<a href="http://www.prefiniti.com/Prefiniti.cfm?View=' + escape(n_object) + '">' + n_text + '</a><br><br>';
+			var message_html = '<a href="/Prefiniti.cfm?View=' + escape(n_object) + '">' + n_text + '</a><br><br>';
 			notify_div.innerHTML += message_html;			
 			
 		}
@@ -466,3 +466,11 @@ function LoadLiveLocation(orms_id)
 	var iframe = document.getElementById('live_location');
 	iframe.src = url;	
 }
+
+function ORMSViewLocation(location_id)
+{
+	var url = '/orms/show_location.cfm?location_id=' + escape(location_id);
+	
+	ORMSDialog(url);
+}
+

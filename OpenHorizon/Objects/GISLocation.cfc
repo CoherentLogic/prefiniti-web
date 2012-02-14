@@ -10,6 +10,8 @@
 	<cfset this.accuracy = 0>
 	<cfset this.comment = "">
 	<cfset this.fixtime = "">
+	<cfset this.r_id = "">
+	<cfset this.written = false>
 	
 	<cffunction name="Create" access="public" returntype="OpenHorizon.Objects.GISLocation" output="no">
 		<cfargument name="provider" type="string" required="yes">
@@ -31,8 +33,33 @@
 		<cfset this.bearing = bearing>
 		<cfset this.speed = speed>
 		<cfset this.accuracy = accuracy>
-				
+		<cfset this.r_id = CreateUUID()>
+		<cfset this.written = false>
+						
 		<cfreturn this>
+	</cffunction>
+	
+	<cffunction name="Open" access="public" returntype="OpenHorizon.Objects.GISLocation" output="no">
+		<cfargument name="location_id" type="string" required="yes">
+	
+		<cfquery name="qryOpen" datasource="#this.BaseDatasource#">
+			SELECT * FROM gis_locations WHERE om_uuid='#location_id#'
+		</cfquery>
+		
+		<cfset this.provider = qryOpen.provider>
+		<cfset this.device_uuid = qryOpen.device_uuid>
+		<cfset this.comment = qryOpen.comment>
+		<cfset this.latitude = qryOpen.latitude>
+		<cfset this.longitude = qryOpen.longitude>
+		<cfset this.elevation = qryOpen.elevation>
+		<cfset this.bearing = qryOpen.bearing>
+		<cfset this.speed = qryOpen.speed>
+		<cfset this.accuracy = qryOpen.accuracy>
+		
+		<cfset this.r_id = qryOpen.om_uuid>
+		<cfset this.written = true>
+		
+		<cfreturn this>		
 	</cffunction>
 	
 	

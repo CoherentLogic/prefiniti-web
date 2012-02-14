@@ -916,6 +916,7 @@ CREATE TABLE `gis_locations` (
 	`accuracy` double,
 	`comment` varchar(255),
 	`fixtime` datetime,
+	`om_uuid` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

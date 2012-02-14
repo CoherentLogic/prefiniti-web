@@ -9,23 +9,23 @@
 </cfif>
  --->
 
-<cfquery name="orms_object" datasource="webwarecl">
+<cfquery name="orms_object" datasource="#session.framework.BaseDatasource#">
 	SELECT * FROM orms WHERE id='#URL.orms_id#'
 </cfquery> 
 
-<cfquery name="orms_keys" datasource="webwarecl">
+<cfquery name="orms_keys" datasource="#session.framework.BaseDatasource#">
 	SELECT * FROM orms_keywords WHERE r_id='#URL.orms_id#'
 </cfquery>
 
-<cfquery name="orms_relationships" datasource="webwarecl">
+<cfquery name="orms_relationships" datasource="#session.framework.BaseDatasource#">
 	SELECT * FROM orms_relations WHERE rel_source='#URL.orms_id#'    
 </cfquery>
 
-<cfquery name="orms_subscriptions" datasource="webwarecl">
+<cfquery name="orms_subscriptions" datasource="#session.framework.BaseDatasource#">
 	SELECT * FROM orms_subscriptions WHERE target_uuid='#URL.orms_id#'
 </cfquery>
 
-<cfquery name="orms_events" datasource="webwarecl">
+<cfquery name="orms_events" datasource="#session.framework.BaseDatasource#">
 	SELECT * FROM orms_events WHERE target_uuid='#URL.orms_id#'
 </cfquery>   
 
